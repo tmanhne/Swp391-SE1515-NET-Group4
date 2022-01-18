@@ -10,5 +10,7 @@ package Model;
  * @author t.manh
  */
 public class admin {
-    
+    public static void main(String[] args) {
+        System.out.println("Đm thằng mạnh ngu vkl :))");
+    }
 }

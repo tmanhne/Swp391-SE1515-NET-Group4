@@ -214,4 +214,39 @@ public class BooksDAO {
         return books;
     }
 
+    public ArrayList<Book> getBookByName(String name) {
+        ArrayList<Book> books = new ArrayList<>();
+        String sql = "SELECT * FROM Products WHERE ProductName LIKE ? ";
+
+        try {
+            con = DBConnection.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%"+name+"%");
+            rs = ps.executeQuery();
+
+            //initialize AuthorsDAO object
+            au = new AuthorsDAO();
+
+            //assign data to books
+            while (rs.next()) {
+                Book book = new Book();
+                book.setProductID(rs.getInt("ProductID"));
+                book.setProductName(rs.getString("ProductName"));
+                book.setPathImage(rs.getString("ImagePath"));
+                book.setDescription(rs.getString("Description"));
+                book.setUnitPrice(rs.getFloat("UnitPrice"));
+
+                // get book authors via AuthorsDAO
+                book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
+                books.add(book);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            DBConnection.close(con, ps, rs);
+        }
+
+        return books;
+    }
 }

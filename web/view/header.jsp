@@ -4,6 +4,7 @@
     Author     : admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,23 +35,23 @@
                     <a href="home">BookShops Online</a>
                 </div>
                 <div id="header-middle">
-                    <form action="/BookStore/search" method="POST">
+                    <form action="search" method="POST">
                         <span class="glyphicon glyphicon-search"></span>
-                        <input type="text" placeholder="Find books"  name="search">
+                        <input type="text" placeholder="Find books"  name="search" value="${requestScope.searchname}">
                         <button type="submit">Search</button>
                     </form>  
                 </div>
 
                 <div id="header-right">
-
-                    <% if (session.getAttribute("account") == null) { %>
-                    <a href="/BookStore/register">Register</a>
-                    <a href="/BookStore/login">Login</a>
-                    <% } else {%>
-                    <a href="/BookStore/logout">Logout</a>
-                    <a href="#" class="account">${sessionScope.account.username}</a>
-                    <a href="/BookStore/update">update</a>
-                    <% }%>
+                    <c:if test="${sessionScope.account.username==null}">
+                        <a href="/BookStore/register">Register</a>
+                        <a href="/BookStore/login">Login</a>
+                    </c:if>
+                    <c:if test="${sessionScope.account.username!=null}">
+                        <a href="/BookStore/logout">Logout</a>
+                        <a href="#" class="account">${sessionScope.account.username}</a>
+                        <a href="/BookStore/update">update</a>
+                    </c:if>
                     <a href="/BookStore/cart"><span class="glyphicon glyphicon-shopping-cart" style="padding: 0px 10px;"></span></a>
                 </div>
             </div>

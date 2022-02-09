@@ -19,19 +19,19 @@
                 <div class="dropdown">
                     <button class="dropbtn">List</button>
                     <div class="dropdown-content">
-                        <form action="/BookShopsOnline/StoryController" method="POST">
+                        <form action="StoryController" method="GET">
                             <button>Story</button>
                         </form>
-                        <form action="/BookShopsOnline/BookController" method="POST">
+                        <form action="BookController" method="GET">
                             <button>Book</button>
                         </form>
-                        <form action="/BookShopsOnline/NovelController" method="POST">
+                        <form action="NovelController" method="GET">
                             <button>Novel</button>
                         </form>
                     </div>
                 </div>
                 <div id="header-left">
-                    <a href="/BookShopsOnline/LandingPageController">BookShops Online</a>
+                    <a href="home">BookShops Online</a>
                 </div>
                 <div id="header-middle">
                     <form action="/BookStore/search" method="POST">

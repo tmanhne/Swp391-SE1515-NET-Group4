@@ -7,7 +7,6 @@ package controller;
 
 import controller.util.BooksDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +19,8 @@ import model.Book;
  *
  * @author Hfyl
  */
-@WebServlet(name = "StoryController", urlPatterns = {"/StoryController"})
-public class StoryController extends HttpServlet {
+@WebServlet(name = "HomeController", urlPatterns = {"/home"})
+public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,7 +28,7 @@ public class StoryController extends HttpServlet {
         BooksDAO db = new BooksDAO();
         
         ArrayList<Book> books = new ArrayList<>();
-         books = db.getBookByStory();
+         books = db.getAllBooks();
         
         ArrayList<Book> bestSellerBooks = new ArrayList<>();
         bestSellerBooks = db.getBestSellerBooks();

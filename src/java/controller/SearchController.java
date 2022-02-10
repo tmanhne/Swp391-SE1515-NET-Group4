@@ -18,7 +18,7 @@ import model.Book;
 /**
  * The class contain method doPost
  *
- * @author Hfyl
+ * @author dult
  */
 @WebServlet(name = "SearchController", urlPatterns = {"/search"})
 public class SearchController extends HttpServlet {

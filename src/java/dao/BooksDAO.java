@@ -1,8 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2022-02-08      1.0                 VUDM               BooksDAO
  */
+
 package dao;
 
 import java.sql.Connection;
@@ -16,11 +17,16 @@ import model.Book;
 import dal.DBConnection;
 
 /**
- *
- * @author Hfyl
+ * The class contain method to contact with database
+ * @author vudm
  */
 public class BooksDAO extends DBConnection {
-
+    
+     /**
+     * Get all products from database
+     * @param
+     * @return ArrayList books
+     */
     public ArrayList<Book> getAllBooks() {
         Connection con = null;
         PreparedStatement ps = null;
@@ -32,6 +38,7 @@ public class BooksDAO extends DBConnection {
                 + "Products\n ";
 
         try {
+            //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -48,7 +55,7 @@ public class BooksDAO extends DBConnection {
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
 
-                // get book authors via AuthorsDAO
+                // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
             }
@@ -56,23 +63,30 @@ public class BooksDAO extends DBConnection {
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            //close connection
             super.close(con, ps, rs);
         }
 
         return books;
     }
-
+    
+      /**
+     * Get top 3 best seller products from database
+     * @param
+     * @return ArrayList books
+     */
     public ArrayList<Book> getBestSellerBooks() {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         AuthorsDAO au;
         ArrayList<Book> books = new ArrayList<>();
-        String sql = "select top 5 *\n"
+        String sql = "select top 3 *\n"
                 + "from Products\n"
                 + "order by UnitInStock desc";
 
         try {
+            //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -89,7 +103,7 @@ public class BooksDAO extends DBConnection {
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
 
-                // get book authors via AuthorsDAO
+                // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
             }
@@ -97,24 +111,29 @@ public class BooksDAO extends DBConnection {
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            //close connection
             super.close(con, ps, rs);
         }
 
         return books;
     }
-
-    public ArrayList<Book> getBookByStory() {
+    
+    /**
+     * Get top 2 highest price products from database
+     * @return ArrayList books
+     */
+    public ArrayList<Book> getHighestPriceBooks() {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         AuthorsDAO au;
         ArrayList<Book> books = new ArrayList<>();
-        String sql = "select * \n"
-                + "from Products,Category\n"
-                + "where Products.CategoryID=Category.CategoryID\n"
-                + "and Products.CategoryID=1";
+        String sql = "select top 2 *\n"
+                + "from Products\n"
+                + "order by UnitPrice desc";
 
         try {
+            //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -131,7 +150,7 @@ public class BooksDAO extends DBConnection {
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
 
-                // get book authors via AuthorsDAO
+                // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
             }
@@ -139,96 +158,18 @@ public class BooksDAO extends DBConnection {
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            //close connection
             super.close(con, ps, rs);
         }
 
         return books;
     }
-
-    public ArrayList<Book> getBookByBook() {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        AuthorsDAO au;
-        ArrayList<Book> books = new ArrayList<>();
-        String sql = "select * \n"
-                + "from Products,Category\n"
-                + "where Products.CategoryID=Category.CategoryID\n"
-                + "and Products.CategoryID=2";
-
-        try {
-
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-
-            //initialize AuthorsDAO object
-            au = new AuthorsDAO();
-
-            //assign data to books
-            while (rs.next()) {
-                Book book = new Book();
-                book.setProductID(rs.getInt("ProductID"));
-                book.setProductName(rs.getString("ProductName"));
-                book.setPathImage(rs.getString("ImagePath"));
-                book.setDescription(rs.getString("Description"));
-                book.setUnitPrice(rs.getFloat("UnitPrice"));
-
-                // get book authors via AuthorsDAO
-                book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
-                books.add(book);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            super.close(con, ps, rs);
-        }
-
-        return books;
-    }
-
-    public ArrayList<Book> getBookByNovel() {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        AuthorsDAO au;
-        ArrayList<Book> books = new ArrayList<>();
-        String sql = "select * \n"
-                + "from Products,Category\n"
-                + "where Products.CategoryID=Category.CategoryID\n"
-                + "and Products.CategoryID=3";
-
-        try {
-            con = super.open();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-
-            //initialize AuthorsDAO object
-            au = new AuthorsDAO();
-
-            //assign data to books
-            while (rs.next()) {
-                Book book = new Book();
-                book.setProductID(rs.getInt("ProductID"));
-                book.setProductName(rs.getString("ProductName"));
-                book.setPathImage(rs.getString("ImagePath"));
-                book.setDescription(rs.getString("Description"));
-                book.setUnitPrice(rs.getFloat("UnitPrice"));
-
-                // get book authors via AuthorsDAO
-                book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
-                books.add(book);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            super.close(con, ps, rs);
-        }
-
-        return books;
-    }
-
+    
+    /**
+     * Get all products by name from database
+     * @param name was searching name
+     * @return ArrayList books
+     */
     public ArrayList<Book> getBookByName(String name) {
         Connection con = null;
         PreparedStatement ps = null;
@@ -238,6 +179,7 @@ public class BooksDAO extends DBConnection {
         String sql = "SELECT * FROM Products WHERE ProductName LIKE ? ";
 
         try {
+            //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + name + "%");
@@ -255,7 +197,7 @@ public class BooksDAO extends DBConnection {
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
 
-                // get book authors via AuthorsDAO
+                // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
             }
@@ -263,6 +205,7 @@ public class BooksDAO extends DBConnection {
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            //close connection
             super.close(con, ps, rs);
         }
 

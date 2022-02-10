@@ -1,15 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2022-02-07      1.0                 VUDM               Book Class
  */
 package model;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author admin
+ * The class contain parameter and method of book class
+ * @author vudm
  */
 public class Book {
     private  int ProductID;

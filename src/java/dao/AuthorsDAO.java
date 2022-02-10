@@ -1,8 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2022-02-07      1.0                 VUDM               AuthorsDAO
  */
+
 package dao;
 
 import dal.DBConnection;
@@ -15,11 +16,17 @@ import java.util.logging.Logger;
 import java.sql.Connection;
 
 /**
- *
- * @author Hfyl
+ * The class contain method to contact with database
+ * @author vudm
  */
 public class AuthorsDAO extends DBConnection{
-
+    
+    /**
+     * Get author by bookId from database
+     * @param bookId is the variable passed
+     * @return authors
+     */
+    
     public ArrayList<String> getAuthorsByBookId(int bookId) {
         Connection con = null;
         PreparedStatement ps = null;
@@ -32,11 +39,12 @@ public class AuthorsDAO extends DBConnection{
                 + " and ProAu.ProductID = ?";
 
         try {
+            //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
             ps.setInt(1, bookId);
             rs = ps.executeQuery();
-
+            //assign data to authors
             while (rs.next()) {
                 String author = rs.getString("AuthorName");
                 authors.add(author);
@@ -44,6 +52,7 @@ public class AuthorsDAO extends DBConnection{
         } catch (SQLException ex) {
             Logger.getLogger(AuthorsDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            //close connection
             super.close(con, ps, rs);
         }
 

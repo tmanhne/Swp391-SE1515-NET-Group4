@@ -9,15 +9,36 @@ import java.util.ArrayList;
 
 /**
  * The class contain parameter and method of book class
+ *
  * @author vudm
  */
 public class Book {
-    private  int ProductID;
+
+    private int ProductID;
     private String ProductName;
     private String PathImage;
     private String CreateDate;
     private String Description;
     private float UnitPrice;
+    private int UnitInStock;
+
+    private boolean isContinues;
+
+    public int getUnitInStock() {
+        return UnitInStock;
+    }
+
+    public void setUnitInStock(int UnitInStock) {
+        this.UnitInStock = UnitInStock;
+    }
+
+    public boolean isIsContinues() {
+        return isContinues;
+    }
+
+    public void setIsContinues(boolean isContinues) {
+        this.isContinues = isContinues;
+    }
     private ArrayList<String> authors;
 
     public Book() {
@@ -54,7 +75,7 @@ public class Book {
     }
 
     public void setPathImage(String PathImage) {
-        this.PathImage =PathImage;
+        this.PathImage = PathImage;
     }
 
     public String getCreateDate() {
@@ -88,6 +109,5 @@ public class Book {
     public void setAuthors(ArrayList<String> authors) {
         this.authors = authors;
     }
-    
 
 }

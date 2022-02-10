@@ -1,11 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2022-02-10      1.0                 DuLT           First Implement
  */
 package controller;
 
-import controller.util.BooksDAO;
+import dao.BooksDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -16,20 +16,30 @@ import javax.servlet.http.HttpServletResponse;
 import model.Book;
 
 /**
+ * The class contain method doPost
  *
  * @author Hfyl
  */
 @WebServlet(name = "SearchController", urlPatterns = {"/search"})
 public class SearchController extends HttpServlet {
 
+    /**
+     * Get keyword from search bar
+     * If not empty search record of books match in database then setAttribute then forward
+     *
+     * @param request is HttpServletRequest
+     * @param response is HttpServletResponse
+     * @return none
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BooksDAO db = new BooksDAO();
         String name = "";
+        //check search parameter
         if (request.getParameter("search") != null) {
             if (!request.getParameter("search").toString().trim().isEmpty()) {
-                name = request.getParameter("search").toString().trim();
+                name = request.getParameter("search").toString().trim();//if parameter is not empty
             }
         }
 

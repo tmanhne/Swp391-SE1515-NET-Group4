@@ -3,28 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.util;
+package dao;
 
-import java.sql.Connection;
+import dal.DBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DBConnection;
+import java.sql.Connection;
 
 /**
  *
  * @author Hfyl
  */
-public class AuthorsDAO {
-
-    private Connection con;
-    private PreparedStatement ps;
-    private ResultSet rs;
+public class AuthorsDAO extends DBConnection{
 
     public ArrayList<String> getAuthorsByBookId(int bookId) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         ArrayList<String> authors = new ArrayList();
 
         String sql = "SELECT *\n"
@@ -32,9 +31,8 @@ public class AuthorsDAO {
                 + " where ProAu.AuthorID = Authors.AuthorID\n"
                 + " and ProAu.ProductID = ?";
 
-
         try {
-            con = DBConnection.open();
+            con = super.open();
             ps = con.prepareStatement(sql);
             ps.setInt(1, bookId);
             rs = ps.executeQuery();
@@ -45,8 +43,8 @@ public class AuthorsDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(AuthorsDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            DBConnection.close(con, ps, rs);
+        } finally {
+            super.close(con, ps, rs);
         }
 
         return authors;

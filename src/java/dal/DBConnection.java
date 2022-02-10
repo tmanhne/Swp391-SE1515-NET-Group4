@@ -1,4 +1,4 @@
-package model;
+package dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class DBConnection {
 
-     public static Connection open() {
+    protected Connection open() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=BooksShopOnline", "sa", "123");
@@ -20,7 +20,7 @@ public class DBConnection {
         return null;
     }
 
-    public static void close(Connection conn, Statement stmt,ResultSet rs) {
+    protected void close(Connection conn, Statement stmt,ResultSet rs) {
         try {
             if(rs!=null){
                 rs.close();

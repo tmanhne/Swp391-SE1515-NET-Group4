@@ -5,7 +5,7 @@
  */
 package controller;
 
-import controller.util.BooksDAO;
+import dao.BooksDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;

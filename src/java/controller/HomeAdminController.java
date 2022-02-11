@@ -40,7 +40,7 @@ public class HomeAdminController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeAdminController</title>");            
+            out.println("<title>Servlet HomeAdminController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet HomeAdminController at " + request.getContextPath() + "</h1>");
@@ -61,7 +61,7 @@ public class HomeAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         BooksDAO db = new BooksDAO();
+        BooksDAO db = new BooksDAO();
 
         ArrayList<Book> books = new ArrayList<>();
         books = db.getAllBooks();
@@ -82,14 +82,14 @@ public class HomeAdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String name = "";
+        String name = "";
         //check search parameter
         if (request.getParameter("search") != null) {
             if (!request.getParameter("search").toString().trim().isEmpty()) {
                 name = request.getParameter("search").toString().trim();//if parameter is not empty
             }
         }
-         BooksDAO db = new BooksDAO();
+        BooksDAO db = new BooksDAO();
         ArrayList<Book> books = new ArrayList<>();
         books = db.getBookByName(name);
 

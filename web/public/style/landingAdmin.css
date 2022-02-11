@@ -1,0 +1,87 @@
+#admin-main-content {
+    margin: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px
+}
+.admin-manager {
+    background-color: rgb(243, 245, 244);
+    width: 25%;
+    margin-right: 10px;
+    padding: 10px;
+    font-size: 20px;
+    padding-top: 30px;
+}
+.list-manager {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid black;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-bottom: 3px
+}
+.list-manager a {
+    text-decoration: none;
+    font: bold;
+    font-size: 18px;
+    font-weight: 600;
+}
+.list-manager:hover {
+    background-color: #aec2ba;
+    text-decoration: none;
+}
+.admin-manager-detail {
+    background-color: rgb(243, 245, 244);
+    width: 75%;
+    float: right;
+}
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.admin-manager-detail p,
+button {
+    padding: 10px 10px;
+    font-size: 20px;
+}
+
+.table-listProduct {
+    padding: 10px;
+}
+.table-listProduct table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table-listProduct table,
+td,
+th {
+    border: 1px solid black;
+}
+.table-listProduct td {
+    text-align: -webkit-center;
+}
+.pagination {
+    display: inline-block;
+    border: 1px solid black; 
+}
+
+.pagination a {
+    float: left;
+
+    text-decoration: none;
+
+    padding: 8px 16px;
+}
+
+.pagination a:active {
+    background-color: #4caf50;
+    color: white;
+}
+
+.pagination a:hover {
+    background-color: chocolate;
+}

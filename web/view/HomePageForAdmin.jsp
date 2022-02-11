@@ -4,6 +4,8 @@
     Author     : phamthithi
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.List"%>
 <%@page import="model.Book"%>
 <%@page import="dao.BooksDAO"%>
@@ -15,47 +17,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home Page For Admin</title>
         <link href="./public/style/home.css" rel="stylesheet" type="text/css"/>
-        <style>
-
-            .pagination{
-
-                display: inline-block;
-
-            }
-
-            .pagination a{
-
-                float: left;
-
-                text-decoration: none;
-
-                padding: 8px 16px;
-
-            }
-
-            .pagination a.active{
-
-                background-color: #4CAF50;
-
-                color: white;
-
-            }
-
-            .pagination a:hover:not(.active){
-
-                background-color: chocolate;
-
-            }
-            .addnew{
-                float:right;
-                margin-right: 140px;
-                font-weight: bold;
-            }
-        </style>
+        <link href="./public/style/landingAdmin.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 
-        <jsp:include page="headerforadmin.jsp"></jsp:include>
+        <jsp:include page="headerAdmin.jsp"></jsp:include>
         <%
             List<Book> list = new ArrayList<Book>();
             BooksDAO pdao = new BooksDAO();
@@ -72,66 +38,85 @@
             List<Book> pageList = new ArrayList<Book>();
             pageList = pdao.getBookByPage(list, start, end);
         %>
-        <div>
-            <a class="addnew">Add new product</a>
-            <h1>The list of Products</h1>
-            <table>
-                <tr>
-                    <th>BookID</th>
-                    <th>BookName</th>
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Unit Price</th>
-                    <th>UnitInStock</th>
-                    <th>Author</th>
-                    <th>IsContinue</th>
 
-                    <th>Edit</th>
-                </tr>
-                <%
-                    for (Book p : pageList) {
 
-                %>
-                <tr>
-                    <td><%=p.getProductID()%></td>
-                    <td><%=p.getProductName()%></td>
-                    <td><img src="<%=p.getPathImage()%>"style="width: 90%;height: 90%;"/></td>
-                    <td><%=p.getDescription()%></td>
-                    <td><%=p.getUnitPrice()%></td>
-                    <td><%=p.getUnitInStock()%></td>
-                    <td><%=p.getAuthors()%></td>                   
-                    <td><%=p.isIsContinues()%></td>
-                    <td><a href="#">Edit</a></td>
-                </tr>
-                <%
-                    }
-                %>
-            </table>
-            <ul>
-                <%
-                    //navigation
-                    //start ->a; end->b
-                    int a, b;
-                    int numOfPage = list.size() / 3;
-                    if ((numOfPage * 3) < list.size()) {
-                        numOfPage++;
-                    }
-                    for (int i = 1; i <= numOfPage; i++) {
-                        a = (i - 1) * 3;
-                        b = i * 3;
-                        if (b > list.size()) {
-                            b = list.size();
-                        }
-                %>
-                <li class="pagination">
-                    <a href="homeadmin?start=<%=a%>&end=<%=b%>"><%=i%></a>
-                </li>
-                <%
-                    }
-                %>
-            </ul>
+        <div id="admin-main-content">
+            <div class="admin-manager">
+                <div class="list-manager">
+                    <a href="">Manager Products</a>
+                </div>
+                <div class="list-manager">
+                    <a href="">Manager Bills</a>
+                </div>
+                <div class="list-manager">
+                    <a href="">Add New Product</a>
+                </div>
+            </div>
+            <div class="admin-manager-detail">
+                <div class="header-main">
+                    <p>The List of Products</p>
+                </div>
+                <div class="table-listProduct">
+                    <table>
+                        <tr>             
+                            <th>BookID</th>
+                            <th>BookName</th>
+                            <th>Description</th>
+                            <th>Unit Price</th>
+                            <th>UnitInStock</th>
+                            <th>Author</th>
+                            <th>IsContinue</th>
+                            <th>Edit</th>
+
+                        </tr>
+                        <%
+                            for (Book p : pageList) {
+
+                        %>
+
+                        <tr>
+                            <td><%=p.getProductID()%></td>
+                            <td><%=p.getProductName()%></td>                 
+                            <td><%=p.getDescription()%></td>
+                            <td><%=p.getUnitPrice()%></td>
+                            <td><%=p.getUnitInStock()%></td>
+                            <td><%=p.getAuthors()%></td>                   
+                            <td><%=p.isIsContinues()%></td>
+                            <td><a href="#">Edit</a></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </table>
+                </div>
+                    <div class="pagination-page">
+                    <ul>
+                        <%
+                            //navigation
+                            //start ->a; end->b
+                            int a, b;
+                            int numOfPage = list.size() / 3;
+                            if ((numOfPage * 3) < list.size()) {
+                                numOfPage++;
+                            }
+                            for (int i = 1; i <= numOfPage; i++) {
+                                a = (i - 1) * 3;
+                                b = i * 3;
+                                if (b > list.size()) {
+                                    b = list.size();
+                                }
+                        %>
+                        <li class="pagination">
+                            <a href="homeadmin?start=<%=a%>&end=<%=b%>"><%=i%></a>
+                        </li>
+                        <%
+                            }
+                        %>
+                    </ul>   
+                </div>
+            </div>
         </div>
 
-        <jsp:include page="footer.jsp"></jsp:include>
+
     </body>
 </html>

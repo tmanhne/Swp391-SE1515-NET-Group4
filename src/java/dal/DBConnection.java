@@ -1,4 +1,4 @@
-package model;
+package dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,23 +8,38 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The class contain method to open and close connect with database
+ *
+ * @author dult
+ */
 public class DBConnection {
 
-     public static Connection open() {
+    /**
+     * Open connection with database
+     *
+     * @param
+     * @return null
+     */
+    protected Connection open() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;"
-                    + "databaseName=BooksShopOnline",
-                    "sa", "123");
+            return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=BooksShopOnline", "sa", "123");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
-    public static void close(Connection conn, Statement stmt,ResultSet rs) {
+    /**
+     * Close connection with database
+     *
+     * @param
+     * @return null
+     */
+    protected void close(Connection conn, Statement stmt, ResultSet rs) {
         try {
-            if(rs!=null){
+            if (rs != null) {
                 rs.close();
             }
             if (stmt != null) {

@@ -1,3 +1,8 @@
+<%-- 
+    Document   : LangdingPage
+    Created on : Jan 19, 2022, 8:18:01 PM
+    Author     : vudm
+--%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
@@ -67,6 +72,31 @@
                                 
                             </div>
                         </c:forEach>
+                        <span class="title">  Highest Price!!!  </span>
+                        <c:forEach items="${requestScope.highestPricerBooks}" var="book">
+                            <div class="best-seller-book-container">
+                                <div class="book-thumbnail">
+                                    <a href="#"><img class="thumbnail-image" src="${book.getPathImage()}"></a>
+                                </div>
+                                <div class="book-info">
+                                    <div class="book-title">
+                                        <a href="#">${book.getProductName()}</a>
+                                        <c:forEach items="${book.getAuthors()}" var="author" varStatus="loop">
+                                            <span class="author">${author}</span>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                                <div class="buy-section">
+                                    <form action="/FinalAssignment/cart" method="POST" class="button-container">
+                                        <input type="hidden" value="${book.getProductID()}" name="id" >
+                                        <input type="submit" value="Buy" class="form-button">
+                                    </form>
+                                    <div class="price">${book.getUnitPrice()}$</div>
+                                </div>
+                                
+                            </div>
+                        </c:forEach>
+                        
                     </div>
                 </div>
                 <div class="clearfix"></div>

@@ -43,13 +43,13 @@
         <div id="admin-main-content">
             <div class="admin-manager">
                 <div class="list-manager">
-                    <a href="">Manager Products</a>
+                    <a href="#">Manager Products</a>
                 </div>
                 <div class="list-manager">
-                    <a href="">Manager Bills</a>
+                    <a href="#">Manager Bills</a>
                 </div>
                 <div class="list-manager">
-                    <a href="">Add New Product</a>
+                    <a href="AddCategory.jsp">Add New Product</a>
                 </div>
             </div>
             <div class="admin-manager-detail">
@@ -89,7 +89,7 @@
                         %>
                     </table>
                 </div>
-                    <div class="pagination-page">
+                <div class="pagination-page">
                     <ul>
                         <%
                             //navigation

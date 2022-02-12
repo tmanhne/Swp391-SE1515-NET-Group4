@@ -21,22 +21,7 @@
     <body>
 
         <jsp:include page="headerAdmin.jsp"></jsp:include>
-        <%
-            List<Book> list = new ArrayList<Book>();
-            BooksDAO pdao = new BooksDAO();
-            if (request.getAttribute("list") != null) {
-                list = (List<Book>) request.getAttribute("list");
-            } else {
-                list = pdao.getAllBooks();
-            }
-            int start = 0;
-            int end;
-            end = list.size() < 3 ? list.size() : 3;
-            start = request.getParameter("start") != null ? Integer.parseInt(request.getParameter("start")) : start;
-            end = request.getParameter("end") != null ? Integer.parseInt(request.getParameter("end")) : end;
-            List<Book> pageList = new ArrayList<Book>();
-            pageList = pdao.getBookByPage(list, start, end);
-        %>
+       
 
 
         <div id="admin-main-content">
@@ -56,62 +41,37 @@
                     <p>The List of Products</p>
                 </div>
                 <div class="table-listProduct">
-                    <table>
+                  <table>
                         <tr>             
                             <th>BookID</th>
                             <th>BookName</th>
                             <th>Description</th>
                             <th>Unit Price</th>
                             <th>UnitInStock</th>
+                            <th>Image</th>
                             <th>Author</th>
                             <th>IsContinue</th>
                             <th>Edit</th>
 
                         </tr>
-                        <%
-                            for (Book p : pageList) {
-
-                        %>
-
+                         <c:forEach var="product" items="${requestScope.list}">
                         <tr>
-                            <td><%=p.getProductID()%></td>
-                            <td><%=p.getProductName()%></td>                 
-                            <td><%=p.getDescription()%></td>
-                            <td><%=p.getUnitPrice()%></td>
-                            <td><%=p.getUnitInStock()%></td>
-                            <td><%=p.getAuthors()%></td>                   
-                            <td><%=p.isIsContinues()%></td>
-                            <td><a href="AdminEditProduct?pid=<%=p.getProductID()%>">Edit</a></td>
+                            <td>${product.getProductID()}</td>
+                            <td>${product.getProductName()}</td>
+                            <td>${product.getDescription()}</td>
+                            <td>${product.getUnitPrice()}</td>
+                            <td>${product.getUnitInStock()}</td>
+                           
+                            <td><img src="${product.getPathImage()}"style="width: 100%"/></td>
+                              <td>${product.getAuthors()}</td>
+                             <td>${product.isIsContinues()}</td>
+                            <td><a>Edit</a></td>
                         </tr>
-                        <%
-                            }
-                        %>
+                    </c:forEach>
                     </table>
                 </div>
                 <div class="pagination-page">
-                    <ul>
-                        <%
-                            //navigation
-                            //start ->a; end->b
-                            int a, b;
-                            int numOfPage = list.size() / 3;
-                            if ((numOfPage * 3) < list.size()) {
-                                numOfPage++;
-                            }
-                            for (int i = 1; i <= numOfPage; i++) {
-                                a = (i - 1) * 3;
-                                b = i * 3;
-                                if (b > list.size()) {
-                                    b = list.size();
-                                }
-                        %>
-                        <li class="pagination">
-                            <a href="homeadmin?start=<%=a%>&end=<%=b%>"><%=i%></a>
-                        </li>
-                        <%
-                            }
-                        %>
-                    </ul>   
+                 
                 </div>
             </div>
         </div>

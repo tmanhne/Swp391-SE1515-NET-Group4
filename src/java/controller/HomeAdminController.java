@@ -9,6 +9,7 @@ import dao.BooksDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,12 +63,24 @@ public class HomeAdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BooksDAO db = new BooksDAO();
+//        List<Book> books = new ArrayList<>();
+//        books = db.getAllBooks();
 
-        ArrayList<Book> books = new ArrayList<>();
-        books = db.getAllBooks();
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
+        int count = db.getTotalProduct();//7
+        int endPage = count / 3;//7/3=2
+        if (count % 3 != 0) {
+            endPage++;
+        }
+        List<Book> listPage = db.pagingProduct(index);
 
-        request.setAttribute("list", books);
-
+        request.setAttribute("listPage", listPage);
+//        request.setAttribute("list", books);
+        request.setAttribute("endPage", endPage);
         request.getRequestDispatcher("view/HomePageForAdmin.jsp").forward(request, response);
     }
 
@@ -90,10 +103,10 @@ public class HomeAdminController extends HttpServlet {
             }
         }
         BooksDAO db = new BooksDAO();
-        ArrayList<Book> books = new ArrayList<>();
+        List<Book> books = new ArrayList<>();
         books = db.getBookByName(name);
-
-        request.setAttribute("list", books);
+          
+        request.setAttribute("listPage", books);
         request.setAttribute("searchname", name);
         request.getRequestDispatcher("view/HomePageForAdmin.jsp").forward(request, response);
     }

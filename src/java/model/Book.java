@@ -44,16 +44,6 @@ public class Book {
     public Book() {
     }
 
-    public Book(int ProductID, String ProductName, String PathImage, String CreateDate, String Description, float UnitPrice, ArrayList<String> authors) {
-        this.ProductID = ProductID;
-        this.ProductName = ProductName;
-        this.PathImage = PathImage;
-        this.CreateDate = CreateDate;
-        this.Description = Description;
-        this.UnitPrice = UnitPrice;
-        this.authors = authors;
-    }
-
     public int getProductID() {
         return ProductID;
     }
@@ -108,6 +98,11 @@ public class Book {
 
     public void setAuthors(ArrayList<String> authors) {
         this.authors = authors;
+    }
+
+    @Override
+    public String toString() {
+        return ProductID+ ProductName;
     }
 
 }

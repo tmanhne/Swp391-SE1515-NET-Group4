@@ -55,7 +55,7 @@
                                 <th>Add</th>
                                 <th>Edit</th>
                             </tr>
-                        <c:forEach var="product" items="${requestScope.list}">
+                        <c:forEach var="product" items="${requestScope.listPage}">
                             <tr>
                                 <td>${product.getProductID()}</td>
                                 <td>${product.getProductName()}</td>
@@ -71,7 +71,9 @@
                     </table>
                 </div>
                 <div class="pagination-page">
-
+                <c:forEach begin="1"end="${endPage}"var="i">
+                    <a href="homeadmin?index=${i}">${i}</a>
+                </c:forEach>
                 </div>
             </div>
         </div>

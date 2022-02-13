@@ -256,11 +256,84 @@ public class BooksDAO extends DBConnection {
         return book;
     }
 
-    public List<Book> getBookByPage(List<Book> fullList, int start, int end) {
-        List<Book> pageList = new ArrayList<>();
-        for (int i = start; i < end; i++) {
-            pageList.add(fullList.get(i));
+    /**
+     * Get total product
+     *
+     * @return total product quantity
+     */
+    public int getTotalProduct() {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Book book = new Book();
+        String sql = "SELECT COUNT(*)FROM Products";
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
         }
-        return pageList;
+        return 0;
     }
+
+    /**
+     * Get product by paging
+     *
+     * @param index was page number
+     * @return listing has 3 products on 1 page
+     */
+    public List<Book> pagingProduct(int index) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Book> books = new ArrayList<>();
+        String sql = "SELECT * FROM Products\n"
+                + "ORDer by ProductID\n"
+                + "offset ? rows fetch next 3 rows only;";
+
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, (index - 1) * 3);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Book book = new Book();
+                book.setProductID(rs.getInt("ProductID"));
+                book.setProductName(rs.getString("ProductName"));
+                book.setPathImage(rs.getString("ImagePath"));
+                book.setDescription(rs.getString("Description"));
+                book.setUnitPrice(rs.getFloat("UnitPrice"));
+                book.setUnitInStock(rs.getInt("UnitInStock"));
+                books.add(book);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+
+        return books;
+    }
+
+//    public static void main(String[] args) {
+//        BooksDAO book = new BooksDAO();
+//        List<Book> list = book.pagingProduct(2);
+//        for (Book a : list) {
+//            System.out.println(a);
+//        }
+//
+//    }
+
 }

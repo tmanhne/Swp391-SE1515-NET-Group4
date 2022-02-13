@@ -48,7 +48,7 @@
                             <th>Description</th>
                             <th>Unit Price</th>
                             <th>UnitInStock</th>
-                            <th>Image</th>
+                       
                             <th>Author</th>
                             <th>IsContinue</th>
                             <th>Edit</th>
@@ -61,8 +61,8 @@
                             <td>${product.getDescription()}</td>
                             <td>${product.getUnitPrice()}</td>
                             <td>${product.getUnitInStock()}</td>
+                          <%--  <td><img src="${product.getPathImage()}"style="width: 100%"/></td>--%>
                            
-                            <td><img src="${product.getPathImage()}"style="width: 100%"/></td>
                               <td>${product.getAuthors()}</td>
                              <td>${product.isIsContinues()}</td>
                             <td><a>Edit</a></td>

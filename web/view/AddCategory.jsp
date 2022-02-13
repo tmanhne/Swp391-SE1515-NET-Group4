@@ -50,7 +50,7 @@
         </style>
     </head>
     <body>
-        <jsp:include page="headerforadmin.jsp"></jsp:include>
+        <jsp:include page="headerAdmin.jsp"></jsp:include>
             <h1>The List of Categories</h1>
         <%
             CategoryDAO cdb = new CategoryDAO();
@@ -76,7 +76,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                   
+
                 </tr>
                 <%
                     String id = "";

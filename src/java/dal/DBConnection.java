@@ -1,9 +1,3 @@
-/*
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-07      1.0                 DULT               Connection
- */
-
 package dal;
 
 import java.sql.Connection;
@@ -14,15 +8,16 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  * The class contain method to open and close connect with database
+ *
  * @author dult
  */
 public class DBConnection {
-    
+
     /**
      * Open connection with database
+     *
      * @param
      * @return null
      */
@@ -35,15 +30,16 @@ public class DBConnection {
         }
         return null;
     }
-    
+
     /**
      * Close connection with database
+     *
      * @param
      * @return null
      */
-    protected void close(Connection conn, Statement stmt,ResultSet rs) {
+    protected void close(Connection conn, Statement stmt, ResultSet rs) {
         try {
-            if(rs!=null){
+            if (rs != null) {
                 rs.close();
             }
             if (stmt != null) {

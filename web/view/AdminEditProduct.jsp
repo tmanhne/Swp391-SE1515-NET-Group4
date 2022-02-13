@@ -24,12 +24,15 @@
                             <a href="#">Manager Bills</a>
                         </div>
                         <div class="list-manager">
-                            <a href="AddCategory.jsp">Add New Product</a>
+                            <a href="#">Add New Product</a>
+                        </div>
+                        <div class="list-manager">
+                            <a href="category">Category</a>
                         </div>
                     </div>
                     <div class="admin-manager-detail">
                         <div class="header-main">
-                            <p>The List of Products</p>
+                            <p>Edit Product</p>
                         </div>
                         <div class="table-listProduct">
                             <table>

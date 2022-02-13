@@ -21,61 +21,61 @@
     <body>
 
         <jsp:include page="headerAdmin.jsp"></jsp:include>
-       
 
 
-        <div id="admin-main-content">
-            <div class="admin-manager">
-                <div class="list-manager">
-                    <a href="#">Manager Products</a>
-                </div>
-                <div class="list-manager">
-                    <a href="#">Manager Bills</a>
-                </div>
-                <div class="list-manager">
-                    <a href="#">Add New Product</a>
-                </div>
-            </div>
-            <div class="admin-manager-detail">
-                <div class="header-main">
-                    <p>The List of Products</p>
-                </div>
-                <div class="table-listProduct">
-                  <table>
-                        <tr>             
-                            <th>BookID</th>
-                            <th>BookName</th>
-                            <th>Description</th>
-                            <th>Unit Price</th>
-                            <th>UnitInStock</th>
-                       
-                            <th>Author</th>
-                            <th>IsContinue</th>
-                            <th>Edit</th>
 
-                        </tr>
-                         <c:forEach var="product" items="${requestScope.list}">
-                        <tr>
-                            <td>${product.getProductID()}</td>
-                            <td>${product.getProductName()}</td>
-                            <td>${product.getDescription()}</td>
-                            <td>${product.getUnitPrice()}</td>
-                            <td>${product.getUnitInStock()}</td>
-                          <%--  <td><img src="${product.getPathImage()}"style="width: 100%"/></td>--%>
-                           
-                              <td>${product.getAuthors()}</td>
-                             <td>${product.isIsContinues()}</td>
-                            <td><a>Edit</a></td>
-                        </tr>
-                    </c:forEach>
+            <div id="admin-main-content">
+                <div class="admin-manager">
+                    <div class="list-manager">
+                        <a href="#">Manager Products</a>
+                    </div>
+                    <div class="list-manager">
+                        <a href="#">Manager Bills</a>
+                    </div>
+                    <div class="list-manager">
+                        <a href="#">Add New Product</a>
+                    </div>
+                     <div class="list-manager">
+                        <a href="category">Category</a>
+                    </div>
+                </div>
+                <div class="admin-manager-detail">
+                    <div class="header-main">
+                        <p>The List of Products</p>
+                    </div>
+                    <div class="table-listProduct">
+                        <table>
+                            <tr>             
+                                <th>BookID</th>
+                                <th>BookName</th>
+                                <th>Description</th>
+                                <th>Unit Price</th>
+                                <th>UnitInStock</th>                     
+                                <th>IsContinue</th>
+                                <th>Add</th>
+                                <th>Edit</th>
+                            </tr>
+                        <c:forEach var="product" items="${requestScope.list}">
+                            <tr>
+                                <td>${product.getProductID()}</td>
+                                <td>${product.getProductName()}</td>
+                                <td>${product.getDescription()}</td>
+                                <td>${product.getUnitPrice()}</td>
+                                <td>${product.getUnitInStock()}</td>
+                                <%--  <td><img src="${product.getPathImage()}"style="width: 100%"/></td>--%> 
+                                <td>${product.isIsContinues()}</td>
+                                <td><a>Add</a></td>
+                                <td><a href="AdminEditProduct?pid=${product.getProductID()}">Edit</a></td>
+                            </tr>
+                        </c:forEach>
                     </table>
                 </div>
                 <div class="pagination-page">
-                 
+
                 </div>
             </div>
         </div>
-         <jsp:include page="footer.jsp"></jsp:include>
+        <jsp:include page="footer.jsp"></jsp:include>
 
     </body>
 </html>

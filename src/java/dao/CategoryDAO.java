@@ -46,16 +46,16 @@ public class CategoryDAO extends DBConnection {
 
             //assign data to books
             while (rs.next()) {
-                while (rs.next()) {
-                    category.add(new Category(rs.getString(1),
-                            rs.getString(2)));
-
-                }
+                category.add(new Category(
+                        rs.getString(1),
+                        rs.getString(2)));
+                       
+            
 
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             super.close(con, ps, rs);
         }

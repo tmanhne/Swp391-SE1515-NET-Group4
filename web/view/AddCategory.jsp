@@ -4,126 +4,64 @@
     Author     : phamthithi
 --%>
 
-<%@page import="dao.CategoryDAO"%>
-<%@page import="model.Category"%>
-<%@page import="java.util.List"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Category</title>
-        <link href="./public/style/home.css" rel="stylesheet" type="text/css"/>
-        <style>
-
-            .pagination{
-
-                display: inline-block;
-
-            }
-
-            .pagination a{
-
-                float: left;
-
-                text-decoration: none;
-
-                padding: 8px 16px;
-
-            }
-
-            .pagination a.active{
-
-                background-color: #4CAF50;
-
-                color: white;
-
-            }
-
-            .pagination a:hover:not(.active){
-
-                background-color: chocolate;
-
-            }
-
-        </style>
+        <link href="./public/style/landingAdmin.css" rel="stylesheet" type="text/css"/>
+     
     </head>
     <body>
         <jsp:include page="headerAdmin.jsp"></jsp:include>
-            <h1>The List of Categories</h1>
-        <%
-            CategoryDAO cdb = new CategoryDAO();
-            List<Category> list = cdb.getCategory();
 
-            //Phan trang
-            int start = 0;
-            int end = 3;
-            if (list.size() < 3) {
-                end = list.size();
-            }
-            if (request.getParameter("start") != null) {
-                start = Integer.parseInt(request.getParameter("start"));
-            }
-            if (request.getParameter("end") != null) {
-                end = Integer.parseInt(request.getParameter("end"));
-            }
-            List<Category> pageList = cdb.getCategoryByPage(list, start, end);
-        %>
-        <form action="" method="post">
-            <a href="AddCategory.jsp">Add New</a>
-            <table border="1px">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
 
-                </tr>
-                <%
-                    String id = "";
-                    String name = "";
-                    String describe = "";
-                    for (Category c : pageList) {
-                        id = c.getId();
-                        name = c.getName();
+            <div id="admin-main-content">
+                <div class="admin-manager">
+                    <div class="list-manager">
+                        <a href="#">Manager Products</a>
+                    </div>
+                    <div class="list-manager">
+                        <a href="#">Manager Bills</a>
+                    </div>
+                    <div class="list-manager">
+                        <a href="#">Add New Product</a>
+                    </div>
+                    <div class="list-manager">
+                        <a href="category">Category</a>
+                    </div>
+                </div>
+                <div class="admin-manager-detail">
+                    <div class="header-main">
+                        <p>Category Product</p>
+                      
+                    </div>
+                      <h4><a href="#">Add new category</a></h4>
+                    <div class="table-listCategory">
+                        <table>
+                            <tr>             
+                                <th>Category ID</th>
+                                <th>Category Name</th>
+                                <th>Edit</th>
 
-                %>
-                <tr>
-                    <td><%=id%></td>
-                    <td><%=name%></td>
+                            </tr>
 
-                    <td>
-                        <a href="#">Delete</a>&nbsp&nbsp;
-                        <a href="#">Edit</a>
-                    </td>
-                </tr>
-                <%
-                    }
-                %>
-            </table>
-            <ul>
-                <%
-                    //navigation
-                    //start ->a; end->b
-                    int a, b;
-                    int numOfPage = list.size() / 3;
-                    if ((numOfPage * 3) < list.size()) {
-                        numOfPage++;
-                    }
-                    for (int i = 1; i <= numOfPage; i++) {
-                        a = (i - 1) * 3;
-                        b = i * 3;
-                        if (b > list.size()) {
-                            b = list.size();
-                        }
-                %>
-                <li class="pagination">
-                    <a href="category?start=<%=a%>&end=<%=b%>"><%=i%></a>
-                </li>
-                <%
-                    }
-                %>
-            </ul>
-        </form>
+                            <c:forEach var="cate" items="${requestScope.list}">
+                                <tr>
+                                    <td>${cate.getId()}</td>
+                                    <td>${cate.getName()}</td>
+                                    <td><a href="#">Edit</a></td>
+                                </tr>
+                            </c:forEach>
+
+                    </table>
+                </div>
+
+            </div>
+        </div> 
+
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </body>

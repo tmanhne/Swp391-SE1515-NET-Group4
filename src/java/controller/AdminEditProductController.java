@@ -68,7 +68,20 @@ public class AdminEditProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        BooksDAO db = new BooksDAO();
+
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        String pName = request.getParameter("productName");
+        String pDes = request.getParameter("description");
+        Float uPrice = Float.parseFloat(request.getParameter("unitPrice"));
+        int uInStock = Integer.parseInt(request.getParameter("unitInStock"));
+        boolean isContinues = request.getParameter("unitInStock").equals("Yes") ? true : false;
+
+        Book b = new Book(productId, pName, pDes, uPrice, uInStock, isContinues);
+        db.updateBook(b);
+        request.getRequestDispatcher("view/HomePageForAdmin.jsp").forward(request, response);
+
     }
 
     /**

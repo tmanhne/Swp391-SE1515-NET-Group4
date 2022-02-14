@@ -38,7 +38,7 @@ public class BooksDAO extends DBConnection {
         String sql = "SELECT *\n "
                 + "FROM\n "
                 + "Products\n ";
-
+        
         try {
             //open connection
             con = super.open();
@@ -57,18 +57,20 @@ public class BooksDAO extends DBConnection {
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
                 book.setUnitInStock(rs.getInt("UnitInStock"));
+                book.setIsContinues(rs.getBoolean("IsContinue"));
+                book.setRatting(rs.getInt("Ratting"));
                 // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close connection
             super.close(con, ps, rs);
         }
-
+        
         return books;
     }
 
@@ -87,7 +89,7 @@ public class BooksDAO extends DBConnection {
         String sql = "select top 3 *\n"
                 + "from Products\n"
                 + "order by UnitInStock desc";
-
+        
         try {
             //open connection
             con = super.open();
@@ -110,14 +112,14 @@ public class BooksDAO extends DBConnection {
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close connection
             super.close(con, ps, rs);
         }
-
+        
         return books;
     }
 
@@ -135,7 +137,7 @@ public class BooksDAO extends DBConnection {
         String sql = "select top 2 *\n"
                 + "from Products\n"
                 + "order by UnitPrice desc";
-
+        
         try {
             //open connection
             con = super.open();
@@ -158,14 +160,14 @@ public class BooksDAO extends DBConnection {
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close connection
             super.close(con, ps, rs);
         }
-
+        
         return books;
     }
 
@@ -182,7 +184,7 @@ public class BooksDAO extends DBConnection {
         AuthorsDAO au;
         ArrayList<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM Products WHERE ProductName LIKE ? ";
-
+        
         try {
             //open connection
             con = super.open();
@@ -206,17 +208,17 @@ public class BooksDAO extends DBConnection {
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close connection
             super.close(con, ps, rs);
         }
-
+        
         return books;
     }
-
+    
     public Book getBookById(int pid) {
         Connection con = null;
         PreparedStatement ps = null;
@@ -234,7 +236,7 @@ public class BooksDAO extends DBConnection {
             au = new AuthorsDAO();
             //assign data to books
             while (rs.next()) {
-
+                
                 book.setProductID(rs.getInt("ProductID"));
                 book.setProductName(rs.getString("ProductName"));
                 book.setPathImage(rs.getString("ImagePath"));
@@ -243,19 +245,56 @@ public class BooksDAO extends DBConnection {
 
                 // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
-
+                
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close connection
             super.close(con, ps, rs);
         }
-
+        
         return book;
     }
-
+    
+    public int updateBook(Book book) {
+        int result = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        AuthorsDAO au = new AuthorsDAO();
+        
+        String sql = " UPDATE [dbo].[Products] "
+                + "   SET [ProductName] = ? , "
+                + "      ,[Description] = ? , "
+                + "      ,[UnitPrice] = ? , "
+                + "      ,[UnitInStock] = ? , "
+                + "      ,[UnitInStock] = ? , "
+                + "      ,[IsContinue] = ? , "
+                + " WHERE [ProductID] = ? ";
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            
+            ps.setString(1, book.getProductName());
+            ps.setString(2, book.getDescription());
+            ps.setDouble(3, book.getUnitPrice());
+            ps.setInt(4, book.getUnitInStock());
+            ps.setBoolean(5, book.isIsContinues());
+            ps.setInt(6, book.getProductID());
+//            ps.setString(result, au.getAuthorsByBookId(book.getProductID()));
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return result;
+    }
+    
     public List<Book> getBookByPage(List<Book> fullList, int start, int end) {
         List<Book> pageList = new ArrayList<>();
         for (int i = start; i < end; i++) {

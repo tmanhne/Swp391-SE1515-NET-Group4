@@ -16,62 +16,55 @@
         <jsp:include page="headerAdmin.jsp"></jsp:include>
             <form action="AdminEditProduct" method="post">
                 <div id="admin-main-content">
-                    <div class="admin-manager">
-                        <div class="list-manager">
-                            <a href="#">Manager Products</a>
-                        </div>
-                        <div class="list-manager">
-                            <a href="#">Manager Bills</a>
-                        </div>
-                        <div class="list-manager">
-                            <a href="AddCategory.jsp">Add New Product</a>
-                        </div>
-                    </div>
+                <jsp:include page="leftMenuAdmin.jsp"></jsp:include>
                     <div class="admin-manager-detail">
                         <div class="header-main">
                             <p>The List of Products</p>
                         </div>
                         <div class="table-listProduct">
-                            <table>
-                                <tr>             
-                                    <th>BookID</th>
-                                    <th>BookName</th>
-                                    <th>Description</th>
-                                    <th>Unit Price</th>
-                                    <th>UnitInStock</th>
-                                    <th>Author</th>
-                                    <th>IsContinue</th>
-                                    <th>Edit</th>
-
-                                </tr>
-
-                                <tr>
-                                <td>
-                                        <h5>${book.getProductID()}</h5>
-                                </td>
-                                <td> 
-                                    <input type="text" name="id" value="${book.getProductName()}" readonly>
-                                </td>                 
-                                <td>
-                                    <input type="text" name="id" value="${book.getDescription()}" readonly>
-
-                                </td>
-                                <td>
-                                    <input type="text" name="id" value="${book.getUnitPrice()}" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" name="id" value="${book.getUnitInStock()}" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" name="id" value="${book.getAuthors()}" readonly>
-                                </td>                   
-                                <td>
-                                    <input type="text" name="id" value="${book.isIsContinues()}" readonly>
-                                </td>
-                                <td><a href="#">Save</a></td>
-                            </tr>
-
-                        </table>
+                            <div class="divTable">
+                                <div class="divTableBody">
+                                    <div class="divTableRow">
+                                        <div class="divTableCell">BookID</div>
+                                        <div class="divTableCell">
+                                            <input type="text" class="form-control" name="productId" value="${book.getProductID()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">BookName</div>
+                                    <div class="divTableCell"><input type="text" name="productName" value="${book.getProductName()}" ></div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">Description</div>
+                                    <div class="divTableCell"><input type="text" name="description" value="${book.getDescription()}" ></div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">Unit Price</div>
+                                    <div class="divTableCell">
+                                        <input type="text" name="unitPrice" value="${book.getUnitPrice()}" >
+                                    </div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">UnitInStock</div>
+                                    <div class="divTableCell"><input type="text" name="unitInStock" value="${book.getUnitInStock()}" ></div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">Author</div>
+                                    <div class="divTableCell"> <input type="text" name="author" value="${book.getAuthors()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">IsContinue</div>
+                                    <div class="divTableCell"><input type="text" name="isContinues" value="${book.isIsContinues()}" ></div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">
+                                        <input style="color: #74BA43" type="submit" value="Submit" name="submit">
+                                    </div>
+                                    <div class="divTableCell" style="color: blue">Message Edit</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

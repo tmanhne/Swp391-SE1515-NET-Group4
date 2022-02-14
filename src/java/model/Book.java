@@ -21,6 +21,28 @@ public class Book {
     private String Description;
     private float UnitPrice;
     private int UnitInStock;
+    private int Ratting;
+    private String CategoryID;
+
+    public Book(int productId, String pName, String pDes, float uPrice, int uInStock, boolean continues) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public int getRatting() {
+        return Ratting;
+    }
+
+    public void setRatting(int Ratting) {
+        this.Ratting = Ratting;
+    }
+
+    public String getCategoryID() {
+        return CategoryID;
+    }
+
+    public void setCategoryID(String CategoryID) {
+        this.CategoryID = CategoryID;
+    }
 
     private boolean isContinues;
 

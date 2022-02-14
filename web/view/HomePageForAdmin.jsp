@@ -40,37 +40,27 @@
 
 
         <div id="admin-main-content">
-            <div class="admin-manager">
-                <div class="list-manager">
-                    <a href="#">Manager Products</a>
-                </div>
-                <div class="list-manager">
-                    <a href="#">Manager Bills</a>
-                </div>
-                <div class="list-manager">
-                    <a href="#">Add New Product</a>
-                </div>
-            </div>
-            <div class="admin-manager-detail">
-                <div class="header-main">
-                    <p>The List of Products</p>
-                </div>
-                <div class="table-listProduct">
-                    <table>
-                        <tr>             
-                            <th>BookID</th>
-                            <th>BookName</th>
-                            <th>Description</th>
-                            <th>Unit Price</th>
-                            <th>UnitInStock</th>
-                            <th>Author</th>
-                            <th>IsContinue</th>
-                            <th>Edit</th>
+            <jsp:include page="leftMenuAdmin.jsp"></jsp:include>
+                <div class="admin-manager-detail">
+                    <div class="header-main">
+                        <p>The List of Products</p>
+                    </div>
+                    <div class="table-listProduct">
+                        <table>
+                            <tr>             
+                                <th>BookID</th>
+                                <th>BookName</th>
+                                <th>Description</th>
+                                <th>Unit Price</th>
+                                <th>UnitInStock</th>
+                                <th>Author</th>
+                                <th>IsContinue</th>
+                                <th>View</th>
+                                <th>Edit</th>
 
-                        </tr>
+                            </tr>
                         <%
                             for (Book p : pageList) {
-
                         %>
 
                         <tr>
@@ -81,6 +71,7 @@
                             <td><%=p.getUnitInStock()%></td>
                             <td><%=p.getAuthors()%></td>                   
                             <td><%=p.isIsContinues()%></td>
+                            <td><a href="#">View</a></td>
                             <td><a href="AdminEditProduct?pid=<%=p.getProductID()%>">Edit</a></td>
                         </tr>
                         <%

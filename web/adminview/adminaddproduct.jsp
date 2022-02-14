@@ -36,12 +36,12 @@
         <div style="margin: 20px 20px;">
             <form action="adminAddProduct" method="post">
                 <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="name" value="" required>
+                    <label>Product ID </label>
+                    <input type="text" class="form-control" name="id" value="" required>
                 </div>
                 <div class="form-group">
-                    <label>Price</label>
-                    <input type="number" class="form-control" name="price" value="" required>
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" value="" required>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
@@ -49,58 +49,30 @@
                 </div>
                 <div class="form-group">
                     <label>Quantity Stock</label>
-                    <input type="number" class="form-control" name="quantity_stock" value="" required>
+                    <input type="number" class="form-control" name="unitPrice" value="" required>
                 </div>
                 <div class="form-group">
                     <label>Operating System</label>
-                    <input type="text" class="form-control" name="operating_system" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Display Resolution</label>
-                    <input type="text" class="form-control" name="display_resolution" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Processor</label>
-                    <input type="text" class="form-control" name="processor" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Processor Technology</label>
-                    <input type="text" class="form-control" name="processor_technology" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Graphics</label>
-                    <input type="text" class="form-control" name="graphics" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Memory</label>
-                    <input type="text" class="form-control" name="memory" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Hard Drive</label>
-                    <input type="text" class="form-control" name="hard_drive" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Wireless</label>
-                    <input type="text" class="form-control" name="wireless" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Power Supply</label>
-                    <input type="text" class="form-control" name="power_supply" value="" required>
-                </div>
-                <div class="form-group">
-                    <label>Battery</label>
-                    <input type="text" class="form-control" name="battery" value="" required>
+                    <input type="number" class="form-control" name="unitInStock" value="" required>
                 </div>
                 <div class="form-group">
                     <label>Category</label>
-                    <select class="form-control" name="cateid">
-                        <c:forEach var="o" items="${requestScope.categories}">
-                            <option value="${o.cid}">${o.name}</option>
-                        </c:forEach>
+                    <select class="form-control" name="isContinue">
+                    <option value = "1" >Yes</option>
+                    <option value = "0" >No</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Image</label>
+                    <label>Category</label>
+                    <select class="form-control" name="categoryID">
+                        <c:forEach var="o" items="${requestScope.categories}">
+                            <option value="${o.categoryID}">${o.categoryName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                 <div class="form-group">
+                    <label>Image Path</label>
+                    <!--<input type="text" name="description" />-->
                     <input type="text" class="form-control" name="image" value="" required>
                 </div>
                 <br/>

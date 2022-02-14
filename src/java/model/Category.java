@@ -11,22 +11,22 @@ package model;
  */
 public class Category {
     
-    private int categoryID ; 
+    private String categoryID ; 
     private String categoryName ;
 
     public Category() {
     }
 
-    public Category(int categoryID, String categoryName) {
+    public Category(String categoryID, String categoryName) {
         this.categoryID = categoryID;
         this.categoryName = categoryName;
     }
 
-    public int getCategoryID() {
+    public String getCategoryID() {
         return categoryID;
     }
 
-    public void setCategoryID(int categoryID) {
+    public void setCategoryID(String categoryID) {
         this.categoryID = categoryID;
     }
 
@@ -37,10 +37,6 @@ public class Category {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
-    
-    
 
-   
-    
     
 }

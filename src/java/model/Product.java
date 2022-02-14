@@ -18,8 +18,8 @@ public class Product {
     private String imagePath ;
     private Date createDate ;
     private String description ;
-    private String unitPrice ;
-    private double unitInStock ;
+    private double unitPrice ;
+    private int unitInStock ;
     private boolean isContinue ;
     private int ratting ;
     private String categoryID ;
@@ -27,7 +27,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String productID, String productName, String imagePath, Date createDate, String description, String unitPrice, double unitInStock, boolean isContinue, int ratting, String categoryID) {
+    public Product(String productID, String productName, String imagePath, Date createDate, String description, double unitPrice, int unitInStock, boolean isContinue, int ratting, String categoryID) {
         this.productID = productID;
         this.productName = productName;
         this.imagePath = imagePath;
@@ -80,19 +80,19 @@ public class Product {
         this.description = description;
     }
 
-    public String getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(String unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public double getUnitInStock() {
+    public int getUnitInStock() {
         return unitInStock;
     }
 
-    public void setUnitInStock(double unitInStock) {
+    public void setUnitInStock(int unitInStock) {
         this.unitInStock = unitInStock;
     }
 
@@ -120,6 +120,11 @@ public class Product {
         this.categoryID = categoryID;
     }
 
-   
+    @Override
+    public String toString() {
+        return "Product{" + "productID=" + productID + ", productName=" + productName + ", imagePath=" + imagePath + ", createDate=" + createDate + ", description=" + description + ", unitPrice=" + unitPrice + ", unitInStock=" + unitInStock + ", isContinue=" + isContinue + ", ratting=" + ratting + ", categoryID=" + categoryID + '}';
+    }
+
+    
     
 }

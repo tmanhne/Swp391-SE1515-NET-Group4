@@ -10,7 +10,9 @@ package model;
  * @author phamthithi
  */
 public class Category {
-      private String id, name;
+
+    private String id;
+    private String name;
 
     public Category() {
     }
@@ -35,5 +37,5 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-      
+
 }

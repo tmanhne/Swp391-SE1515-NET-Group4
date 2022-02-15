@@ -70,8 +70,8 @@
                             <td><%=p.getUnitPrice()%></td>
                             <td><%=p.getUnitInStock()%></td>
                             <td><%=p.getAuthors()%></td>                   
-                            <td><%=p.isIsContinues()%></td>
-                            <td><a href="#">View</a></td>
+                            <td><%=p.isIsContinue()%></td>
+                            <td><a href="AdminViewProduct?pid=<%=p.getProductID()%>">View</a></td>
                             <td><a href="AdminEditProduct?pid=<%=p.getProductID()%>">Edit</a></td>
                         </tr>
                         <%

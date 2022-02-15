@@ -1,6 +1,6 @@
 <%-- 
-    Document   : AdminEditProduct
-    Created on : Feb 12, 2022, 10:40:04 AM
+    Document   : AdminViewProduct
+    Created on : Feb 14, 2022, 11:35:14 PM
     Author     : t.manh
 --%>
 
@@ -9,9 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Edit Product</title>
         <link href="./public/style/landingAdmin.css" rel="stylesheet" type="text/css"/>
+        <title>JSP Page</title>
     </head>
+    <body>
     <body>
         <jsp:include page="headerAdmin.jsp"></jsp:include>
             <form action="AdminEditProduct" method="post">
@@ -27,49 +28,50 @@
                                     <div class="divTableRow">
                                         <div class="divTableCell">BookID</div>
                                         <div class="divTableCell">
-                                            <input type="text" class="form-control" name="productId" value="${book.getProductID()}" readonly>
+                                        ${book.getProductID()}
                                     </div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">BookName</div>
-                                    <div class="divTableCell"><input type="text" name="productName" value="${book.getProductName()}" ></div>
+                                    <div class="divTableCell">${book.getProductName()}</div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">Image</div>
+                                    <div class="divTableCell"><img src="${book.getPathImage()}"style="width: 150px;height: 150px;"/></div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">Create Date</div>
+                                    <div class="divTableCell">${book.getCreateDate()}</div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">Description</div>
-                                    <div class="divTableCell"><input type="text" name="description" value="${book.getDescription()}" ></div>
+                                    <div class="divTableCell">${book.getDescription()}</div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">Unit Price</div>
                                     <div class="divTableCell">
-                                        <input type="text" name="unitPrice" value="${book.getUnitPrice()}" >
+                                        ${book.getUnitPrice()}
                                     </div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">UnitInStock</div>
-                                    <div class="divTableCell"><input type="text" name="unitInStock" value="${book.getUnitInStock()}" ></div>
+                                    <div class="divTableCell">${book.getUnitInStock()}</div>
                                 </div>
-                                    <!--                                <div class="divTableRow">
-                                                                        <div class="divTableCell">Author</div>
-                                                                        <div class="divTableCell"> <input type="text" name="author" value="${book.getAuthors()}" readonly>
-                                                                        </div>
-                                                                    </div>-->
+                                <div class="divTableRow">
+                                    <div class="divTableCell">Author</div>
+                                    <div class="divTableCell"> ${book.getAuthors()}
+                                    </div>
+                                </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">IsContinue</div>
-                                    <div class="divTableCell"><input type="text" name="isContinues" value="${book.isIsContinue()}" ></div>
+                                    <div class="divTableCell">${book.isIsContinue()}</div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">Ratting</div>
-                                    <div class="divTableCell"><input type="text" name="ratting" value="${book.getRatting()}" ></div>
+                                    <div class="divTableCell">${book.getRatting()}</div>
                                 </div>
                                 <div class="divTableRow">
-                                    <div class="divTableCell">
-                                        <input style="color: #74BA43" type="submit" value="Submit" name="submit">
-                                    </div>
-                                    <div class="divTableCell" style="color: blue">
-                                        <p>
-                                            ${requestScope.mess}
-                                        </p>
-                                    </div>
+                                    <a href="homeadmin">Back</a>
                                 </div>
                             </div>
                         </div>
@@ -80,4 +82,5 @@
         </form>
 
     </body>
+</body>
 </html>

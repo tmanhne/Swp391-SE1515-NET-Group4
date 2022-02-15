@@ -14,7 +14,7 @@
     <body>
         <div class="admin-manager">
             <div class="list-manager">
-                <a href="#">Manager Products</a>
+                <a href="homeadmin">Manager Products</a>
             </div>
             <div class="list-manager">
                 <a href="#">Manager Bills</a>

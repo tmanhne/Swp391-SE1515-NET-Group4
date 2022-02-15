@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.BooksDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,16 +13,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.BooksDAO;
-import java.util.ArrayList;
 import model.Book;
 
 /**
  *
  * @author t.manh
  */
-@WebServlet(name = "AdminEditProductController", urlPatterns = {"/AdminEditProduct"})
-public class AdminEditProductController extends HttpServlet {
+@WebServlet(name = "AdminViewProductController", urlPatterns = {"/AdminViewProduct"})
+public class AdminViewProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +33,19 @@ public class AdminEditProductController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AdminViewProductController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AdminViewProductController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,12 +60,11 @@ public class AdminEditProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
         int pid = Integer.parseInt(request.getParameter("pid"));
         BooksDAO db = new BooksDAO();
         Book b = db.getBookById(pid);
         request.setAttribute("book", b);
-        request.getRequestDispatcher("view/AdminEditProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("view/AdminViewProduct.jsp").forward(request, response);
     }
 
     /**
@@ -68,28 +78,7 @@ public class AdminEditProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        BooksDAO db = new BooksDAO();
-
-        int productId = Integer.parseInt(request.getParameter("productId").trim());
-        String pName = request.getParameter("productName").trim();
-        String pDes = request.getParameter("description").trim();
-        float uPrice = Float.parseFloat(request.getParameter("unitPrice").trim());
-        int uInStock = Integer.parseInt(request.getParameter("unitInStock").trim());
-        boolean isContinues = request.getParameter("unitInStock").equals("Yes") ? true : false;
-        int ratting = Integer.parseInt(request.getParameter("ratting").trim());
-        Book b = new Book(productId, pName, pDes, uPrice, uInStock, ratting, isContinues);
-
-        request.setAttribute("book", b);
-        int count = db.updateBook(b);
-        request.setAttribute("mess", count);
-        if (count != 0) {
-            request.setAttribute("mess", "Update success!!");
-        } else {
-            request.setAttribute("mess", "Update fail!!");
-        }
-        request.getRequestDispatcher("view/AdminEditProduct.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**

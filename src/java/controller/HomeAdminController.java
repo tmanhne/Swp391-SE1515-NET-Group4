@@ -65,7 +65,6 @@ public class HomeAdminController extends HttpServlet {
 
         ArrayList<Book> books = new ArrayList<>();
         books = db.getAllBooks();
-
         request.setAttribute("list", books);
 
         request.getRequestDispatcher("view/HomePageForAdmin.jsp").forward(request, response);

@@ -21,36 +21,37 @@ public class Book {
     private String Description;
     private float UnitPrice;
     private int UnitInStock;
-
-    private boolean isContinues;
-
-    public int getUnitInStock() {
-        return UnitInStock;
-    }
-
-    public void setUnitInStock(int UnitInStock) {
-        this.UnitInStock = UnitInStock;
-    }
-
-    public boolean isIsContinues() {
-        return isContinues;
-    }
-
-    public void setIsContinues(boolean isContinues) {
-        this.isContinues = isContinues;
-    }
+    private int Ratting;
+    private String CategoryID;
+    private boolean IsContinue;
     private ArrayList<String> authors;
 
     public Book() {
+
     }
 
-    public Book(int ProductID, String ProductName, String PathImage, String CreateDate, String Description, float UnitPrice, ArrayList<String> authors) {
+    public Book(int ProductID, String ProductName, String Description, float UnitPrice, int UnitInStock, int Ratting, boolean IsContinue) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.Description = Description;
+        this.UnitPrice = UnitPrice;
+        this.UnitInStock = UnitInStock;
+        this.Ratting = Ratting;
+        this.IsContinue = IsContinue;
+
+    }
+
+    public Book(int ProductID, String ProductName, String PathImage, String CreateDate, String Description, float UnitPrice, int UnitInStock, int Ratting, String CategoryID, boolean IsContinue, ArrayList<String> authors) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.PathImage = PathImage;
         this.CreateDate = CreateDate;
         this.Description = Description;
         this.UnitPrice = UnitPrice;
+        this.UnitInStock = UnitInStock;
+        this.Ratting = Ratting;
+        this.CategoryID = CategoryID;
+        this.IsContinue = IsContinue;
         this.authors = authors;
     }
 
@@ -100,6 +101,38 @@ public class Book {
 
     public void setUnitPrice(float UnitPrice) {
         this.UnitPrice = UnitPrice;
+    }
+
+    public int getUnitInStock() {
+        return UnitInStock;
+    }
+
+    public void setUnitInStock(int UnitInStock) {
+        this.UnitInStock = UnitInStock;
+    }
+
+    public int getRatting() {
+        return Ratting;
+    }
+
+    public void setRatting(int Ratting) {
+        this.Ratting = Ratting;
+    }
+
+    public String getCategoryID() {
+        return CategoryID;
+    }
+
+    public void setCategoryID(String CategoryID) {
+        this.CategoryID = CategoryID;
+    }
+
+    public boolean isIsContinue() {
+        return IsContinue;
+    }
+
+    public void setIsContinue(boolean IsContinue) {
+        this.IsContinue = IsContinue;
     }
 
     public ArrayList<String> getAuthors() {

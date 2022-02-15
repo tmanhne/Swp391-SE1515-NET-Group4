@@ -29,7 +29,7 @@ public class DBConnection {
     protected Connection open() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=BooksShopOnline", "sa", "123456a@");
+            return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=BooksShopOnline", "sa", "Anhvu123");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }

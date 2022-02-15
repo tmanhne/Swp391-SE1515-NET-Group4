@@ -7,6 +7,7 @@
 package dao;
 
 import dal.DBConnection;
+import interfaceDAO.IAuthorsDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ import java.sql.Connection;
  * The class contain method to contact with database
  * @author vudm
  */
-public class AuthorsDAO extends DBConnection{
+public class AuthorsDAO extends DBConnection implements IAuthorsDAO{
     
     /**
      * Get author by bookId from database
@@ -27,6 +28,7 @@ public class AuthorsDAO extends DBConnection{
      * @return authors
      */
     
+    @Override
     public ArrayList<String> getAuthorsByBookId(int bookId) {
         Connection con = null;
         PreparedStatement ps = null;

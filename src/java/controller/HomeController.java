@@ -1,7 +1,7 @@
 /*
  * Record of change:
  * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-07      1.0                 VUDM               Interation1
+ * 2022-02-07      1.0                 VUDM               First Implement
  */
 
 package controller;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Book;
 
 /**
- * The class contain method doGet
+ * The class contain method doGet used BooksDAO to get products then forward to LandingPage
  *
  * @author vudm
  */

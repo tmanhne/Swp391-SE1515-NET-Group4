@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,33 +8,36 @@ package model;
 
 /**
  *
- * @author phamthithi
+ * @author Thongchu
  */
 public class Category {
-      private String id, name;
+    
+    private String categoryID ; 
+    private String categoryName ;
 
     public Category() {
     }
 
-    public Category(String id, String name) {
-        this.id = id;
-        this.name = name;
+    public Category(String categoryID, String categoryName) {
+        this.categoryID = categoryID;
+        this.categoryName = categoryName;
     }
 
-    public String getId() {
-        return id;
+    public String getCategoryID() {
+        return categoryID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
-      
+
+    
 }

@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,6 +23,27 @@ import model.Book;
  * @author phamthithi
  */
 public class CategoryDAO extends DBConnection {
+    
+     public List<Category> getAllCategories() {
+        Connection con = super.open();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Category> categories = new ArrayList<>();
+        try {
+            String sql = "select * from Category";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Category category = new Category();
+                category.setCategoryID(rs.getString("CategoryID"));
+                category.setCategoryName(rs.getString("CategoryName"));
+                categories.add(category);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return categories;
+    }
 
     public List<Category> getCategoryByPage(List<Category> fullList, int start, int end) {
         List<Category> pageList = new ArrayList<>();

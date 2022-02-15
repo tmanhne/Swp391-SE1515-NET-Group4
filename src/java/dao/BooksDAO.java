@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Book;
 import dal.DBConnection;
+import java.util.List;
 
 /**
  * The class contain method to contact with database
@@ -54,7 +55,7 @@ public class BooksDAO extends DBConnection {
                 book.setPathImage(rs.getString("ImagePath"));
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
-
+                 book.setUnitInStock(rs.getInt("UnitInStock"));
                 // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
@@ -210,5 +211,12 @@ public class BooksDAO extends DBConnection {
         }
 
         return books;
+    }
+     public List<Book> getBookByPage(List<Book> fullList, int start, int end) {
+        List<Book> pageList = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            pageList.add(fullList.get(i));
+        }
+        return pageList;
     }
 }

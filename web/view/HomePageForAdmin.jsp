@@ -100,7 +100,7 @@
                     <td><%=p.getUnitPrice()%></td>
                     <td><%=p.getUnitInStock()%></td>
                     <td><%=p.getAuthors()%></td>                   
-                    <td><%=p.isIsContinues()%></td>
+                    <td><%=p.isIsContinue()%></td>
                     <td><a href="#">Edit</a></td>
                 </tr>
                 <%

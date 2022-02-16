@@ -3,7 +3,6 @@
  * DATE            Version             AUTHOR           DESCRIPTION
  * 2022-02-08      1.0                 VUDM               BooksDAO
  */
-
 package dao;
 
 import java.sql.Connection;
@@ -17,15 +16,18 @@ import model.Book;
 import dal.DBConnection;
 import interfaceDAO.IBooksDAO;
 import java.util.List;
+import model.Product;
 
 /**
  * The class contain method to contact with database
+ *
  * @author vudm
  */
-public class BooksDAO extends DBConnection implements IBooksDAO{
-    
-     /**
+public class BooksDAO extends DBConnection implements IBooksDAO {
+
+    /**
      * Get all products from database
+     *
      * @return ArrayList books
      */
     @Override
@@ -56,7 +58,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO{
                 book.setPathImage(rs.getString("ImagePath"));
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
-                 book.setUnitInStock(rs.getInt("UnitInStock"));
+                book.setUnitInStock(rs.getInt("UnitInStock"));
                 // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
                 books.add(book);
@@ -71,9 +73,10 @@ public class BooksDAO extends DBConnection implements IBooksDAO{
 
         return books;
     }
-    
-      /**
+
+    /**
      * Get top 3 best seller products from database
+     *
      * @param
      * @return ArrayList books
      */
@@ -120,9 +123,10 @@ public class BooksDAO extends DBConnection implements IBooksDAO{
 
         return books;
     }
-    
+
     /**
      * Get top 2 highest price products from database
+     *
      * @return ArrayList books
      */
     @Override
@@ -168,9 +172,10 @@ public class BooksDAO extends DBConnection implements IBooksDAO{
 
         return books;
     }
-    
+
     /**
      * Get all products by name from database
+     *
      * @param name was searching name
      * @return ArrayList books
      */
@@ -216,15 +221,16 @@ public class BooksDAO extends DBConnection implements IBooksDAO{
 
         return books;
     }
-     public List<Book> getBookByPage(List<Book> fullList, int start, int end) {
+
+    public List<Book> getBookByPage(List<Book> fullList, int start, int end) {
         List<Book> pageList = new ArrayList<>();
         for (int i = start; i < end; i++) {
             pageList.add(fullList.get(i));
         }
         return pageList;
     }
-     
-     public Book getBookById(int pid) {
+
+    public Book getBookById(int pid) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -240,7 +246,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO{
             //initialize AuthorsDAO object
             au = new AuthorsDAO();
             //assign data to books
-            while (rs.next()) {               
+            while (rs.next()) {
                 book.setProductID(rs.getInt("ProductID"));
                 book.setProductName(rs.getString("ProductName"));
                 book.setPathImage(rs.getString("ImagePath"));
@@ -251,52 +257,18 @@ public class BooksDAO extends DBConnection implements IBooksDAO{
                 book.setIsContinue(rs.getBoolean("IsContinue"));
                 book.setRatting(rs.getInt("Ratting"));
                 // get book authors follow ProductID
-                book.setAuthors(au.getAuthorsByBookId(book.getProductID()));               
-            }           
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            //close connection
-            super.close(con, ps, rs);
-        }       
-        return book;
-    }
-     
-     public int updateBook(Book book) {
-        int result = 0;
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sql = " UPDATE [dbo].[Products] "
-                + "   SET [ProductName] = ?  "
-                + "      ,[Description] = ?  "
-                + "      ,[UnitPrice] = ?  "
-                + "      ,[UnitInStock] = ?  "
-                + "      ,[IsContinue] = ?  "
-                + "      ,[Ratting] = ?  "
-                + " WHERE [ProductID] = ? ";
-        try {
-            //open connection
-            con = super.open();
-            ps = con.prepareStatement(sql);            
-            ps.setString(1, book.getProductName());            
-            ps.setString(2, book.getDescription());
-            ps.setDouble(3, book.getUnitPrice());
-            ps.setInt(4, book.getUnitInStock());
-            ps.setBoolean(5, book.isIsContinue());
-            ps.setInt(6, book.getRatting());
-            ps.setInt(7, book.getProductID());
-            result = ps.executeUpdate();
+                book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             //close connection
             super.close(con, ps, rs);
         }
-        return result;
+        return book;
     }
-     
-     public int getTotalProduct() {
+
+    public int getTotalProduct() {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -318,8 +290,8 @@ public class BooksDAO extends DBConnection implements IBooksDAO{
         }
         return 0;
     }
-     
-     public List<Book> pagingProduct(int index) {
+
+    public List<Book> pagingProduct(int index) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

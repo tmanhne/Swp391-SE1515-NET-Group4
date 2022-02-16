@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.BooksDAO;
+import dao.ProductDAO;
 import java.util.ArrayList;
 import model.Book;
+import model.Product;
 
 /**
  *
@@ -54,7 +56,7 @@ public class AdminEditProductController extends HttpServlet {
         BooksDAO db = new BooksDAO();
         Book b = db.getBookById(pid);
         request.setAttribute("book", b);
-        request.getRequestDispatcher("view/AdminEditProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
     }
 
     /**
@@ -69,26 +71,27 @@ public class AdminEditProductController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        BooksDAO db = new BooksDAO();
+        ProductDAO db = new ProductDAO();
 
-        int productId = Integer.parseInt(request.getParameter("productId").trim());
+        String productId = request.getParameter("productId").trim();
         String pName = request.getParameter("productName").trim();
         String pDes = request.getParameter("description").trim();
         float uPrice = Float.parseFloat(request.getParameter("unitPrice").trim());
         int uInStock = Integer.parseInt(request.getParameter("unitInStock").trim());
         boolean isContinues = request.getParameter("unitInStock").equals("Yes") ? true : false;
         int ratting = Integer.parseInt(request.getParameter("ratting").trim());
-        Book b = new Book(productId, pName, pDes, uPrice, uInStock, ratting, isContinues);
-
+//        Product b = new Book(productId, pName, pDes, uPrice, uInStock, ratting, isContinues);
+        Product b = new Product(productId, pName, pDes, uPrice, uInStock, isContinues, ratting);
         request.setAttribute("book", b);
         int count = db.updateBook(b);
+
         request.setAttribute("mess", count);
         if (count != 0) {
             request.setAttribute("mess", "Update success!!");
         } else {
             request.setAttribute("mess", "Update fail!!");
         }
-        request.getRequestDispatcher("view/AdminEditProduct.jsp").forward(request, response);
+        request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
 
     }
 

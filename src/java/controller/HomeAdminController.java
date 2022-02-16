@@ -81,7 +81,7 @@ public class HomeAdminController extends HttpServlet {
         request.setAttribute("listPage", listPage);
 //        request.setAttribute("list", books);
         request.setAttribute("endPage", endPage);
-        request.getRequestDispatcher("view/HomePageForAdmin.jsp").forward(request, response);
+        request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
     }
 
     /**
@@ -108,7 +108,7 @@ public class HomeAdminController extends HttpServlet {
 
         request.setAttribute("listPage", books);
         request.setAttribute("searchname", name);
-        request.getRequestDispatcher("view/HomePageForAdmin.jsp").forward(request, response);
+        request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
     }
 
     /**

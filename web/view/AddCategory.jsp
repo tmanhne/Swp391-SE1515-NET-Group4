@@ -76,15 +76,15 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                   
+
                 </tr>
                 <%
                     String id = "";
                     String name = "";
                     String describe = "";
                     for (Category c : pageList) {
-                        id = c.getId();
-                        name = c.getName();
+                        id = c.getCategoryID();
+                        name = c.getCategoryName();
 
                 %>
                 <tr>

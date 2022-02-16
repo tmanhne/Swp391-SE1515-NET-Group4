@@ -12,9 +12,11 @@ import model.Product;
  * @author Thongchu
  */
 public interface IProductDAO {
-    
-    
+
     public void insertProduct(Product p);
-    
-    
+
+    public int updateBook(Product product);
+
+    public Product getProductById(int pid);
+
 }

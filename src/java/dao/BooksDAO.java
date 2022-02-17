@@ -16,7 +16,6 @@ import model.Book;
 import dal.DBConnection;
 import interfaceDAO.IBooksDAO;
 import java.util.List;
-import model.Product;
 
 /**
  * The class contain method to contact with database

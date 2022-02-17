@@ -100,8 +100,37 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
     }
 
     @Override
-    public Product getProductById(int pid) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Product getProductById(String productID) {
+        Product product = null;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM [dbo].[Products]";
+
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.execute();
+
+            while (rs.next()) {
+                String ProductName = rs.getString("ProductName");
+                String ImagePath = rs.getString("ImagePath");
+                Date CreatedDate = rs.getDate("CreatedDate");
+                String Description = rs.getString("Description");
+                float UnitPrice = rs.getFloat("UnitPrice");
+                int UnitInStock = rs.getInt("UnitInStock");
+                boolean IsContinue = rs.getBoolean("IsContinue");
+                int Ratting = rs.getInt("Ratting");
+                String CategoryID = rs.getString("CategoryID");
+                product = new Product(productID, ProductName, ImagePath, CreatedDate, Description, UnitPrice, UnitInStock, IsContinue, Ratting, CategoryID);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return product;
     }
 
 }

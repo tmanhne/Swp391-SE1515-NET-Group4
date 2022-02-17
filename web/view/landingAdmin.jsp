@@ -17,30 +17,30 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Home Page For Admin</title>
         <link href="./public/style/landingAdmin.css" rel="stylesheet" type="text/css"/>
+        <style>
+          
+        </style>
     </head>
     <body>
-
         <jsp:include page="headerAdmin.jsp"></jsp:include>
-        <%
-            List<Book> list = new ArrayList<Book>();
-            BooksDAO pdao = new BooksDAO();
-            if (request.getAttribute("list") != null) {
-                list = (List<Book>) request.getAttribute("list");
-            } else {
-                list = pdao.getAllBooks();
-            }
-            int start = 0;
-            int end;
-            end = list.size() < 3 ? list.size() : 3;
-            start = request.getParameter("start") != null ? Integer.parseInt(request.getParameter("start")) : start;
-            end = request.getParameter("end") != null ? Integer.parseInt(request.getParameter("end")) : end;
-            List<Book> pageList = new ArrayList<Book>();
-            pageList = pdao.getBookByPage(list, start, end);
-        %>
 
 
-        <div id="admin-main-content">
-            <jsp:include page="leftMenuAdmin.jsp"></jsp:include>
+
+            <div id="admin-main-content">
+                <div class="admin-manager">
+                    <div class="list-manager">
+                        <a href="#">Manager Products</a>
+                    </div>
+                    <div class="list-manager">
+                        <a href="#">Manager Bills</a>
+                    </div>
+                    <div class="list-manager">
+                        <a href="#">Add New Product</a>
+                    </div>
+                    <div class="list-manager">
+                        <a href="category">Category</a>
+                    </div>
+                </div>
                 <div class="admin-manager-detail">
                     <div class="header-main">
                         <p>The List of Products</p>
@@ -52,63 +52,36 @@
                                 <th>BookName</th>
                                 <th>Description</th>
                                 <th>Unit Price</th>
-                                <th>UnitInStock</th>
-                                <th>Author</th>
+                                <th>UnitInStock</th>                     
                                 <th>IsContinue</th>
-                                <th>View</th>
+                                <th>Add</th>
                                 <th>Edit</th>
-                                <th>Delete</th>
-
+                                 <td><a href="#">Delete</a></td>
                             </tr>
-                        <%
-                            for (Book p : pageList) {
-                        %>
-
-                        <tr>
-                            <td><%=p.getProductID()%></td>
-                            <td><%=p.getProductName()%></td>                 
-                            <td><%=p.getDescription()%></td>
-                            <td><%=p.getUnitPrice()%></td>
-                            <td><%=p.getUnitInStock()%></td>
-                            <td><%=p.getAuthors()%></td>                   
-                            <td><%=p.isIsContinue()%></td>
-                            <td><a href="AdminViewProduct?pid=<%=p.getProductID()%>">View</a></td>
-                            <td><a href="AdminEditProduct?pid=<%=p.getProductID()%>">Edit</a></td>
-                            <td><a href="#">Delete</a></td>
-                        </tr>
-                        <%
-                            }
-                        %>
+                        <c:forEach var="product" items="${requestScope.listPage}">
+                            <tr>
+                                <td>${product.getProductID()}</td>
+                                <td>${product.getProductName()}</td>
+                                <td>${product.getDescription()}</td>
+                                <td>${product.getUnitPrice()}</td>
+                                <td>${product.getUnitInStock()}</td>
+                                <%--  <td><img src="${product.getPathImage()}"style="width: 100%"/></td>--%> 
+                                <td>${product.isIsContinue()}</td>
+                                <td><a>Add</a></td>
+                                <td><a href="AdminEditProduct?pid=${product.getProductID()}">Edit</a></td>
+                                 <td><a href="#">Delete</a></td>
+                            </tr>
+                        </c:forEach>
                     </table>
                 </div>
                 <div class="pagination-page">
-                    <ul>
-                        <%
-                            //navigation
-                            //start ->a; end->b
-                            int a, b;
-                            int numOfPage = list.size() / 3;
-                            if ((numOfPage * 3) < list.size()) {
-                                numOfPage++;
-                            }
-                            for (int i = 1; i <= numOfPage; i++) {
-                                a = (i - 1) * 3;
-                                b = i * 3;
-                                if (b > list.size()) {
-                                    b = list.size();
-                                }
-                        %>
-                        <li class="pagination">
-                            <a href="homeadmin?start=<%=a%>&end=<%=b%>"><%=i%></a>
-                        </li>
-                        <%
-                            }
-                        %>
-                    </ul>   
+                    <c:forEach begin="1"end="${endPage}"var="i">
+                        <a href="homeadmin?index=${i}">${i}</a>
+                    </c:forEach>
                 </div>
             </div>
         </div>
-
+        <jsp:include page="footer.jsp"></jsp:include>
 
     </body>
 </html>

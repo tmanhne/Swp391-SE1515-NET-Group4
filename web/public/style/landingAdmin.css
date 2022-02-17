@@ -115,27 +115,7 @@ th {
 .divTableBody {
     display: table-row-group;
 }
-.pagination {
-    display: inline-block;
-    border: 1px solid black; 
-}
 
-.pagination a {
-    float: left;
-
-    text-decoration: none;
-
-    padding: 8px 16px;
-}
-
-.pagination a:active {
-    background-color: #4caf50;
-    color: white;
-}
-
-.pagination a:hover {
-    background-color: chocolate;
-}
 .mess{
     display: flex;
 }
@@ -154,4 +134,25 @@ th {
     border-radius: 6px;
     font-weight: bold;
     font-size: 16px;
+}
+.pagination-page {
+    display: inline-block;
+
+}
+
+.pagination-page a {
+    float: left;
+
+    text-decoration: none;
+
+    padding: 8px 16px;
+}
+
+.pagination-page a:active {
+    background-color: #4caf50;
+    color: white;
+}
+
+.pagination-page a:hover {
+    background-color: chocolate;
 }

@@ -27,7 +27,7 @@ public class AddToCartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("home");
+        request.getRequestDispatcher("").forward(request, response);
     }
 
     @Override
@@ -43,8 +43,11 @@ public class AddToCartController extends HttpServlet {
         Cookie[] cookies = request.getCookies();
 
         Cookie cookie = editCart(cookies, id);
-        response.addCookie(cookie);
-        request.getRequestDispatcher("" + id).forward(request, response);
+        if (null != cookie) {
+            response.addCookie(cookie);
+        }
+        request.setAttribute("bookid", id);
+        request.getRequestDispatcher("").forward(request, response);
     }
 
     private Cookie editCart(Cookie[] cookie, String productID) {
@@ -54,19 +57,20 @@ public class AddToCartController extends HttpServlet {
         if (null != cookie) {
             for (Cookie cookie1 : cookie) {
                 //if cart cookie exist
-                if (cookie1.getName() == CART_NAME_COOKIE) {
+                if (cookie1.getName().equals(CART_NAME_COOKIE)) {
                     cartCookie = cookie1;
                     break;
                 }
             }
         }
 
-        if (null != cartCookie) {
-            cartValue = cartCookie.getValue();
+        if (null == cartCookie) {
+            cartCookie = new Cookie(CART_NAME_COOKIE, cartValue);
         }
-
+        
+        cartValue = cartCookie.getValue();
         cartValue = updateCartValue(cartValue, productID);
-        cartCookie = new Cookie(CART_NAME_COOKIE, cartValue);
+        cartCookie.setValue(cartValue);
         cartCookie.setMaxAge(60 * 60 * 24 * 7);
         return cartCookie;
     }

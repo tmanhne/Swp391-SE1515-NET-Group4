@@ -99,4 +99,41 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         return null;
     }
 
+    /**
+     * Get account by username
+     *
+     * @param username is the user account name
+     * @return account
+     */
+    public Account getAccount(String username) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        Account account = new Account();
+        String sql = "SELECT * FROM Accounts WHERE Username = ?";
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+
+            //assign data to books
+            while (rs.next()) {
+                account.setUserName(rs.getString("userName"));
+                account.setPassword(rs.getString("password"));
+                account.setEmail(rs.getString("email"));
+                account.setPhone(rs.getString("phone"));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return account;
+    }
+
 }

@@ -5,6 +5,7 @@
  */
 package controller;
 
+import Validate.Validate;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -51,12 +52,12 @@ public class AdminEditProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
         int pid = Integer.parseInt(request.getParameter("pid"));
         BooksDAO db = new BooksDAO();
         Book b = db.getBookById(pid);
         request.setAttribute("book", b);
         request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
+//        request.getRequestDispatcher("adminview/adminViewProduct.jsp").forward(request, response);
     }
 
     /**
@@ -70,29 +71,63 @@ public class AdminEditProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ProductDAO db = new ProductDAO();
-
-        String productId = request.getParameter("productId").trim();
-        String pName = request.getParameter("productName").trim();
-        String pDes = request.getParameter("description").trim();
-        float uPrice = Float.parseFloat(request.getParameter("unitPrice").trim());
-        int uInStock = Integer.parseInt(request.getParameter("unitInStock").trim());
-        boolean isContinues = request.getParameter("unitInStock").equals("Yes") ? true : false;
-        int ratting = Integer.parseInt(request.getParameter("ratting").trim());
+        try {
+            String productId = request.getParameter("productId");
+            String pName = request.getParameter("productName");
+            String pDes = request.getParameter("description");
+            String uPrice = request.getParameter("unitPrice");
+            String uInStock = request.getParameter("unitInStock");
+            boolean isContinues = Boolean.parseBoolean(request.getParameter("isContinue"));
+            String ratting = request.getParameter("ratting").trim();
 //        Product b = new Book(productId, pName, pDes, uPrice, uInStock, ratting, isContinues);
-        Product b = new Product(productId, pName, pDes, uPrice, uInStock, isContinues, ratting);
-        request.setAttribute("book", b);
-        int count = db.updateBook(b);
 
-        request.setAttribute("mess", count);
-        if (count != 0) {
-            request.setAttribute("mess", "Update success!!");
-        } else {
-            request.setAttribute("mess", "Update fail!!");
+            Validate validate = new Validate();
+            boolean checkValidate = false;
+            // validate name of product
+            if (!validate.checkName(pName)) {
+                request.setAttribute("pName", "Name is wrong");
+                checkValidate = true;
+            }
+            // validate description of product 
+            if (!validate.checkName(pDes)) {
+                request.setAttribute("pDes", "Your Description product is wrong");
+                checkValidate = true;
+            }
+            // validate price of product
+            if (!validate.checkPrice(uPrice)) {
+                request.setAttribute("uPrice", "Your price product is wrong");
+                checkValidate = true;
+            }
+            // validate unit int stock of product 
+            if (!validate.checkUnitInStock(uInStock)) {
+                request.setAttribute("unitInStockPara", "Your Unit in stock is wrong");
+                checkValidate = true;
+            }
+            // if all parameters is true 
+            double unitInPrice = Double.parseDouble(uPrice);
+            int unitInStock = Integer.parseInt(uInStock);
+            int uratting = Integer.parseInt(ratting);
+            Product b = new Product(productId, pName, pDes, unitInPrice, unitInStock, isContinues, uratting);
+            // update to database
+            System.out.println("product " + b.toString());
+            ProductDAO db = new ProductDAO();
+            request.setAttribute("book", b);
+            if (checkValidate) {
+                request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
+                return;
+            }
+            int count = db.updateBook(b);
+            request.setAttribute("mess", count);
+            if (count != 0) {
+                request.setAttribute("mess", "Update success!!");
+            } else {
+                request.setAttribute("mess", "Update fail!!");
+            }
+            request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
+        } catch (Exception e) {
+            System.out.println("error " + e);
         }
-        request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
-
+//        request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
     }
 
     /**

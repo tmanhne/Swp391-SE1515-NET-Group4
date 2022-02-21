@@ -102,16 +102,6 @@ th {
     display: table-cell;
     padding: 10px 10px;
 }
-/*.divTableHeading {
-    background-color: #eee;
-    display: table-header-group;
-    font-weight: bold;
-}*/
-/*.divTableFoot {
-    background-color: #eee;
-    display: table-footer-group;
-    font-weight: bold;
-}*/
 .divTableBody {
     display: table-row-group;
 }
@@ -154,4 +144,12 @@ th {
     border-radius: 6px;
     font-weight: bold;
     font-size: 16px;
+}
+.backPage{
+    padding: 10px;
+    display: flex;
+}
+.backPage a{
+    font-size: 16px;
+    margin: 0 auto;
 }

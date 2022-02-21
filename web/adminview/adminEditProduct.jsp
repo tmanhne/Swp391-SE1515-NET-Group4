@@ -33,35 +33,46 @@
                                 <div class="divTableRow">
                                     <div class="divTableCell">BookID</div>
                                     <div class="divTableCell">
-                                        <input type="text" class="form-control" name="productId" value="${book.getProductID()}" readonly>
+                                        <input type="text" class="form-control" name="productId" value="${requestScope.book.getProductID()}" readonly>
+
                                     </div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">BookName</div>
-                                    <div class="divTableCell"><input type="text" name="productName" value="${book.getProductName()}" ></div>
+                                    <div class="divTableCell"><input type="text" name="productName" value="${requestScope.book.getProductName()}" ></div>
+                                    <p>${requestScope.pName}</p>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">Description</div>
-                                    <div class="divTableCell"><input type="text" name="description" value="${book.getDescription()}" ></div>
+                                    <div class="divTableCell"><input type="text" name="description" value="${requestScope.book.getDescription()}" ></div>
+                                    <p>${requestScope.pDes}</p>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">Unit Price</div>
                                     <div class="divTableCell">
-                                        <input type="text" name="unitPrice" value="${book.getUnitPrice()}" >
+                                        <input type="text" name="unitPrice" value="${requestScope.book.getUnitPrice()}" >
+                                        <br>
+                                        <p>${requestScope.uPrice}</p>
                                     </div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">UnitInStock</div>
-                                    <div class="divTableCell"><input type="text" name="unitInStock" value="${book.getUnitInStock()}" ></div>
+                                    <div class="divTableCell"><input type="text" name="unitInStock" value="${requestScope.book.getUnitInStock()}" >
+                                        <p>${requestScope.unitInStockPara}</p>
+                                    </div>
                                 </div>
 
                                 <div class="divTableRow">
                                     <div class="divTableCell">IsContinue</div>
-                                    <div class="divTableCell"><input type="text" name="isContinues" value="${book.isIsContinue()}" ></div>
+                                    <div class="divTableCell">
+                                        <input type="radio"  name="isContinue" value="Yes" checked>Yes
+                                        <input type="radio"  name="isContinue" value="No">No
+                                    </div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">Ratting</div>
-                                    <div class="divTableCell"><input type="text" name="ratting" value="${book.getRatting()}" ></div>
+                                    <div class="divTableCell"><input type="text" name="ratting" value="${requestScope.book.getRatting()}" >
+                                        <p>${requestScope.pName}</p></div>
                                 </div>                             
                             </div>
                         </div>

@@ -14,13 +14,13 @@
     </head>
     <body>
         <jsp:include page="../view/headerAdmin.jsp"></jsp:include>
-            <form action="AdminEditProduct" method="post">
+            <form action="AdminViewProduct" method="post">
                 <div id="admin-main-content">
                 <jsp:include page="../view/leftMenuAdmin.jsp"></jsp:include>
                     <div class="admin-manager-detail">
                         <div class="header-main">
                             <p>The List of Products</p>
-                        </div>
+                        </div>                    
                         <div class="table-listProduct">
                             <div class="divTable">
                                 <div class="divTableBody">
@@ -69,13 +69,12 @@
                                     <div class="divTableCell">Ratting</div>
                                     <div class="divTableCell">${book.getRatting()}</div>
                                 </div>
-                                <div class="divTableRow">
-                                    <a href="homeadmin">Back</a>
-                                </div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="backPage">
+                        <a href="homeadmin">Back</a>
+                    </div>
                 </div>
             </div> 
         </form>

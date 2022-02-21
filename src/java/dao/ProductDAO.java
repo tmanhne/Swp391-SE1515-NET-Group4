@@ -61,6 +61,9 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
         }
     }
 
@@ -101,7 +104,42 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     @Override
     public Product getProductById(int pid) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        AuthorsDAO au;
+        Product book = new Product();
+        String sql = "SELECT * FROM dbo.Products WHERE ProductID = ?";
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, pid);
+            rs = ps.executeQuery();
+            //initialize AuthorsDAO object
+            au = new AuthorsDAO();
+            //assign data to books
+            while (rs.next()) {
+                book.setProductID(rs.getString("ProductID"));
+                book.setProductName(rs.getString("ProductName"));
+                book.setImagePath(rs.getString("ImagePath"));
+                book.setCreateDate(rs.getDate("CreatedDate"));
+                book.setDescription(rs.getString("Description"));
+                book.setUnitPrice(rs.getFloat("UnitPrice"));
+                book.setUnitInStock(rs.getInt("UnitInStock"));
+                book.setIsContinue(rs.getBoolean("IsContinue"));
+                book.setRatting(rs.getInt("Ratting"));
+                // get book authors follow ProductID
+//                book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return book;
+
     }
 
 }

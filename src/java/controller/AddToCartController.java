@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2022-02-21      1.0                 VUDM               Sencond Implement
  */
 package controller;
 
@@ -17,24 +17,43 @@ import model.Product;
 
 /**
  *
- * @author Hfyl
+ * @author vudm
  */
 @WebServlet(name = "AddToCartController", urlPatterns = {"/AddToCart"})
 public class AddToCartController extends HttpServlet {
 
     private final String CART_NAME_COOKIE = "Carts";
+        /**
+     * Processes requests for both HTTP <code>GET</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("").forward(request, response);
+        request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
     }
+    
+        /**
+     * Processes requests for both HTTP <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO bd = new ProductDAO();
-        String id = request.getParameter("Pid");
+        String id = request.getParameter("id");
         Product product = bd.getProductById(id);
         if (null == product) {
             //response.sendRedirect(""); error page
@@ -47,7 +66,7 @@ public class AddToCartController extends HttpServlet {
             response.addCookie(cookie);
         }
         request.setAttribute("bookid", id);
-        request.getRequestDispatcher("").forward(request, response);
+        response.sendRedirect("../Swp391-SE1515-NET-Group4/home");
     }
 
     private Cookie editCart(Cookie[] cookie, String productID) {

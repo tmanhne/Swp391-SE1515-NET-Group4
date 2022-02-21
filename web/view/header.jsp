@@ -42,17 +42,17 @@
                     </form>  
                 </div>
 
-                <div id="header-right">
-                    <c:if test="${sessionScope.account.username==null}">
-                        <a href="/BookStore/register">Register</a>
-                        <a href="/BookStore/login">Login</a>
-                    </c:if>
-                    <c:if test="${sessionScope.account.username!=null}">
-                        <a href="/BookStore/logout">Logout</a>
-                        <a href="#" class="account">${sessionScope.account.username}</a>
-                        <a href="/BookStore/update">update</a>
-                    </c:if>
-                    <a href="/BookStore/cart"><span class="glyphicon glyphicon-shopping-cart" style="padding: 0px 10px;"></span></a>
+                 <div id="header-right">
+                    
+                    <% if (session.getAttribute("account") == null) { %>
+                            <a href="/FinalAssignment/register">Register</a>
+                            <a href="Login">Login</a>
+                        <% } else {%>
+                            <a href="/FinalAssignment/logout">Logout</a>
+                            <a href="#" class="account">${sessionScope.Username}</a>
+                            <a href="/FinalAssignment/update">update</a>
+                        <% } %>
+                    <a href="cart"><span class="glyphicon glyphicon-shopping-cart" style="padding: 0px 10px;"></span></a>
                 </div>
             </div>
         </div>

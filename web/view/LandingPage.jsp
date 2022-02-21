@@ -38,7 +38,7 @@
                                     </div>
                                 </div> 
                                 <div class="book-container-footer">
-                                    <form action="/BookStore/cart" method="POST">
+                                    <form action="AddToCart" method="POST">
                                         <input type="hidden" value="${book.getProductID()}" name="id">
                                         <input type="submit" value="Buy" class="form-button">
                                     </form>
@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="buy-section">
-                                    <form action="/FinalAssignment/cart" method="POST" class="button-container">
+                                    <form action="AddToCart" method="POST" class="button-container">
                                         <input type="hidden" value="${book.getProductID()}" name="id" >
                                         <input type="submit" value="Buy" class="form-button">
                                     </form>
@@ -87,7 +87,7 @@
                                     </div>
                                 </div>
                                 <div class="buy-section">
-                                    <form action="/FinalAssignment/cart" method="POST" class="button-container">
+                                    <form action="AddToCart" method="POST" class="button-container">
                                         <input type="hidden" value="${book.getProductID()}" name="id" >
                                         <input type="submit" value="Buy" class="form-button">
                                     </form>

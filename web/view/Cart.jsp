@@ -46,7 +46,7 @@
         </form>
 
         <div>Thành tiền</div>
-        <form name="buy" action="buy" method="POST">
+        <form name="buy" action="cart" method="POST">
             <ul>
                 <li><strong>Tổng tiền hàng</strong><strong>${totalAmount}</strong></li>
                 <li><strong>Phí vận chuyển</strong><strong>${ship}</strong></li>

@@ -23,14 +23,15 @@ import model.Book;
  * @author phamthithi
  */
 public class CategoryDAO extends DBConnection {
-    
-     public List<Category> getAllCategories() {
-        Connection con = super.open();
+
+    public List<Category> getAllCategories() {
+        Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Category> categories = new ArrayList<>();
         try {
             String sql = "select * from Category";
+            con = super.open();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {

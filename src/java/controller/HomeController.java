@@ -52,3 +52,4 @@ public class HomeController extends HttpServlet {
         request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
     }
 }
+ 

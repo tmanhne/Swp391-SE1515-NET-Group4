@@ -5,6 +5,7 @@
  */
 package interfaceDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 
@@ -13,5 +14,8 @@ import model.Category;
  * @author Thongchu
  */
 public interface ICategoryDAO {
+
     public List<Category> getAllCategories();
+
+    public ArrayList<Category> getCategory();
 }

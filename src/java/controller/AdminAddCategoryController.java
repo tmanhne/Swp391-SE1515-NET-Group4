@@ -5,23 +5,20 @@
  */
 package controller;
 
-import dao.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Category;
 
 /**
  *
- * @author phamthithi
+ * @author t.manh
  */
-@WebServlet(name = "CategoryController", urlPatterns = {"/category"})
-public class CategoryController extends HttpServlet {
+@WebServlet(name = "AdminAddCategoryController", urlPatterns = {"/AdminAddCategory"})
+public class AdminAddCategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class CategoryController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CategoryController</title>");            
+            out.println("<title>Servlet AdminAddCategoryController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CategoryController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminAddCategoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,10 +58,7 @@ public class CategoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         CategoryDAO pdb = new CategoryDAO();
-        List<Category> list = pdb.getCategory();
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("view/AddCategory.jsp").forward(request, response);
+        request.getRequestDispatcher("adminview/adminAddCategory.jsp").forward(request, response);
     }
 
     /**

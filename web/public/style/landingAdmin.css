@@ -51,7 +51,6 @@ and open the template in the editor.
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
 .admin-manager-detail p,
 button {
     padding: 10px 10px;
@@ -102,30 +101,14 @@ th {
     display: table-cell;
     padding: 10px 10px;
 }
+.divTableCell .checkbox{
+    padding: 10px;
+    display: flex;
+}
 .divTableBody {
     display: table-row-group;
 }
-.pagination {
-    display: inline-block;
-    border: 1px solid black; 
-}
 
-.pagination a {
-    float: left;
-
-    text-decoration: none;
-
-    padding: 8px 16px;
-}
-
-.pagination a:active {
-    background-color: #4caf50;
-    color: white;
-}
-
-.pagination a:hover {
-    background-color: chocolate;
-}
 .mess{
     display: flex;
 }
@@ -145,11 +128,31 @@ th {
     font-weight: bold;
     font-size: 16px;
 }
+.form-btn{
+    display: flex;
+}
 .backPage{
     padding: 10px;
     display: flex;
 }
-.backPage a{
-    font-size: 16px;
-    margin: 0 auto;
+.pagination-page {
+    display: inline-block;
+}
+/*paging*/
+
+.pagination-page a {
+    float: left;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 0.5px solid black;
+    margin-left: 1px;
+}
+
+.pagination-page a:active {
+    background-color: #4caf50;
+    color: white;
+}
+
+.pagination-page a:hover {
+    background-color: chocolate;
 }

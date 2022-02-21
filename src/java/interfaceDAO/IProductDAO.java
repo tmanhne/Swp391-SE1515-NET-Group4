@@ -17,6 +17,12 @@ public interface IProductDAO {
 
     public int updateBook(Product product);
 
-    public Product getProductById(int pid);
+    public Product getProductById(String pid);
+    
+    /**
+     *
+     * @param pid
+     */
+    public void removeProduct(String pid);
 
 }

@@ -3,16 +3,12 @@ package dao;
 import interfaceDAO.IProductDAO;
 import java.sql.Connection;
 import java.sql.Date;
-import model.Category;
 import model.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Book;
 
 /**
  *
@@ -102,35 +98,31 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         return result;
     }
 
-    @Override
-    public Product getProductById(int pid) {
+    public Product getProductById(String productID) {
+        Product product = null;
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        AuthorsDAO au;
-        Product book = new Product();
-        String sql = "SELECT * FROM dbo.Products WHERE ProductID = ?";
+        String sql = "SELECT * FROM [dbo].[Products] WHERE [ProductID]= ? ";
+
         try {
-            //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pid);
+            ps.setString(1, productID);
             rs = ps.executeQuery();
-            //initialize AuthorsDAO object
-            au = new AuthorsDAO();
-            //assign data to books
+
             while (rs.next()) {
-                book.setProductID(rs.getString("ProductID"));
-                book.setProductName(rs.getString("ProductName"));
-                book.setImagePath(rs.getString("ImagePath"));
-                book.setCreateDate(rs.getDate("CreatedDate"));
-                book.setDescription(rs.getString("Description"));
-                book.setUnitPrice(rs.getFloat("UnitPrice"));
-                book.setUnitInStock(rs.getInt("UnitInStock"));
-                book.setIsContinue(rs.getBoolean("IsContinue"));
-                book.setRatting(rs.getInt("Ratting"));
-                // get book authors follow ProductID
-//                book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
+                String ProductName = rs.getString("ProductName");
+                String ImagePath = rs.getString("ImagePath");
+                Date CreatedDate = rs.getDate("CreatedDate");
+                String Description = rs.getString("Description");
+                float UnitPrice = rs.getFloat("UnitPrice");
+                int UnitInStock = rs.getInt("UnitInStock");
+                boolean IsContinue = rs.getBoolean("IsContinue");
+                int Ratting = rs.getInt("Ratting");
+                String CategoryID = rs.getString("CategoryID");
+                product = new Product(productID, ProductName, ImagePath, CreatedDate, Description, UnitPrice, UnitInStock, IsContinue, Ratting, CategoryID);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -138,8 +130,26 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             //close connection
             super.close(con, ps, rs);
         }
-        return book;
 
+        return product;
+    }
+
+    public void removeProduct(String pid) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "DELETE FROM dbo.Products WHERE ProductID = ?";
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, pid);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            super.close(con, ps, rs);
+        }
     }
 
 }

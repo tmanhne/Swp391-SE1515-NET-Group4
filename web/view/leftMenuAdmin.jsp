@@ -20,7 +20,10 @@
                 <a href="#">Manager Bills</a>
             </div>
             <div class="list-manager">
-                <a href="#">Add New Product</a>
+                <a href="adminAddProduct">Add New Product</a>
+            </div>
+            <div class="list-manager">
+                <a href="AdminViewCategory">Category</a>
             </div>
         </div>
     </body>

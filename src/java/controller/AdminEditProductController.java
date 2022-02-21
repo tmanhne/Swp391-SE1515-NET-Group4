@@ -100,7 +100,7 @@ public class AdminEditProductController extends HttpServlet {
             }
             // validate unit int stock of product 
             if (!validate.checkUnitInStock(uInStock)) {
-                request.setAttribute("unitInStockPara", "Your Unit in stock is wrong");
+                request.setAttribute("uInStock", "Your Unit in stock is wrong");
                 checkValidate = true;
             }
             // if all parameters is true 
@@ -112,7 +112,7 @@ public class AdminEditProductController extends HttpServlet {
             System.out.println("product " + b.toString());
             ProductDAO db = new ProductDAO();
             request.setAttribute("book", b);
-            if (checkValidate) {
+            if (!checkValidate) {
                 request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
                 return;
             }

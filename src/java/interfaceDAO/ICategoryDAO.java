@@ -17,5 +17,7 @@ public interface ICategoryDAO {
 
     public List<Category> getAllCategories();
 
-    public ArrayList<Category> getCategory();
+    public Category getCategoryById(String categoryID);
+
+    public int updateCategory(Category cate);
 }

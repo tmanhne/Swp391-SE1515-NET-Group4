@@ -14,7 +14,6 @@
     </head>
     <body>
         <jsp:include page="../view/headerAdmin.jsp"></jsp:include>
-            <!--            <form action="AdminViewCategory" method="post">-->
             <div id="admin-main-content">
             <jsp:include page="../view/leftMenuAdmin.jsp"></jsp:include>
                 <div class="admin-manager-detail">
@@ -27,16 +26,14 @@
                                 <th>Category ID</th>
                                 <th>Category</th>
                                 <th>Add</th>
-                                <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
 
-                            <c:forEach var="cate" items="${requestScope.list}">
+                        <c:forEach var="cate" items="${requestScope.list}">
                             <tr>
                                 <td>${cate.getCategoryID()}</td>
                                 <td>${cate.getCategoryName()}</td>
-                                <td><a href="AdminAddCategory">Add</a></td>
-                                <td><a href="AdminAddCategory">Edit</a></td>
+                                <td><a href="adminEditCategory?cId=${cate.getCategoryID()}">Edit</a></td>
                                 <td><a href="#" 
                                        onclick="return confirm('Are you sure you want to delete this item?');">
                                         Delete </a></td >
@@ -44,11 +41,11 @@
                         </c:forEach>
                     </table>
                 </div>
+                    <div class="contain-add">
+                    <a class="add-Cate" href="AdminAddCategory">Add</a>  
+                </div>
             </div>
         </div>
-        <!--        </form>-->
-
         <jsp:include page="../view/footer.jsp"></jsp:include>
-
     </body>
 </html>

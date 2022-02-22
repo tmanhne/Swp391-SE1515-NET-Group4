@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2022-02-20      1.0                 DULT               Second Implement
  */
 package controller;
 
@@ -19,13 +19,21 @@ import model.Product;
 
 /**
  *
- * @author Hfyl
+ * @author dult
  */
 @WebServlet(name = "CartController", urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
 
     private final String CART_NAME_COOKIE = "Carts";
-
+        /**
+     * Processes requests for both HTTP <code>GET</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,7 +46,15 @@ public class CartController extends HttpServlet {
         }
         request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
     }
-
+        /**
+     * Processes requests for both HTTP <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

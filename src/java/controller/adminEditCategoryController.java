@@ -5,10 +5,10 @@
  */
 package controller;
 
+import Validate.Validate;
 import dao.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +20,8 @@ import model.Category;
  *
  * @author t.manh
  */
-@WebServlet(name = "AdminViewCategoryController", urlPatterns = {"/AdminViewCategory"})
-public class AdminViewCategoryController extends HttpServlet {
+@WebServlet(name = "adminEditCategoryController", urlPatterns = {"/adminEditCategory"})
+public class adminEditCategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class AdminViewCategoryController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminViewCategoryController</title>");
+            out.println("<title>Servlet adminEditCategoryController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminViewCategoryController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet adminEditCategoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,11 +61,11 @@ public class AdminViewCategoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String cId = request.getParameter("cId");
         CategoryDAO db = new CategoryDAO();
-        List<Category> list = db.getAllCategories();
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("adminview/adminCategory.jsp").forward(request, response);
+        Category cate = db.getCategoryById(cId);
+        request.setAttribute("cate", cate);
+        request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
     }
 
     /**
@@ -79,7 +79,41 @@ public class AdminViewCategoryController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            Validate v = new Validate();
+            boolean checkValidate = false;
+
+            String cateId = request.getParameter("categoryID");
+            String cateName = request.getParameter("categoryName");
+            //validate categoryName            
+            if (!v.checkName(cateName)) {
+                request.setAttribute("cateName", "name is wrong");
+                checkValidate = true;
+            }
+            //if checkValidate true (all vadiable correct) => update
+            if (!checkValidate) {
+                Category category = new Category(cateId, cateName);
+                CategoryDAO db = new CategoryDAO();
+                request.setAttribute("cate", category);
+                int count = db.updateCategory(category);
+                request.setAttribute("mess", count);
+                if (count != 0) {
+                    request.setAttribute("mess", "Update success!!");
+                } else {
+                    request.setAttribute("mess", "Update fail!!");
+                }
+                request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
+//                return;
+            } else {
+                Category category = new Category(cateId, cateName);
+                CategoryDAO db = new CategoryDAO();
+                request.setAttribute("cate", category);
+                //if one variable false => return page and variable false
+                request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
+            }
+        } catch (Exception ex) {
+            System.out.println("error " + ex);
+        }
     }
 
     /**

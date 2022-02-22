@@ -50,7 +50,6 @@
                                 <td>${product.getUnitInStock()}</td>
                                 <%--  <td><img src="${product.getPathImage()}"style="width: 100%"/></td>--%> 
                                 <td>${product.isIsContinue()}</td>
-
                                 <td><a href="AdminEditProduct?pid=${product.getProductID()}">Edit</a></td>
                                 <td><a href="#" 
                                        onclick="return confirm('Are you sure you want to delete this item?');">

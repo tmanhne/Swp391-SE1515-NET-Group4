@@ -54,35 +54,52 @@ public class CategoryDAO extends DBConnection {
         return pageList;
     }
 
-    public ArrayList<Category> getCategory() {
+    public Category getCategoryById(String categoryID) {
+        Category cate = null;
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
-        ArrayList<Category> category = new ArrayList<>();
-        String sql = "select * from Category";
-
+        String sql = " SELECT * FROM dbo.Category WHERE CategoryID = ? ";
         try {
             con = super.open();
             ps = con.prepareStatement(sql);
+            ps.setString(1, categoryID);
             rs = ps.executeQuery();
-
-            //assign data to books
             while (rs.next()) {
-                while (rs.next()) {
-                    category.add(new Category(rs.getString(1),
-                            rs.getString(2)));
-
-                }
-
+//                String categoryID = rs.getString("ProductName");
+                String categoryName = rs.getString("CategoryName");
+                cate = new Category(categoryID, categoryName);
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            //close connection
             super.close(con, ps, rs);
         }
+        return cate;
+    }
 
-        return category;
+    public int updateCategory(Category cate) {
+        int result = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "UPDATE dbo.Category "
+                + "SET CategoryName = ? "
+                + "WHERE CategoryID = ? ";
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(2, cate.getCategoryID());
+            ps.setString(1, cate.getCategoryName());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return result;
     }
 }

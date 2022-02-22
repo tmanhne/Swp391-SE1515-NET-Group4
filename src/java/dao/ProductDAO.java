@@ -58,8 +58,12 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO{
             stm.setInt(9, p.getRatting());
             stm.setString(10, p.getCategoryID());
             stm.executeUpdate();
-        } catch (SQLException ex) {
+        } 
+        catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+            super.close(con, ps, rs);
         }
     }
     

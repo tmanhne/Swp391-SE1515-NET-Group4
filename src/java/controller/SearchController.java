@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Book;
+import model.Product;
 
 /**
  * The class contain method doPost
@@ -43,10 +43,10 @@ public class SearchController extends HttpServlet {
             }
         }
 
-        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Product> books = new ArrayList<>();
         books = db.getBookByName(name);
 
-        ArrayList<Book> bestSellerBooks = new ArrayList<>();
+        ArrayList<Product> bestSellerBooks = new ArrayList<>();
         bestSellerBooks = db.getBestSellerBooks();
 
         request.setAttribute("books", books);

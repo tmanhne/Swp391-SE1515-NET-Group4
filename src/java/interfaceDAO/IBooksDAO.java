@@ -1,12 +1,12 @@
 /*
  * Record of change:
  * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-014      1.0                 VUDM               AuthorsDAO
+ * 2022-02-014      1.0                 VUDM               First Implement
  */
 package interfaceDAO;
 
 import java.util.ArrayList;
-import model.Book;
+import model.Product;
 
 /**
  *This interface class used to contain some method used to implements in another
@@ -18,22 +18,22 @@ public interface IBooksDAO {
      * This method used to get all products from Products table
      * @return account is a ArrayList <code>books</code>
      */
-    public ArrayList<Book> getAllBooks();
+    public ArrayList<Product> getAllBooks();
     /**
      * This method used to get all products from Products table
      * @return account is a ArrayList <code>books</code>
      */
-    public ArrayList<Book> getBestSellerBooks();
+    public ArrayList<Product> getBestSellerBooks();
     /**
      * This method used to get all products from Products table
      * @return account is a ArrayList <code>books</code>
      */
-     public ArrayList<Book> getHighestPriceBooks();
+     public ArrayList<Product> getHighestPriceBooks();
      /**
      * This method used search all products by name from Products table
      * @param name is a <code>String</code>
      * @return account is a ArrayList <code>books</code>
      */
-     public ArrayList<Book> getBookByName(String name);
+     public ArrayList<Product> getBookByName(String name);
      
 }

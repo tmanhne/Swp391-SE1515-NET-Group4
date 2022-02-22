@@ -13,67 +13,57 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 import model.Product;
 
 /**
- *
+ * The class contain method doPost has used to add product to cart
  * @author vudm
  */
 @WebServlet(name = "AddToCartController", urlPatterns = {"/AddToCart"})
 public class AddToCartController extends HttpServlet {
 
     private final String CART_NAME_COOKIE = "Carts";
-        /**
-     * Processes requests for both HTTP <code>GET</code>
-     * methods.
+
+    /**
+     * Processes requests for both HTTP <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
-    }
-    
-        /**
-     * Processes requests for both HTTP <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO bd = new ProductDAO();
         String id = request.getParameter("id");
         Product product = bd.getProductById(id);
-        if (null == product) {
-            //response.sendRedirect(""); error page
-            return;
-        }
-        Cookie[] cookies = request.getCookies();
 
-        Cookie cookie = editCart(cookies, id);
-        if (null != cookie) {
-            response.addCookie(cookie);
+        Account account = (Account) request.getSession().getAttribute("account");
+        if (account != null) {// if user use account
+            if ( product == null) {
+                //response.sendRedirect(""); error page
+                return;
+            }
+            Cookie[] cookies = request.getCookies();
+
+            Cookie cookie = editCart(cookies, id);
+            if ( cookie != null) {
+                response.addCookie(cookie);
+            }
+            response.sendRedirect("../Swp391-SE1515-NET-Group4/home");
+        } 
+        else {// if user did not use account
+           request.getRequestDispatcher("view/Login.jsp").forward(request, response);
         }
-        request.setAttribute("bookid", id);
-        response.sendRedirect("../Swp391-SE1515-NET-Group4/home");
     }
 
     private Cookie editCart(Cookie[] cookie, String productID) {
         String cartValue = "";
         Cookie cartCookie = null;
 
-        if (null != cookie) {
+        if ( cookie != null) { // if cookie exist
             for (Cookie cookie1 : cookie) {
                 //if cart cookie exist
                 if (cookie1.getName().equals(CART_NAME_COOKIE)) {
@@ -83,14 +73,14 @@ public class AddToCartController extends HttpServlet {
             }
         }
 
-        if (null == cartCookie) {
+        if ( cartCookie == null) {//create cookie with name Cart
             cartCookie = new Cookie(CART_NAME_COOKIE, cartValue);
         }
-        
+
         cartValue = cartCookie.getValue();
         cartValue = updateCartValue(cartValue, productID);
         cartCookie.setValue(cartValue);
-        cartCookie.setMaxAge(60 * 60 * 24 * 7);
+        cartCookie.setMaxAge(60*60);
         return cartCookie;
     }
 

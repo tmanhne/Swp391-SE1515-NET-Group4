@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Book;
+import model.Product;
 import dal.DBConnection;
 import interfaceDAO.IBooksDAO;
 import java.util.List;
@@ -30,12 +30,12 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
      * @return ArrayList books
      */
     @Override
-    public ArrayList<Book> getAllBooks() {
+    public ArrayList<Product> getAllBooks() {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         AuthorsDAO au;
-        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Product> books = new ArrayList<>();
         String sql = "SELECT *\n "
                 + "FROM\n "
                 + "Products\n ";
@@ -51,10 +51,10 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
 
             //assign data to books
             while (rs.next()) {
-                Book book = new Book();
-                book.setProductID(rs.getInt("ProductID"));
+                Product book = new Product();
+                book.setProductID(rs.getString("ProductID"));
                 book.setProductName(rs.getString("ProductName"));
-                book.setPathImage(rs.getString("ImagePath"));
+                book.setImagePath(rs.getString("ImagePath"));
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
                 book.setUnitInStock(rs.getInt("UnitInStock"));
@@ -80,12 +80,12 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
      * @return ArrayList books
      */
     @Override
-    public ArrayList<Book> getBestSellerBooks() {
+    public ArrayList<Product> getBestSellerBooks() {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         AuthorsDAO au;
-        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Product> books = new ArrayList<>();
         String sql = "select top 3 *\n"
                 + "from Products\n"
                 + "order by UnitInStock desc";
@@ -101,10 +101,10 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
 
             //assign data to books
             while (rs.next()) {
-                Book book = new Book();
-                book.setProductID(rs.getInt("ProductID"));
+                Product book = new Product();
+                book.setProductID(rs.getString("ProductID"));
                 book.setProductName(rs.getString("ProductName"));
-                book.setPathImage(rs.getString("ImagePath"));
+                book.setImagePath(rs.getString("ImagePath"));
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
 
@@ -129,12 +129,12 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
      * @return ArrayList books
      */
     @Override
-    public ArrayList<Book> getHighestPriceBooks() {
+    public ArrayList<Product> getHighestPriceBooks() {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         AuthorsDAO au;
-        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Product> books = new ArrayList<>();
         String sql = "select top 2 *\n"
                 + "from Products\n"
                 + "order by UnitPrice desc";
@@ -150,10 +150,10 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
 
             //assign data to books
             while (rs.next()) {
-                Book book = new Book();
-                book.setProductID(rs.getInt("ProductID"));
+                Product book = new Product();
+                book.setProductID(rs.getString("ProductID"));
                 book.setProductName(rs.getString("ProductName"));
-                book.setPathImage(rs.getString("ImagePath"));
+                book.setImagePath(rs.getString("ImagePath"));
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
 
@@ -179,12 +179,12 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
      * @return ArrayList books
      */
     @Override
-    public ArrayList<Book> getBookByName(String name) {
+    public ArrayList<Product> getBookByName(String name) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         AuthorsDAO au;
-        ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Product> books = new ArrayList<>();
         String sql = "SELECT * FROM Products WHERE ProductName LIKE ? ";
 
         try {
@@ -199,10 +199,10 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
 
             //assign data to books
             while (rs.next()) {
-                Book book = new Book();
-                book.setProductID(rs.getInt("ProductID"));
+                Product book = new Product();
+                book.setProductID(rs.getString("ProductID"));
                 book.setProductName(rs.getString("ProductName"));
-                book.setPathImage(rs.getString("ImagePath"));
+                book.setImagePath(rs.getString("ImagePath"));
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
 
@@ -221,35 +221,35 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
         return books;
     }
 
-    public List<Book> getBookByPage(List<Book> fullList, int start, int end) {
-        List<Book> pageList = new ArrayList<>();
+    public List<Product> getBookByPage(List<Product> fullList, int start, int end) {
+        List<Product> pageList = new ArrayList<>();
         for (int i = start; i < end; i++) {
             pageList.add(fullList.get(i));
         }
         return pageList;
     }
 
-    public Book getBookById(int pid) {
+    public Product getBookById(String pid) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         AuthorsDAO au;
-        Book book = new Book();
+        Product book = new Product();
         String sql = "SELECT * FROM dbo.Products WHERE ProductID = ?";
         try {
             //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, pid);
+            ps.setString(1, pid);
             rs = ps.executeQuery();
             //initialize AuthorsDAO object
             au = new AuthorsDAO();
             //assign data to books
             while (rs.next()) {
-                book.setProductID(rs.getInt("ProductID"));
+                book.setProductID(rs.getString("ProductID"));
                 book.setProductName(rs.getString("ProductName"));
-                book.setPathImage(rs.getString("ImagePath"));
-                book.setCreateDate(rs.getString("CreatedDate"));
+                book.setImagePath(rs.getString("ImagePath"));
+                book.setCreateDate(rs.getDate("CreatedDate"));
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
                 book.setUnitInStock(rs.getInt("UnitInStock"));
@@ -271,7 +271,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Book book = new Book();
+        Product book = new Product();
         String sql = "SELECT COUNT(*)FROM Products";
         try {
             //open connection
@@ -290,11 +290,11 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
         return 0;
     }
 
-    public List<Book> pagingProduct(int index) {
+    public List<Product> pagingProduct(int index) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<Book> books = new ArrayList<>();
+        List<Product> books = new ArrayList<>();
         String sql = "SELECT * FROM Products\n"
                 + "ORDer by ProductID\n"
                 + "offset ? rows fetch next 3 rows only;";
@@ -307,10 +307,10 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                Book book = new Book();
-                book.setProductID(rs.getInt("ProductID"));
+                Product book = new Product();
+                book.setProductID(rs.getString("ProductID"));
                 book.setProductName(rs.getString("ProductName"));
-                book.setPathImage(rs.getString("ImagePath"));
+                book.setImagePath(rs.getString("ImagePath"));
                 book.setDescription(rs.getString("Description"));
                 book.setUnitPrice(rs.getFloat("UnitPrice"));
                 book.setUnitInStock(rs.getInt("UnitInStock"));

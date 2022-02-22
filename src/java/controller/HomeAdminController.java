@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Book;
+import model.Product;
 
 /**
  *
@@ -76,7 +76,7 @@ public class HomeAdminController extends HttpServlet {
         if (count % 3 != 0) {
             endPage++;
         }
-        List<Book> listPage = db.pagingProduct(index);
+        List<Product> listPage = db.pagingProduct(index);
 
         request.setAttribute("listPage", listPage);
 //        request.setAttribute("list", books);
@@ -103,7 +103,7 @@ public class HomeAdminController extends HttpServlet {
             }
         }
         BooksDAO db = new BooksDAO();
-        List<Book> books = new ArrayList<>();
+        List<Product> books = new ArrayList<>();
         books = db.getBookByName(name);
 
         request.setAttribute("listPage", books);

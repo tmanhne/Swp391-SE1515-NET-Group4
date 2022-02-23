@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.List"%>
-<%@page import="model.Book"%>
+<%@page import="model.Product"%>
 <%@page import="dao.BooksDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -36,7 +36,7 @@
                                 <th>Unit Price</th>
                                 <th>UnitInStock</th>                     
                                 <th>IsContinue</th>
-
+                                <th>View</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
 
@@ -50,6 +50,8 @@
                                 <td>${product.getUnitInStock()}</td>
                                 <%--  <td><img src="${product.getPathImage()}"style="width: 100%"/></td>--%> 
                                 <td>${product.isIsContinue()}</td>
+
+                                <td><a href="AdminViewProduct?pid=${product.getProductID()}">View</a></td>
                                 <td><a href="AdminEditProduct?pid=${product.getProductID()}">Edit</a></td>
                                 <td><a href="#" 
                                        onclick="return confirm('Are you sure you want to delete this item?');">

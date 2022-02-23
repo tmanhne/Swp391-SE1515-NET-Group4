@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">Image</div>
-                                    <div class="divTableCell"><img src="${book.getPathImage()}"style="width: 150px;height: 150px;"/></div>
+                                    <div class="divTableCell"><img src="${book.getImagePath()}"style="width: 150px;height: 150px;"/></div>
                                 </div>
                                 <div class="divTableRow">
                                     <div class="divTableCell">Create Date</div>

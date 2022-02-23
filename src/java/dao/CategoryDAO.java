@@ -16,7 +16,7 @@ import dal.DBConnection;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Book;
+import model.Product;
 
 /**
  *
@@ -101,5 +101,24 @@ public class CategoryDAO extends DBConnection {
             super.close(con, ps, rs);
         }
         return result;
+    }
+
+    public void insertCategory(Category cate) {
+        Connection con = super.open();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "INSERT INTO dbo.Category "
+                + "( CategoryID, CategoryName ) "
+                + "VALUES  ( ?, ?)";
+        try {
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, cate.getCategoryID());
+            stm.setString(2, cate.getCategoryName());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            close(con, ps, rs);
+        }
     }
 }

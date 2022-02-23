@@ -29,7 +29,7 @@ public class AuthorsDAO extends DBConnection implements IAuthorsDAO{
      */
     
     @Override
-    public ArrayList<String> getAuthorsByBookId(int bookId) {
+    public ArrayList<String> getAuthorsByBookId(String bookId) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -44,7 +44,7 @@ public class AuthorsDAO extends DBConnection implements IAuthorsDAO{
             //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, bookId);
+            ps.setString(1, bookId);
             rs = ps.executeQuery();
             //assign data to authors
             while (rs.next()) {

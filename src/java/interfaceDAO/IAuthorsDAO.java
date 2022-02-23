@@ -16,8 +16,8 @@ public interface IAuthorsDAO {
     /**
      * This method used to get author by bookId from Authors table
      *
-     * @param bookId is a <code>int</code>
+     * @param bookId is a <code>String</code>
      * @return account is a ArrayList <code>authors</code>
      */
-    public ArrayList<String> getAuthorsByBookId(int bookId);
+    public ArrayList<String> getAuthorsByBookId(String bookId);
 }

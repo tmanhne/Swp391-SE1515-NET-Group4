@@ -25,11 +25,11 @@
                             <div class="book-container">
                                 <div class="book-container-header">
                                     <div class="book-thumbnail">
-                                        <a href="#"><img class="thumbnail-image" src="${book.getPathImage()}"></a>
+                                        <a href="#"><img class="thumbnail-image" src="${book.getImagePath()}"></a>
                                     </div>
                                     <div class="book-info">
                                         <div class="book-title">
-                                            <a class="book-name" href="/BookStore/view?id=${book.getProductID()}">${book.getProductName()}</a>
+                                            <a class="book-name" href="/Swp391-SE1515-NET-Group4/viewDetail?id=${book.getProductID()}">${book.getProductName()}</a>
                                             <c:forEach items="${book.getAuthors()}" var="author">
                                                 <span class="author">${author}</span>
                                             </c:forEach>
@@ -52,7 +52,7 @@
                         <c:forEach items="${requestScope.bestSellerBooks}" var="book">
                             <div class="best-seller-book-container">
                                 <div class="book-thumbnail">
-                                    <a href="#"><img class="thumbnail-image" src="${book.getPathImage()}"></a>
+                                    <a href="#"><img class="thumbnail-image" src="${book.getImagePath()}"></a>
                                 </div>
                                 <div class="book-info">
                                     <div class="book-title">
@@ -76,7 +76,7 @@
                         <c:forEach items="${requestScope.highestPricerBooks}" var="book">
                             <div class="best-seller-book-container">
                                 <div class="book-thumbnail">
-                                    <a href="#"><img class="thumbnail-image" src="${book.getPathImage()}"></a>
+                                    <a href="#"><img class="thumbnail-image" src="${book.getImagePath()}"></a>
                                 </div>
                                 <div class="book-info">
                                     <div class="book-title">
@@ -101,6 +101,7 @@
                 </div>
                 <div class="clearfix"></div>
             </div>
+            <jsp:include page="footer.jsp"></jsp:include>
         </div>
     </body>
 </html>

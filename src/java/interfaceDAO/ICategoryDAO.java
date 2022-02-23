@@ -20,4 +20,6 @@ public interface ICategoryDAO {
     public Category getCategoryById(String categoryID);
 
     public int updateCategory(Category cate);
+    
+    public void insertCategory(Category cate);
 }

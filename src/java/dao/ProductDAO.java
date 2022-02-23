@@ -7,6 +7,7 @@ import model.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -104,7 +105,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "SELECT * FROM [dbo].[Products] WHERE [ProductID]= ? ";
-
+        AuthorsDAO au = new AuthorsDAO();
         try {
             con = super.open();
             ps = con.prepareStatement(sql);
@@ -113,7 +114,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
             while (rs.next()) {
                 String ProductName = rs.getString("ProductName");
-                String ImagePath = rs.getString("ImagePath");
+                String ImagePath = rs.getString("imagePath");
                 Date CreatedDate = rs.getDate("CreatedDate");
                 String Description = rs.getString("Description");
                 float UnitPrice = rs.getFloat("UnitPrice");
@@ -121,8 +122,9 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
                 boolean IsContinue = rs.getBoolean("IsContinue");
                 int Ratting = rs.getInt("Ratting");
                 String CategoryID = rs.getString("CategoryID");
+                // ArrayList<String> author = au.getAuthorsByBookId(product.getProductID());
                 product = new Product(productID, ProductName, ImagePath, CreatedDate, Description, UnitPrice, UnitInStock, IsContinue, Ratting, CategoryID);
-
+                //          product = new Product(productID, ProductName, ImagePath, CreatedDate, Description, UnitPrice, UnitInStock, IsContinue, Ratting, CategoryID)
             }
         } catch (SQLException ex) {
             Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);

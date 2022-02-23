@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -23,7 +24,9 @@ public class Product {
     private boolean isContinue;
     private int ratting;
     private String categoryID;
+    private ArrayList<String> authors;
 
+   
     public Product() {
     }
 
@@ -128,6 +131,14 @@ public class Product {
 
     public void setCategoryID(String categoryID) {
         this.categoryID = categoryID;
+    }
+    
+    public ArrayList<String> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(ArrayList<String> authors) {
+        this.authors = authors;
     }
 
     @Override

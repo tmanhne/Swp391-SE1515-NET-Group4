@@ -6,7 +6,6 @@
 package controller;
 
 import dao.BooksDAO;
-import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,36 +17,12 @@ import model.Product;
 
 /**
  *
- * @author t.manh
+ * @author admin
  */
-@WebServlet(name = "AdminViewProductController", urlPatterns = {"/AdminViewProduct"})
-public class AdminViewProductController extends HttpServlet {
+@WebServlet(name = "ProductDetailController", urlPatterns = {"/viewDetail"})
+public class ProductDetailController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AdminViewProductController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AdminViewProductController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -61,12 +36,12 @@ public class AdminViewProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pid = request.getParameter("pid");
-        ProductDAO db = new ProductDAO();
-        Product b = db.getProductById(pid);
-        request.setAttribute("book", b);
-
-        request.getRequestDispatcher("adminview/adminViewProduct.jsp").forward(request, response);
+        String id = request.getParameter("id");
+        BooksDAO db = new BooksDAO();
+        Product product = new Product();
+        product = db.getBookById(id);
+        request.setAttribute("book", product);
+        request.getRequestDispatcher("view/ProductDetail.jsp").forward(request, response);
     }
 
     /**
@@ -80,7 +55,7 @@ public class AdminViewProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       
     }
 
     /**

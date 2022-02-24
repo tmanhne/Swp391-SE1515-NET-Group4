@@ -25,6 +25,7 @@ import model.Product;
 public class CartController extends HttpServlet {
 
     private final String CART_NAME_COOKIE = "Carts";
+    private final int FETCH = 3;
 
     /**
      * Processes requests for both HTTP <code>GET</code> methods.
@@ -48,23 +49,38 @@ public class CartController extends HttpServlet {
             //encode books cookie
             ArrayList<BookOnCart> booklst = decodeCart(cartCookie);
 
-            int fetch = 1;
-            int offset = page < 0 ? 0 : ((page - 1) * fetch);
+            int offset = page < 0 ? 0 : ((page - 1) * FETCH);
             int size = booklst.size();
             if (offset >= size) {
-                offset = size % fetch == 0 ? (size - fetch) : (size % fetch);
+                offset = size % FETCH == 0 ? (size - FETCH) : (size % FETCH);
             } else {
-                size = size < (offset + fetch) ? size : (offset + fetch);
+                size = size < (offset + FETCH) ? size : (offset + FETCH);
             }
             ArrayList<BookOnCart> lst = new ArrayList<>();
             for (int i = offset; i < size; i++) {
                 lst.add(booklst.get(i));
             }
 
-            if (Math.floorDiv(booklst.size(), fetch) > 1) {
+            size = Math.floorDiv(booklst.size(), FETCH);
+            //if has more than 1 page
+            if (size > 1) {
+                size = booklst.size() % FETCH > 0 ? size + 1 : size;
                 int crpage = page != -1 ? page : 1;
-                int bpage = (crpage - 2) > 1 ? (page - 2) : 1;
-                int epage = (crpage + 2) > booklst.size() ? booklst.size() : (crpage + 2);
+                int bpage;
+                int epage;
+                if (crpage <= 2) {
+                    bpage = 1;
+                    epage = size > 5 ? 5 : size;
+                } else {
+                    if (size <= 4) {
+                        bpage = 1;
+                        epage = size;
+                    } else {
+                        bpage = size - crpage <= 2 ? size - 4 : crpage - 2;
+                        epage = size - crpage <= 2 ? size : crpage + 2;
+                    }
+                }
+
                 request.setAttribute("bpage", bpage);
                 request.setAttribute("epage", epage);
             }
@@ -127,26 +143,44 @@ public class CartController extends HttpServlet {
             }
             response.addCookie(cartCookie);
 
-            int fetch = 1;
-            int offset = page < 0 ? 0 : ((page - 1) * fetch);
+            /*Pagingnation*/
+            int offset = page < 0 ? 0 : ((page - 1) * FETCH);
             int size = booklst.size();
+
             if (offset >= size) {
-                offset = size % fetch == 0 ? (size - fetch) : (size % fetch);
+                offset = size % FETCH == 0 ? (size - FETCH) : (size % FETCH);
             } else {
-                size = size < (offset + fetch) ? size : (offset + fetch);
+                size = size < (offset + FETCH) ? size : (offset + FETCH);
             }
             ArrayList<BookOnCart> lst = new ArrayList<>();
             for (int i = offset; i < size; i++) {
                 lst.add(booklst.get(i));
             }
 
-            if (Math.floorDiv(size, fetch) > 1) {
-                int bpage = (page - 2) > 1 ? (page - 2) : 1;
-                int epage = (page + 2) > size ? size : (page + 2);
+            size = Math.floorDiv(booklst.size(), FETCH);
+            //if has more than 1 page
+            if (size > 1) {
+                size = booklst.size() % FETCH > 0 ? size + 1 : size;
+                int crpage = page != -1 ? page : 1;
+                int bpage;
+                int epage;
+                if (crpage <= 2) {
+                    bpage = 1;
+                    epage = size > 5 ? 5 : size;
+                } else {
+                    if (size <= 4) {
+                        bpage = 1;
+                        epage = size;
+                    } else {
+                        bpage = size - crpage <= 2 ? size - 4 : crpage - 2;
+                        epage = size - crpage <= 2 ? size : crpage + 2;
+                    }
+                }
+
                 request.setAttribute("bpage", bpage);
                 request.setAttribute("epage", epage);
             }
-            request.setAttribute("books", booklst);
+            request.setAttribute("books", lst);
         }
         if (page == -1) {
             request.getRequestDispatcher("view/Cart.jsp").forward(request, response);

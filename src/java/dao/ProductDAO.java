@@ -16,8 +16,9 @@ import java.util.logging.Logger;
  * @author Riel
  */
 public class ProductDAO extends dal.DBConnection implements IProductDAO {
-
-    public void insertProduct(Product p) {
+    
+    @Override
+    public void insertProduct(Product p) throws Exception {
         Connection con = super.open();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -56,8 +57,9 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             stm.setInt(9, p.getRatting());
             stm.setString(10, p.getCategoryID());
             stm.executeUpdate();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);

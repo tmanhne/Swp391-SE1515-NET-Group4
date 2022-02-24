@@ -5,13 +5,17 @@
  */
 package controller;
 
+import Validate.Validate;
+import dao.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLDataException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Category;
 
 /**
  *
@@ -72,7 +76,36 @@ public class AdminAddCategoryController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String cateId = request.getParameter("categoryId");
+            String cateName = request.getParameter("categoryName");
+            Validate v = new Validate();
+            boolean checkValidate = false;
+            //validate nameCategory
+            if (!v.checkName(cateName)) {
+                request.setAttribute("cateName", "name is wrong");
+                checkValidate = true;
+            }
+            //if all paremeters is true
+            if (!checkValidate) {
+                //add all atribute to class
+                Category cate = new Category(cateId, cateName);
+                //update Sql
+                CategoryDAO cateDao = new CategoryDAO();
+                cateDao.insertCategory(cate);
+                request.setAttribute("mess", "insert success");
+            } else {
+                Category category = new Category(cateId, cateName);
+                CategoryDAO db = new CategoryDAO();
+                request.setAttribute("category", category);
+                //if one variable false => return page and variable false
+                request.setAttribute("mess", "insert fail");
+                request.getRequestDispatcher("adminview/adminAddCategory.jsp").forward(request, response);
+            }
+            request.getRequestDispatcher("adminview/adminAddCategory.jsp").forward(request, response);
+        } catch (Exception e) {
+            System.out.println("error " + e);
+        }
     }
 
     /**

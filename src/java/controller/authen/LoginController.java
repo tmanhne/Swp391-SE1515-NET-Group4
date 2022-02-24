@@ -87,7 +87,8 @@ public class LoginController extends HttpServlet {
                 response.addCookie(pass);
             }
             response.sendRedirect("../Swp391-SE1515-NET-Group4/home");
-        } else { // if account null
+        } else {
+            // if account null
             request.setAttribute("Message", "Please check your username or password!!! ");
             request.getRequestDispatcher("view/Login.jsp").forward(request, response);
         }

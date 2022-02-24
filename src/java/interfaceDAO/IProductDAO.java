@@ -13,7 +13,7 @@ import model.Product;
  */
 public interface IProductDAO {
 
-    public void insertProduct(Product p);
+    public void insertProduct(Product p) throws Exception;
 
     public int updateBook(Product product);
 

@@ -39,18 +39,22 @@ import javax.servlet.http.Part;
  */
 @WebServlet(name = "AdminAddProductController", urlPatterns = {"/adminAddProduct"})
 
-
-
 public class AdminAddProductController extends RequiredAdminAccount {
 
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CategoryDAO categoryDAO = new CategoryDAO();
-        List<Category> categories = categoryDAO.getAllCategories();
+        try {
+            CategoryDAO categoryDAO = new CategoryDAO();
+            List<Category> categories = categoryDAO.getAllCategories();
 
-        request.setAttribute("categories", categories);
-        request.getRequestDispatcher("./adminview/adminaddproduct.jsp").forward(request, response);
+            request.setAttribute("categories", categories);
+            request.getRequestDispatcher("./adminview/adminaddproduct.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
+
     }
 
     @Override
@@ -65,55 +69,53 @@ public class AdminAddProductController extends RequiredAdminAccount {
             boolean isContinue = Boolean.parseBoolean(request.getParameter("isContinue"));
             String categoryID = request.getParameter("categoryID");
             String imagePara = request.getParameter("image");
-            
+
             Validate validate = new Validate();
-            boolean checkValidate = false ; 
+            boolean checkValidate = false;
             // validate name of product
             if (!validate.checkName(namePara)) {
                 request.setAttribute("namePara", "Your Name product is wrong");
-                checkValidate = true ; 
+                checkValidate = true;
             }
             // validate description of product 
             if (!validate.checkName(descriptionPara)) {
                 request.setAttribute("descriptionPara", "Your Description product is wrong");
-                checkValidate = true ; 
+                checkValidate = true;
             }
             // validate price of product 
             if (!validate.checkPrice(unitPricePara)) {
                 request.setAttribute("unitPricePara", "Your price product is wrong");
-                checkValidate = true ; 
+                checkValidate = true;
             }
             // validate unit int stock of product 
             if (!validate.checkUnitInStock(unitInStockPara)) {
                 request.setAttribute("unitInStockPara", "Your Unit in stock is wrong");
-                checkValidate = true ; 
+                checkValidate = true;
             }
-            
+
             // if all parameters is true 
             if (!checkValidate) {
                 double unitInPrice = Double.parseDouble(unitPricePara);
                 int unitInStock = Integer.parseInt(unitInStockPara);
-                Date date = new Date();  
+                Date date = new Date();
                 java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                
+
                 // add all attribute to class 
-                Product product=new Product(idPara, namePara, imagePara, date, descriptionPara, unitInPrice, unitInStock, isContinue, 5, categoryID);
+                Product product = new Product(idPara, namePara, imagePara, date, descriptionPara, unitInPrice, unitInStock, isContinue, 5, categoryID);
                 System.out.println("product " + product.toString());
-                
+
                 // update to sql 
                 ProductDAO productDAO = new ProductDAO();
                 productDAO.insertProduct(product);
-            }
-            else {
-                
+            } else {
+
             }
             request.getRequestDispatcher("./adminview/adminaddproduct.jsp").forward(request, response);
-           
-        } catch (Exception e) {
-            System.out.println("error " + e);
-            // return to the error page
-        }
 
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
 
     }
 

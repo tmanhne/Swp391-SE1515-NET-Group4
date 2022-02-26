@@ -61,11 +61,17 @@ public class adminEditCategoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String cId = request.getParameter("cId");
-        CategoryDAO db = new CategoryDAO();
-        Category cate = db.getCategoryById(cId);
-        request.setAttribute("cate", cate);
-        request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
+        try {
+            String cId = request.getParameter("cId");
+            CategoryDAO db = new CategoryDAO();
+            Category cate = db.getCategoryById(cId);
+            request.setAttribute("cate", cate);
+            request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
+
     }
 
     /**
@@ -112,7 +118,12 @@ public class adminEditCategoryController extends HttpServlet {
                 request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
             }
         } catch (Exception ex) {
-            System.out.println("error " + ex);
+            try {
+
+            } catch (Exception e) {
+                request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+                request.getRequestDispatcher("error/error.jsp").forward(request, response);
+            }
         }
     }
 

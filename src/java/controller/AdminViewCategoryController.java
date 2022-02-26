@@ -62,10 +62,16 @@ public class AdminViewCategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        CategoryDAO db = new CategoryDAO();
-        List<Category> list = db.getAllCategories();
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("adminview/adminCategory.jsp").forward(request, response);
+        try{
+            CategoryDAO db = new CategoryDAO();
+            List<Category> list = db.getAllCategories();
+            request.setAttribute("list", list);
+            request.getRequestDispatcher("adminview/adminCategory.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
+        
     }
 
     /**

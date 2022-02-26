@@ -29,7 +29,7 @@ public class AuthorsDAO extends DBConnection implements IAuthorsDAO{
      */
     
     @Override
-    public ArrayList<String> getAuthorsByBookId(String bookId) {
+    public ArrayList<String> getAuthorsByBookId(String bookId) throws Exception{
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -51,8 +51,9 @@ public class AuthorsDAO extends DBConnection implements IAuthorsDAO{
                 String author = rs.getString("AuthorName");
                 authors.add(author);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(AuthorsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);

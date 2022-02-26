@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author Riel
  */
 public class ProductDAO extends dal.DBConnection implements IProductDAO {
-    
+
     @Override
     public void insertProduct(Product p) throws Exception {
         Connection con = super.open();
@@ -58,7 +58,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             stm.setString(10, p.getCategoryID());
             stm.executeUpdate();
         } catch (Exception ex) {
-            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
             throw ex;
         } finally {
             //close connection
@@ -67,7 +67,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
     }
 
     @Override
-    public int updateBook(Product product) {
+    public int updateBook(Product product) throws Exception {
         int result = 0;
         Connection con = null;
         PreparedStatement ps = null;
@@ -92,8 +92,9 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             ps.setInt(6, product.getRatting());
             ps.setString(7, product.getProductID());
             result = ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -101,7 +102,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         return result;
     }
 
-    public Product getProductById(String productID) {
+    public Product getProductById(String productID) throws Exception {
         Product product = null;
         Connection con = null;
         PreparedStatement ps = null;
@@ -128,8 +129,9 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
                 product = new Product(productID, ProductName, ImagePath, CreatedDate, Description, UnitPrice, UnitInStock, IsContinue, Ratting, CategoryID);
                 //          product = new Product(productID, ProductName, ImagePath, CreatedDate, Description, UnitPrice, UnitInStock, IsContinue, Ratting, CategoryID)
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -138,7 +140,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         return product;
     }
 
-    public void removeProduct(String pid) {
+    public void removeProduct(String pid) throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -148,9 +150,9 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, pid);
             rs = ps.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
-
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
         } finally {
             super.close(con, ps, rs);
         }

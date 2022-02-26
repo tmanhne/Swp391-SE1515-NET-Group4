@@ -34,25 +34,31 @@ public class SearchController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BooksDAO db = new BooksDAO();
-        String name = "";
-        //check search parameter
-        if (request.getParameter("search") != null) {
-            if (!request.getParameter("search").toString().trim().isEmpty()) {
-                name = request.getParameter("search").toString().trim();//if parameter is not empty
-            }
+          try{
+              BooksDAO db = new BooksDAO();
+              String name = "";
+              //check search parameter
+              if (request.getParameter("search") != null) {
+                  if (!request.getParameter("search").toString().trim().isEmpty()) {
+                      name = request.getParameter("search").toString().trim();//if parameter is not empty
+                  }
+              }
+
+              ArrayList<Product> books = new ArrayList<>();
+              books = db.getBookByName(name);
+
+              ArrayList<Product> bestSellerBooks = new ArrayList<>();
+              bestSellerBooks = db.getBestSellerBooks();
+
+              request.setAttribute("books", books);
+              request.setAttribute("bestSellerBooks", bestSellerBooks);
+              request.setAttribute("searchname", name);
+              request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
-
-        ArrayList<Product> books = new ArrayList<>();
-        books = db.getBookByName(name);
-
-        ArrayList<Product> bestSellerBooks = new ArrayList<>();
-        bestSellerBooks = db.getBestSellerBooks();
-
-        request.setAttribute("books", books);
-        request.setAttribute("bestSellerBooks", bestSellerBooks);
-        request.setAttribute("searchname", name);
-        request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
+      
     }
 
 }

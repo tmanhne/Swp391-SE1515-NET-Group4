@@ -61,12 +61,18 @@ public class AdminViewProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pid = request.getParameter("pid");
-        ProductDAO db = new ProductDAO();
-        Product b = db.getProductById(pid);
-        request.setAttribute("book", b);
+          try{
+              String pid = request.getParameter("pid");
+              ProductDAO db = new ProductDAO();
+              Product b = db.getProductById(pid);
+              request.setAttribute("book", b);
 
-        request.getRequestDispatcher("adminview/adminViewProduct.jsp").forward(request, response);
+              request.getRequestDispatcher("adminview/adminViewProduct.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
+        
     }
 
     /**

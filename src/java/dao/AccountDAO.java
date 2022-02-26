@@ -53,7 +53,7 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
      */
     //Encrypt password with Java SHA1 Hashing by password and salt
     @Override
-    public String encryptPassword(String password, byte[] salt) {
+    public String encryptPassword(String password, byte[] salt){
         String encryptedPassword = null;
         try {
             // Create MessageDigest instance for MD5
@@ -82,7 +82,7 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
      * system throw username and password
      */
     @Override
-    public Account checkAccountByUsernameAndPassword(String username, String password) {
+    public Account checkAccountByUsernameAndPassword(String username, String password){
         try {
             Connection con = null;
             PreparedStatement ps = null;
@@ -111,8 +111,9 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
                     return account;
                 }
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            
         }
         return null;
     }

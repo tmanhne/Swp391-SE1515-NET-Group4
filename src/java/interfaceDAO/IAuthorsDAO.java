@@ -19,5 +19,5 @@ public interface IAuthorsDAO {
      * @param bookId is a <code>String</code>
      * @return account is a ArrayList <code>authors</code>
      */
-    public ArrayList<String> getAuthorsByBookId(String bookId);
+    public ArrayList<String> getAuthorsByBookId(String bookId) throws Exception;
 }

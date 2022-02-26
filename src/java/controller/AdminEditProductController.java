@@ -52,13 +52,18 @@ public class AdminEditProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+            String pid = request.getParameter("pid");
+            BooksDAO db = new BooksDAO();
+            Product b = db.getBookById(pid);
+            request.setAttribute("book", b);
+            request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
 
-        processRequest(request, response);
-        String pid = request.getParameter("pid");
-        BooksDAO db = new BooksDAO();
-        Product b = db.getBookById(pid);
-        request.setAttribute("book", b);
-        request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
 //        request.getRequestDispatcher("adminview/adminViewProduct.jsp").forward(request, response);
     }
 
@@ -127,7 +132,8 @@ public class AdminEditProductController extends HttpServlet {
             }
             request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
         } catch (Exception e) {
-            System.out.println("error " + e);
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
 //        request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
     }

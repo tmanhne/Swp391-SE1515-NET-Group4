@@ -36,12 +36,18 @@ public class ProductDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        BooksDAO db = new BooksDAO();
-        Product product = new Product();
-        product = db.getBookById(id);
-        request.setAttribute("book", product);
-        request.getRequestDispatcher("view/ProductDetail.jsp").forward(request, response);
+          try{
+              String id = request.getParameter("id");
+              BooksDAO db = new BooksDAO();
+              Product product = new Product();
+              product = db.getBookById(id);
+              request.setAttribute("book", product);
+              request.getRequestDispatcher("view/ProductDetail.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
+        
     }
 
     /**

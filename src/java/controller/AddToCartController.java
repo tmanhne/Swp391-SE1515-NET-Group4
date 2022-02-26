@@ -36,21 +36,27 @@ public class AddToCartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDAO bd = new ProductDAO();
-        String id = request.getParameter("id");
-        Product product = bd.getProductById(id);
-        if (product == null) {
-            //response.sendRedirect(""); error page
-            return;
-        }
-        Cookie[] cookies = request.getCookies();
+        try {
+            ProductDAO bd = new ProductDAO();
+            String id = request.getParameter("id");
+            Product product = bd.getProductById(id);
+            if (product == null) {
+                //response.sendRedirect(""); error page
+                return;
+            }
+            Cookie[] cookies = request.getCookies();
 
-        Cookie cookie = editCart(cookies, id);
-        if (cookie != null) {
-            response.addCookie(cookie);
+            Cookie cookie = editCart(cookies, id);
+            if (cookie != null) {
+                response.addCookie(cookie);
+            }
+
+            request.getRequestDispatcher("/home").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
 
-        request.getRequestDispatcher("/home").forward(request, response);
     }
 
     private Cookie editCart(Cookie[] cookie, String productID) {

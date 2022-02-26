@@ -74,7 +74,11 @@ public class LoginController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         Account account = new Account(username, password);
 
-        account = accountDAO.checkAccountByUsernameAndPassword(username, password);
+        try {
+            account = accountDAO.checkAccountByUsernameAndPassword(username, password);
+        } catch (Exception ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         if (account != null) { // check account null or not
             request.getSession().setAttribute("account", account);

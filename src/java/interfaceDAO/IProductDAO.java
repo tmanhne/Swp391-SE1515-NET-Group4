@@ -15,14 +15,14 @@ public interface IProductDAO {
 
     public void insertProduct(Product p) throws Exception;
 
-    public int updateBook(Product product);
+    public int updateBook(Product product) throws Exception;
 
-    public Product getProductById(String pid);
+    public Product getProductById(String pid) throws Exception;
     
     /**
      *
      * @param pid
      */
-    public void removeProduct(String pid);
+    public void removeProduct(String pid) throws Exception;
 
 }

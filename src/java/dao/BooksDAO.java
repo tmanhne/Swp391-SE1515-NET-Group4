@@ -30,7 +30,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
      * @return ArrayList books
      */
     @Override
-    public ArrayList<Product> getAllBooks() {
+    public ArrayList<Product> getAllBooks() throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -63,8 +63,9 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
                 books.add(book);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -80,7 +81,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
      * @return ArrayList books
      */
     @Override
-    public ArrayList<Product> getBestSellerBooks() {
+    public ArrayList<Product> getBestSellerBooks() throws Exception{
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -113,8 +114,9 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
                 books.add(book);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -129,7 +131,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
      * @return ArrayList books
      */
     @Override
-    public ArrayList<Product> getHighestPriceBooks() {
+    public ArrayList<Product> getHighestPriceBooks() throws Exception{
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -162,8 +164,9 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
                 books.add(book);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -179,7 +182,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
      * @return ArrayList books
      */
     @Override
-    public ArrayList<Product> getBookByName(String name) {
+    public ArrayList<Product> getBookByName(String name) throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -211,8 +214,9 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
                 books.add(book);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -229,7 +233,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
         return pageList;
     }
 
-    public Product getBookById(String pid) {
+    public Product getBookById(String pid) throws Exception{
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -258,8 +262,9 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
                 // get book authors follow ProductID
                 book.setAuthors(au.getAuthorsByBookId(book.getProductID()));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -267,7 +272,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
         return book;
     }
 
-    public int getTotalProduct() {
+    public int getTotalProduct() throws Exception{
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -281,8 +286,9 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
             while (rs.next()) {
                 return rs.getInt(1);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -290,7 +296,7 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
         return 0;
     }
 
-    public List<Product> pagingProduct(int index) {
+    public List<Product> pagingProduct(int index) throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -317,8 +323,9 @@ public class BooksDAO extends DBConnection implements IBooksDAO {
                 books.add(book);
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);

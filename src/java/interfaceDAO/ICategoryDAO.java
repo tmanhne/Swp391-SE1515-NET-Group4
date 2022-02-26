@@ -15,11 +15,11 @@ import model.Category;
  */
 public interface ICategoryDAO {
 
-    public List<Category> getAllCategories();
+    public List<Category> getAllCategories() throws Exception;
 
-    public Category getCategoryById(String categoryID);
+    public Category getCategoryById(String categoryID) throws Exception;
 
-    public int updateCategory(Category cate);
+    public int updateCategory(Category cate) throws Exception;
     
-    public void insertCategory(Category cate);
+    public void insertCategory(Category cate) throws Exception;
 }

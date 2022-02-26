@@ -24,7 +24,7 @@ import model.Product;
  */
 public class CategoryDAO extends DBConnection {
 
-    public List<Category> getAllCategories() {
+    public List<Category> getAllCategories() throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -40,8 +40,9 @@ public class CategoryDAO extends DBConnection {
                 category.setCategoryName(rs.getString("CategoryName"));
                 categories.add(category);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         }
         return categories;
     }
@@ -54,7 +55,7 @@ public class CategoryDAO extends DBConnection {
         return pageList;
     }
 
-    public Category getCategoryById(String categoryID) {
+    public Category getCategoryById(String categoryID) throws Exception {
         Category cate = null;
         Connection con = null;
         PreparedStatement ps = null;
@@ -70,8 +71,9 @@ public class CategoryDAO extends DBConnection {
                 String categoryName = rs.getString("CategoryName");
                 cate = new Category(categoryID, categoryName);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -79,7 +81,7 @@ public class CategoryDAO extends DBConnection {
         return cate;
     }
 
-    public int updateCategory(Category cate) {
+    public int updateCategory(Category cate) throws Exception {
         int result = 0;
         Connection con = null;
         PreparedStatement ps = null;
@@ -94,8 +96,9 @@ public class CategoryDAO extends DBConnection {
             ps.setString(2, cate.getCategoryID());
             ps.setString(1, cate.getCategoryName());
             result = ps.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(BooksDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);
@@ -103,7 +106,7 @@ public class CategoryDAO extends DBConnection {
         return result;
     }
 
-    public void insertCategory(Category cate) {
+    public void insertCategory(Category cate) throws Exception {
         Connection con = super.open();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -115,8 +118,9 @@ public class CategoryDAO extends DBConnection {
             stm.setString(1, cate.getCategoryID());
             stm.setString(2, cate.getCategoryName());
             stm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+             ex.printStackTrace();
+            throw ex;
         } finally {
             close(con, ps, rs);
         }

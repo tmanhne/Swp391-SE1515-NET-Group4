@@ -35,21 +35,27 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BooksDAO db = new BooksDAO();
+          try{
+              BooksDAO db = new BooksDAO();
+
+              ArrayList<Product> books = new ArrayList<>();
+              books = db.getAllBooks();//Get all book from database
+
+              ArrayList<Product> bestSellerBooks = new ArrayList<>();
+              bestSellerBooks = db.getBestSellerBooks();//get 3 most purchased products
+
+              ArrayList<Product> highestPricerBooks = new ArrayList<>();
+              highestPricerBooks = db.getHighestPriceBooks();//Get 2 highest price products
+
+              request.setAttribute("books", books);
+              request.setAttribute("bestSellerBooks", bestSellerBooks);
+              request.setAttribute("highestPricerBooks", highestPricerBooks);
+              request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
         
-        ArrayList<Product> books = new ArrayList<>();
-         books = db.getAllBooks();//Get all book from database
-        
-        ArrayList<Product> bestSellerBooks = new ArrayList<>();
-        bestSellerBooks = db.getBestSellerBooks();//get 3 most purchased products
-        
-        ArrayList<Product> highestPricerBooks = new ArrayList<>();
-        highestPricerBooks = db.getHighestPriceBooks();//Get 2 highest price products
-        
-        request.setAttribute("books", books);
-        request.setAttribute("bestSellerBooks", bestSellerBooks);
-        request.setAttribute("highestPricerBooks", highestPricerBooks);
-        request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
     }
 }
  

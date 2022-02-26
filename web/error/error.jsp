@@ -21,7 +21,7 @@
                 <p class="description">Ooops!!</p>
             </div>
             <div class="title2">
-                <p class="description-page">THAT PAGE DOESN'T EXIST OR IS UNAVABLE.</p>
+                <p class="description-page">${exception.getMessage()}</p>
             </div>
             <div class="title1">
                 <button class="callBack">Go Back to Home</button>

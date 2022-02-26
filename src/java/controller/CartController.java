@@ -51,6 +51,7 @@ public class CartController extends HttpServlet {
 
             int offset = page < 0 ? 0 : ((page - 1) * FETCH);
             int size = booklst.size();
+            
             if (offset >= size) {
                 offset = size % FETCH == 0 ? (size - FETCH) : (size % FETCH);
             } else {
@@ -189,6 +190,7 @@ public class CartController extends HttpServlet {
         request.getRequestDispatcher("view/Cart.jsp?page=" + page).forward(request, response);
     }
 
+    //get cart cookie from session
     private Cookie getCartCookie(Cookie[] cookies) {
         Cookie cartCookie = null;
         if (null != cookies) {
@@ -203,6 +205,7 @@ public class CartController extends HttpServlet {
         return cartCookie;
     }
 
+    //decode value of cart into arraylist
     private ArrayList<BookOnCart> decodeCart(Cookie cartCookie) {
         ArrayList<BookOnCart> lst = new ArrayList<>();
         String regex1 = "%&%";
@@ -237,6 +240,7 @@ public class CartController extends HttpServlet {
         return lst;
     }
 
+    //encode 
     private String encodeCart(ArrayList<BookOnCart> booklst) {
         String regex1 = "%&%";
         String regex2 = "%";

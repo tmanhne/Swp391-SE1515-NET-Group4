@@ -1,7 +1,10 @@
-/*
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-20      1.0                 DULT               Second Implement
+/**
+ * Copyright(C)2022, FPT University
+ * SWP391
+ *
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-22         1.0               DuLT              First Implement
  */
 package controller;
 
@@ -18,6 +21,7 @@ import model.BookOnCart;
 import model.Product;
 
 /**
+ * The class contains method respond for initialize, update, delete cart from Using Carts value from cookie to get information form data base from Products table in database. The method will throw an object of <code>java.lang.Exception</code> class if there is any error occurring when finding.
  *
  * @author dult
  */
@@ -51,7 +55,7 @@ public class CartController extends HttpServlet {
 
             int offset = page < 0 ? 0 : ((page - 1) * FETCH);
             int size = booklst.size();
-            
+
             if (offset >= size) {
                 offset = size % FETCH == 0 ? (size - FETCH) : (size % FETCH);
             } else {
@@ -190,7 +194,12 @@ public class CartController extends HttpServlet {
         request.getRequestDispatcher("view/Cart.jsp?page=" + page).forward(request, response);
     }
 
-    //get cart cookie from session
+    /**
+     * Get <code>CART_NAME_COOKIE</code> from user cookie.
+     *
+     * @param cookies the array of cookies form user <code>javax.servlet.http.Cookie<code>
+     * @return a cookie the <code>CART_NAME_COOKIE</code> form array of cookies
+     */
     private Cookie getCartCookie(Cookie[] cookies) {
         Cookie cartCookie = null;
         if (null != cookies) {
@@ -205,7 +214,14 @@ public class CartController extends HttpServlet {
         return cartCookie;
     }
 
-    //decode value of cart into arraylist
+    /**
+     * Decode <code>CART_NAME_COOKIE</code> value in to ArrayList of <code>BookOnCart<code>.
+     * <code>regex1<code> for separate each product. Pattern: product[n] <code>regex1<code> product[n+1]
+     * <code>regex2<code> for separate each product.Pattern: productID[0] <code>regex2<code> Quantity[1]
+     *
+     * @param cartCookie the cart cookie form user <code>javax.servlet.http.Cookie<code>
+     * @return ArrayList of <code>BookOnCart<code>.
+     */
     private ArrayList<BookOnCart> decodeCart(Cookie cartCookie) {
         ArrayList<BookOnCart> lst = new ArrayList<>();
         String regex1 = "%&%";
@@ -240,7 +256,14 @@ public class CartController extends HttpServlet {
         return lst;
     }
 
-    //encode 
+    /**
+     * Encode ArrayList of <code>BookOnCart<code> to string.
+     * <code>regex1<code> for separate each product. Pattern: product[n] <code>regex1<code> product[n+1]
+     * <code>regex2<code> for separate each product.Pattern: productID[0] <code>regex2<code> Quantity[1]
+     *
+     * @param booklst the ArrayList of <code>BookOnCart<code> <code>java.util.ArrayList<code>
+     * @return a String contain productID and Quantity.
+     */
     private String encodeCart(ArrayList<BookOnCart> booklst) {
         String regex1 = "%&%";
         String regex2 = "%";
@@ -257,6 +280,14 @@ public class CartController extends HttpServlet {
         return sb.toString();
     }
 
+    /**
+     * Modify(increase/decrease quantity or remove) list of product.
+     *
+     * @param booklst the ArrayList of <code>BookOnCart<code> <code>java.util.ArrayList<code>
+     * @param productID the productID <code>java.lang.String<code>
+     * @param type the case 0 = remomve, -1 = decrease, 1 = increase <code>java.lang.Integer<code>
+     * @return ArrayList of <code>BookOnCart<code>.
+     */
     private ArrayList<BookOnCart> updateCartValue(ArrayList<BookOnCart> booklst, String productID, int type) {
         for (int i = 0; i < booklst.size(); i++) {
             if (booklst.get(i).getProductID().equals(productID)) {

@@ -13,11 +13,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Account;
 import model.Product;
 
 /**
  * The class contain method doPost has used to add product to cart
+ *
  * @author vudm
  */
 @WebServlet(name = "AddToCartController", urlPatterns = {"/AddToCart"})
@@ -39,31 +39,25 @@ public class AddToCartController extends HttpServlet {
         ProductDAO bd = new ProductDAO();
         String id = request.getParameter("id");
         Product product = bd.getProductById(id);
-
-        Account account = (Account) request.getSession().getAttribute("account");
-        if (account != null) {// if user use account
-            if ( product == null) {
-                //response.sendRedirect(""); error page
-                return;
-            }
-            Cookie[] cookies = request.getCookies();
-
-            Cookie cookie = editCart(cookies, id);
-            if ( cookie != null) {
-                response.addCookie(cookie);
-            }
-            response.sendRedirect("../Swp391-SE1515-NET-Group4/home");
-        } 
-        else {// if user did not use account
-           request.getRequestDispatcher("view/Login.jsp").forward(request, response);
+        if (product == null) {
+            //response.sendRedirect(""); error page
+            return;
         }
+        Cookie[] cookies = request.getCookies();
+
+        Cookie cookie = editCart(cookies, id);
+        if (cookie != null) {
+            response.addCookie(cookie);
+        }
+
+        request.getRequestDispatcher("/home").forward(request, response);
     }
 
     private Cookie editCart(Cookie[] cookie, String productID) {
         String cartValue = "";
         Cookie cartCookie = null;
 
-        if ( cookie != null) { // if cookie exist
+        if (cookie != null) { // if cookie exist
             for (Cookie cookie1 : cookie) {
                 //if cart cookie exist
                 if (cookie1.getName().equals(CART_NAME_COOKIE)) {
@@ -73,14 +67,14 @@ public class AddToCartController extends HttpServlet {
             }
         }
 
-        if ( cartCookie == null) {//create cookie with name Cart
+        if (cartCookie == null) {//create cookie with name Cart
             cartCookie = new Cookie(CART_NAME_COOKIE, cartValue);
         }
 
         cartValue = cartCookie.getValue();
         cartValue = updateCartValue(cartValue, productID);
         cartCookie.setValue(cartValue);
-        cartCookie.setMaxAge(60*60);
+        cartCookie.setMaxAge(60 * 60);
         return cartCookie;
     }
 

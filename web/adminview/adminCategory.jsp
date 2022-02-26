@@ -26,7 +26,7 @@
                                 <th>Category ID</th>
                                 <th>Category</th>
                                 <th>Add</th>
-                                <th>Delete</th>
+<!--                                <th>Delete</th>-->
                             </tr>
 
                         <c:forEach var="cate" items="${requestScope.list}">
@@ -34,9 +34,9 @@
                                 <td>${cate.getCategoryID()}</td>
                                 <td>${cate.getCategoryName()}</td>
                                 <td><a href="adminEditCategory?cId=${cate.getCategoryID()}">Edit</a></td>
-                                <td><a href="#" 
-                                       onclick="return confirm('Are you sure you want to delete this item?');">
-                                        Delete </a></td >
+                                <!--                                <td><a href="#" 
+                                                                       onclick="return confirm('Are you sure you want to delete this item?');">
+                                                                        Delete </a></td >-->
                             </tr>
                         </c:forEach>
                     </table>

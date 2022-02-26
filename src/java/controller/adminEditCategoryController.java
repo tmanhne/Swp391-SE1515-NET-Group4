@@ -118,12 +118,8 @@ public class adminEditCategoryController extends HttpServlet {
                 request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
             }
         } catch (Exception ex) {
-            try {
-
-            } catch (Exception e) {
-                request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
-                request.getRequestDispatcher("error/error.jsp").forward(request, response);
-            }
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
     }
 

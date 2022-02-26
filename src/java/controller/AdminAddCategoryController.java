@@ -62,7 +62,13 @@ public class AdminAddCategoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("adminview/adminAddCategory.jsp").forward(request, response);
+        try {
+            request.getRequestDispatcher("adminview/adminAddCategory.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
+        
     }
 
     /**
@@ -104,7 +110,8 @@ public class AdminAddCategoryController extends HttpServlet {
             }
             request.getRequestDispatcher("adminview/adminAddCategory.jsp").forward(request, response);
         } catch (Exception e) {
-            System.out.println("error " + e);
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
     }
 

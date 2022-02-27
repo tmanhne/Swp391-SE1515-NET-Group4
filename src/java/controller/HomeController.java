@@ -1,12 +1,18 @@
 /*
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-07      1.0                 VUDM               First Implement
+ * Copyright(C)2021, FPT University
+ * SWP 391
+/*
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ * 
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-07         1.0               VUDMHE140017      First Implement
  */
-
 package controller;
 
-import dao.BooksDAO;
+import dao.ProductDAO;
+import interfaceDAO.IProductDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -25,37 +31,32 @@ import model.Product;
 public class HomeController extends HttpServlet {
     
      /**
-     * Get all book,best seller and highest price of products from database
-     * Then setAttribute and forward to LangdingPage
+     * Get all book,best seller and highest price of products from database then setAttribute and forward to LangdingPage.jsp
      *
      * @param request is HttpServletRequest
      * @param response is HttpServletResponse
-     * @return none
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          try{
-              BooksDAO db = new BooksDAO();
-
-              ArrayList<Product> books = new ArrayList<>();
-              books = db.getAllBooks();//Get all book from database
-
-              ArrayList<Product> bestSellerBooks = new ArrayList<>();
-              bestSellerBooks = db.getBestSellerBooks();//get 3 most purchased products
-
-              ArrayList<Product> highestPricerBooks = new ArrayList<>();
-              highestPricerBooks = db.getHighestPriceBooks();//Get 2 highest price products
-
-              request.setAttribute("books", books);
-              request.setAttribute("bestSellerBooks", bestSellerBooks);
-              request.setAttribute("highestPricerBooks", highestPricerBooks);
-              request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
-        }catch(Exception e){
+        try{
+             IProductDAO productDAO = new ProductDAO();
+        
+            ArrayList<Product> products = productDAO.getAllProducts();//get all products
+        
+            ArrayList<Product> bestSellerProducts = productDAO.getBestSellerProducts();//get 3 most purchased products
+        
+            ArrayList<Product> highestPricerProducts = productDAO.getHighestPriceProducts();//Get 2 highest price products
+        
+            request.setAttribute("books", products);
+            request.setAttribute("bestSellerBooks", bestSellerProducts);
+            request.setAttribute("highestPricerBooks", highestPricerProducts);
+            request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
+        } catch (Exception ex) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
-        
     }
 }
- 

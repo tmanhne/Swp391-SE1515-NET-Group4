@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.BooksDAO;
 import dao.ProductDAO;
 import java.util.ArrayList;
 import model.Product;
@@ -55,8 +54,8 @@ public class AdminEditProductController extends HttpServlet {
         try {
             processRequest(request, response);
             String pid = request.getParameter("pid");
-            BooksDAO db = new BooksDAO();
-            Product b = db.getBookById(pid);
+            ProductDAO db = new ProductDAO();
+            Product b = db.getProductById(pid);
             request.setAttribute("book", b);
             request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
         } catch (Exception e) {

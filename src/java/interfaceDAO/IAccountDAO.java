@@ -12,11 +12,13 @@ import java.sql.SQLException;
 import model.Account;
 
 /**
- * This interface class used to contain some method used to implements in another
+ * This interface class used to contain some method used to implements in
+ * another
+ *
  * @author vudm
  */
 public interface IAccountDAO {
-    
+
     /**
      * This method used to get username and password throw database
      *
@@ -26,11 +28,10 @@ public interface IAccountDAO {
      * @throws java.sql.SQLException
      */
     public Account checkAccountByUsernameAndPassword(String username, String password) throws Exception;
-    
+
     public Account getAccountByEmail(String email) throws SQLException;
-    
+
     public void updateAccount(Account account) throws SQLException;
-    
+
+    public Account getAccount(String userName) throws SQLException;
 }
-
-

@@ -51,6 +51,7 @@
                             <a href="/FinalAssignment/logout">Logout</a>
                             <a href="#" class="account">${sessionScope.Username}</a>
                             <a href="/FinalAssignment/update">update</a>
+                            <a href="profile">Profile</a>
                         <% } %>
                     <a href="cart"><span class="glyphicon glyphicon-shopping-cart" style="padding: 0px 10px;"></span></a>
                 </div>

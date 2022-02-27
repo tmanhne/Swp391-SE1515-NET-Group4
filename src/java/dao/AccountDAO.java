@@ -1,7 +1,7 @@
 /*
  * Record of change:
  * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-17      1.0                 VUDM               First Implement
+ * 2022-02-17      1.0                 VUDM,THONGCT               First Implement
  */
 package dao;
 
@@ -117,5 +117,61 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         }
         return null;
     }
-
+    
+    /**
+     * @param email is string
+     * @return the account who have email equal first parameter 
+     */
+    public Account getAccountByEmail(String email) {
+        String sql = "SELECT * FROM Accounts WHERE [Email] = ?";
+        Connection con = super.open();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Account account = new Account();
+                account.setAccountID(rs.getString(1));
+                account.setUserName(rs.getString(2));
+                account.setPassword(rs.getString(3));
+                account.setEmail(rs.getString(4));
+                account.setPhone(rs.getString(5));
+                account.setRole(rs.getString(6));
+                return account;
+            }
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+            super.close(con, ps, rs);
+        }
+        return null;
+    }
+    
+     /**
+     * @param accpunt is account who need to update 
+     */    
+    public void updateAccount(Account account) {
+        Connection con = super.open();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "UPDATE [dbo].[Accounts] \n" +
+                    "   SET [Password] = ?\n" +
+                    " WHERE [Email] = ?\n" ;
+        try {
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, account.getPassword());
+            stm.setString(2, account.getEmail());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+            super.close(con, ps, rs);
+        }
+    } 
+    
 }

@@ -19,5 +19,9 @@ public interface IAccountDAO {
 
     public byte[] getSalt() throws NoSuchAlgorithmException, NoSuchProviderException;
 
-    public String encryptPassword(String password, byte[] salt) ;
+    public String encryptPassword(String password, byte[] salt);
+    
+    public Account getAccountByEmail(String email);
+    
+    public void updateAccount(Account account);
 }

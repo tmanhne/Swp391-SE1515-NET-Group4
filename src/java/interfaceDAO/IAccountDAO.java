@@ -34,4 +34,6 @@ public interface IAccountDAO {
     public void updateAccount(Account account) throws SQLException;
 
     public Account getAccount(String userName) throws SQLException;
+    
+    public void updateProfile(Account account) throws SQLException;
 }

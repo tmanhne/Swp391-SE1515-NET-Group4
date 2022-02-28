@@ -32,17 +32,16 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <label class="labels">UserName</label>
-                                    <input type="text" class="form-control" placeholder="UserName" value="${account.userName}" name="username">
+                                    <input type="text" class="form-control" placeholder="UserName" value="${account.userName}" name="username"readonly>
                                 </div>
                                 <div class="col-md-12"style="column-count: 2;">
                                     <label class="labels">Password</label>
-                                    <input type="password" class="form-control" placeholder="Password" value="sjasan@sdchjldc"name="password">
-                                    <div style="padding-top: 13%;"><a href="changePassword">Change password</a></div>
+                                    <input type="password" class="form-control" placeholder="Password" value="${account.password}"name="password">                
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Email</label>
                                     <input type="text" class="form-control" placeholder="Email" value="${account.email}"name="email">
-                                   
+                                  
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Phone number</label>
@@ -51,11 +50,11 @@
 
 
                             </div>
-                                <div class="mt-5 text-center"style="padding-top: 3%;padding-bottom: 3%;"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                                <div class="mt-5 text-center"style="padding-top: 3%;padding-bottom: 3%;color: red;"> <input type="submit" class="form-control" value="Save"/> ${requestScope.messResponse}</div>
                            
                         </div>
                     </div>
-                    <label>${requestScope.Message}</label><br/>
+                  
                 </div>
             </div>
         </form>

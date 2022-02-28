@@ -1,10 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ * 
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-18         1.0               ThiPTHE130333      First Implement
  */
 package controller;
 
+import Validate.Validate;
 import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -84,7 +88,37 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         
+        try {
+            Account accountSession = (Account) request.getSession().getAttribute("account");
+            AccountDAO db = new AccountDAO();
+            Account account = db.getAccount(accountSession.getUserName());
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String phone = request.getParameter("phone");
+            // update Account and save in database
+            account.setPassword(password);
+            account.setEmail(email);
+            account.setPhone(phone);
+            // validate email
+            if (!Validate.isValid(email)) {
+                request.setAttribute("account", account);
+                request.setAttribute("messResponse", "Your Email is not correct !!!");
+                request.getRequestDispatcher("./view/profile.jsp").forward(request, response);
+            }
+            // validate phoneNumber
+            if (!Validate.checkPhoneNumber(phone)) {
+                request.setAttribute("account", account);
+                request.setAttribute("messResponse", "Your Phone is not correct !!!");
+                request.getRequestDispatcher("./view/profile.jsp").forward(request, response);
+            }
+            db.updateProfile(account);
+            request.setAttribute("messResponse", "Update profile success");
+            request.getRequestDispatcher("./view/profile.jsp").forward(request, response);
+
+        } catch (IOException | SQLException | ServletException e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
     }
 
     /**

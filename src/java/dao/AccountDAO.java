@@ -166,6 +166,27 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         return account;
     }
 
+    @Override
+    public void updateProfile(Account account) throws SQLException {
+       Connection con = super.open();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "UPDATE [dbo].[Accounts] SET [Password]=?, [Email]=?,[Phone]=? WHERE Username = ?";
+        try {
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, account.getPassword());
+            stm.setString(2, account.getEmail());
+            stm.setString(3, account.getPhone());
+            stm.setString(4, account.getUserName());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        finally {
+            super.close(con, ps, rs);
+        }
+    }
+
   
 
     

@@ -61,7 +61,7 @@
                     </table>
                 </div>
                 <div class="pagination-page">
-                    <c:forEach begin="1"end="${endPage}"var="i">
+                    <c:forEach begin="1" end="${endPage}" var="i">
                         <a href="homeadmin?index=${i}">${i}</a>
                     </c:forEach>
                 </div>

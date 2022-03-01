@@ -66,7 +66,6 @@ public class HomeAdminController extends HttpServlet {
               ProductDAO db = new ProductDAO();
 //        List<Book> books = new ArrayList<>();
 //        books = db.getAllBooks();
-
               String indexPage = request.getParameter("index");
               if (indexPage == null) {
                   indexPage = "1";
@@ -78,9 +77,8 @@ public class HomeAdminController extends HttpServlet {
                   endPage++;
               }
               List<Product> listPage = db.pagingProduct(index);
-
               request.setAttribute("listPage", listPage);
-//        request.setAttribute("list", books);
+//            request.setAttribute("list", books);
               request.setAttribute("endPage", endPage);
               request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
         }catch(Exception e){

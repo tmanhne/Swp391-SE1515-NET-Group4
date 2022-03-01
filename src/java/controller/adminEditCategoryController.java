@@ -1,7 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ * 
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-21         1.0               manhtthe140619      First Implement
  */
 package controller;
 
@@ -17,6 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 import model.Category;
 
 /**
+ ** The class contains method respond for initialize update new attribute
+ * get value form jsp update to database.
+ * validate value after update.
+ * table in database. The method will throw an object of
+ * <code>java.lang.Exception</code> class if there is any error occurring when finding
  *
  * @author t.manh
  */
@@ -88,7 +96,6 @@ public class adminEditCategoryController extends HttpServlet {
         try {
             Validate v = new Validate();
             boolean checkValidate = false;
-
             String cateId = request.getParameter("categoryID");
             String cateName = request.getParameter("categoryName");
             //validate categoryName            
@@ -96,7 +103,7 @@ public class adminEditCategoryController extends HttpServlet {
                 request.setAttribute("cateName", "name is wrong");
                 checkValidate = true;
             }
-            //if checkValidate true (all vadiable correct) => update
+            //if checkValidate true (all variable correct) => update
             if (!checkValidate) {
                 Category category = new Category(cateId, cateName);
                 CategoryDAO db = new CategoryDAO();

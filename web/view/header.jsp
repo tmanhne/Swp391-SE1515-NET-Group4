@@ -48,7 +48,7 @@
                             <a href="/FinalAssignment/register">Register</a>
                             <a href="Login">Login</a>
                         <% } else {%>
-                            <a href="/FinalAssignment/logout">Logout</a>
+                            <a href="/logout">Logout</a>
                             <a href="#" class="account">${sessionScope.Username}</a>
                             <a href="/FinalAssignment/update">update</a>
                             <a href="profile">Profile</a>

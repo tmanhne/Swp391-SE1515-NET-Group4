@@ -38,13 +38,9 @@
                                     </div>
                                     <div class="product-details">
                                         <h1>
-                                            <strong
-                                                ><span class="item-quantity">4</span> x ${book.getProductName()}</strong
-                                            >
-                                            Lace Sleeve Cuff Dress
+                                            <strong><span class="item-quantity">4</span> x ${book.getProductName()}</strong>
                                         </h1>
-                                        <p><strong>Navy, Size 18</strong></p>
-                                        <p>Product Code - ${book.getProductID()}</p>
+                                        <p>Product Code: ${book.getProductID()}</p>
                                     </div>
                                 </div>
                                 <div class="price">${book.getUnitPrice()}</div>
@@ -54,11 +50,11 @@
 
                                 <div class="subtotal">
                                     <button type="submit" value="${book.getProductID()}" name="increase">+</button>
-                                    ${book.getQuantity()}
+                                    ${book.getQuantity()*book.getUnitPrice()}
                                     <button type="submit" value="${book.getProductID()}" name="decrease" >-</button>
                                 </div>
                                 <div class="remove">
-                                    <button type="submit" value="${book.getProductID()}">Remove</button>
+                                    <button type="submit" value="${book.getProductID()}" name="delete" >Remove</button>
                                 </div>
                             </div>    
                         </c:forEach>
@@ -87,22 +83,22 @@
                         <div class="summary-subtotal">
                             <div class="subtotal-title">Subtotal</div>
                             <div class="subtotal-value final-value" id="basket-subtotal">
-                                ${totalAmount}
+                                ${requestScope.totalAmount}
                             </div>
                         </div>
                         <div class="summary-delivery">
                             <div class="summary-ship">Ship</div>
-                            <div class="total-ship" id="basket-total">${ship}</div>
+                            <div class="total-ship" id="basket-total">${requestScope.ship}</div>
                         </div>
                         <div class="summary-total">
                             <div class="total-title">Total</div>
                             <div class="total-value final-value" id="basket-total">
-                                ${totalPayment}
+                                ${requestScope.totalAmount+requestScope.ship}
                             </div>
                         </div>
                         <div class="summary-checkout">
                             <button type="submit" class="checkout-cta">Checkout Cart</button>
-                            ${mess}
+                            ${requestScope.mess}
                         </div>
                     </div>
                 </aside>  

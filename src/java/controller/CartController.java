@@ -101,6 +101,7 @@ public class CartController extends HttpServlet {
                 request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
                 return;
             }
+            request.setAttribute("page", page);
             request.getRequestDispatcher("view/Cart.jsp?page=" + page).forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
@@ -125,6 +126,7 @@ public class CartController extends HttpServlet {
             String add = request.getParameter("increase");
             String delete = request.getParameter("delete");
             Cookie cartCookie = getCartCookie(request.getCookies());
+
             int page = -1;
             if (null != request.getParameter("page")) {
                 page = Integer.parseInt(request.getParameter("page"));
@@ -204,6 +206,7 @@ public class CartController extends HttpServlet {
                 request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
                 return;
             }
+            request.setAttribute("page", page);
             request.getRequestDispatcher("view/Cart.jsp?page=" + page).forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");

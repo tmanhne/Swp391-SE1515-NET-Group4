@@ -24,7 +24,8 @@
                     </ul>
                 </div>
 
-                <form action="cart" method="POST">   
+                <form action="cart" method="POST"> 
+                    <input type="hidden" name="page" value="${requestScope.page}"/>
                     <c:if test="${requestScope.books != null}">
                         <c:forEach var="book" items="${requestScope.books}">
                             <div class="basket-product">

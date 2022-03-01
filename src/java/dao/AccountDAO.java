@@ -132,6 +132,63 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         }
         return null;
     }
+
+     @Override
+    public Account getAccount(String userName) throws SQLException {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        Account account = new Account();
+        String sql = "SELECT * FROM Accounts WHERE Username = ?";
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, userName);
+            rs = ps.executeQuery();
+
+            //assign data to books
+            while (rs.next()) {
+                account.setUserName(rs.getString("userName"));
+                account.setPassword(rs.getString("password"));
+                account.setEmail(rs.getString("email"));
+                account.setPhone(rs.getString("phone"));
+
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return account;
+    }
+
+    @Override
+    public void updateProfile(Account account) throws SQLException {
+       Connection con = super.open();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "UPDATE [dbo].[Accounts] SET [Password]=?, [Email]=?,[Phone]=? WHERE Username = ?";
+        try {
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, account.getPassword());
+            stm.setString(2, account.getEmail());
+            stm.setString(3, account.getPhone());
+            stm.setString(4, account.getUserName());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        finally {
+            super.close(con, ps, rs);
+        }
+    }
+
+  
+
     
 
 }

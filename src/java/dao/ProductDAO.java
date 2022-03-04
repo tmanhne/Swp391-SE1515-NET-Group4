@@ -1,3 +1,8 @@
+/*
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2022-02-14      1.0                 ThongCT               Second Implement
+ */
 package dao;
 
 import interfaceDAO.IProductDAO;
@@ -8,8 +13,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Customer;
 
 /**
  *
@@ -156,6 +163,47 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         } finally {
             super.close(con, ps, rs);
         }
+    }
+    
+    /**
+     *
+     * @param NO 
+     * @return return all FeedBack of member  
+     */
+     public List<Product> getAllProduct() throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Product> products = new ArrayList<>();
+        try {
+            String sql = "select * from Products";
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            // IF database have feedback of customer            
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductID(rs.getString(1));
+                product.setProductName(rs.getString(2));
+                product.setImagePath(rs.getString(3));
+                product.setCreateDate(rs.getDate(4));
+                product.setDescription(rs.getString(5));
+                product.setUnitPrice(rs.getDouble(6));
+                product.setUnitInStock(rs.getInt(7));
+                product.setIsContinue(rs.getBoolean(8));
+                product.setRatting(rs.getInt(9));
+                product.setCategoryID(rs.getString(10));
+                products.add(product);
+            }
+        } 
+        catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        finally{
+            super.close(con, ps, rs);
+        }
+        return products;
     }
 
 }

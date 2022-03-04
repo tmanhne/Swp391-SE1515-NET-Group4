@@ -127,12 +127,12 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         Connection con = super.open();
         PreparedStatement ps = null;
         ResultSet rs = null;
+        Account account = new Account();
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
-                Account account = new Account();
                 account.setAccountID(rs.getString(1));
                 account.setUserName(rs.getString(2));
                 account.setPassword(rs.getString(3));
@@ -148,7 +148,7 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         finally {
             super.close(con, ps, rs);
         }
-        return null;
+        return account;
     }
     
      /**

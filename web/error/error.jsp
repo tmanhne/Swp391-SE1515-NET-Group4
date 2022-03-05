@@ -24,7 +24,7 @@
                 <p class="description-page">${exception.getMessage()}</p>
             </div>
             <div class="title1">
-                <button class="callBack">Go Back to Home</button>
+                <a href="homeadmin" class="callBack">Go Back to Home</a>
             </div>
         </div>
     </body>

@@ -21,11 +21,7 @@ import model.BookOnCart;
 import model.Product;
 
 /**
- * The class contains method respond for initialize, update, delete cart from
- * Using Carts value from cookie to get information form data base from Products
- * table in database. The method will throw an object of
- * <code>java.lang.Exception</code> class if there is any error occurring when
- * finding.
+ * The class contains method respond for initialize, update, delete cart from Using Carts value from cookie to get information form data base from Products table in database. The method will throw an object of <code>java.lang.Exception</code> class if there is any error occurring when finding.
  *
  * @author dult
  */
@@ -95,13 +91,17 @@ public class CartController extends HttpServlet {
                     request.setAttribute("epage", epage);
                 }
 
+                float subtotal = getSubTotal(booklst);
                 request.setAttribute("books", lst);
+                request.setAttribute("totalAmount", subtotal);
+                request.setAttribute("ship", 0);
             }
 
             if (page == -1) {
                 request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
                 return;
             }
+            request.setAttribute("page", page);
             request.getRequestDispatcher("view/Cart.jsp?page=" + page).forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
@@ -126,6 +126,7 @@ public class CartController extends HttpServlet {
             String add = request.getParameter("increase");
             String delete = request.getParameter("delete");
             Cookie cartCookie = getCartCookie(request.getCookies());
+
             int page = -1;
             if (null != request.getParameter("page")) {
                 page = Integer.parseInt(request.getParameter("page"));
@@ -196,12 +197,16 @@ public class CartController extends HttpServlet {
                     request.setAttribute("bpage", bpage);
                     request.setAttribute("epage", epage);
                 }
+                float subtotal = getSubTotal(booklst);
                 request.setAttribute("books", lst);
+                request.setAttribute("totalAmount", subtotal);
+                request.setAttribute("ship", 0);
             }
             if (page == -1) {
                 request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
                 return;
             }
+            request.setAttribute("page", page);
             request.getRequestDispatcher("view/Cart.jsp?page=" + page).forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
@@ -239,7 +244,7 @@ public class CartController extends HttpServlet {
      * @return ArrayList of <code>BookOnCart<code>.
      */
     private ArrayList<BookOnCart> decodeCart(Cookie cartCookie) throws Exception {
-        
+
         ArrayList<BookOnCart> lst = new ArrayList<>();
         String regex1 = "%&%";
         String regex2 = "%";
@@ -329,4 +334,19 @@ public class CartController extends HttpServlet {
         }
         return booklst;
     }
+
+    /**
+     * Get subtotal of all products on cart.
+     *
+     * @param lst the ArrayList of products on cart
+     * @return a subtotal <code>java.lang.float<code>.
+     */
+    private float getSubTotal(ArrayList<BookOnCart> lst) {
+        float total = 0F;
+        for (BookOnCart bookOnCart : lst) {
+            total += (bookOnCart.getQuantity() * bookOnCart.getUnitPrice());
+        }
+        return total;
+    }
+
 }

@@ -4,32 +4,28 @@
  * 
  * Record of change
  * DATE             VERSION             AUTHOR              DESCRIPTION
- * 2022-02-21         1.0               manhtthe140619      First Implement
+ * 2022-02-18         1.0               ThiPTHE130333      First Implement
  */
 package controller;
 
 import Validate.Validate;
-import dao.CategoryDAO;
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Category;
+import model.Account;
 
 /**
- ** The class contains method respond for initialize update new attribute
- * get value form jsp update to database.
- * validate value after update.
- * table in database. The method will throw an object of
- * <code>java.lang.Exception</code> class if there is any error occurring when finding
  *
- * @author t.manh
+ * @author phamthithi
  */
-@WebServlet(name = "adminEditCategoryController", urlPatterns = {"/adminEditCategory"})
-public class adminEditCategoryController extends HttpServlet {
+@WebServlet(name = "ProfileController", urlPatterns = {"/profile"})
+public class ProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,10 +44,10 @@ public class adminEditCategoryController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet adminEditCategoryController</title>");
+            out.println("<title>Servlet ProfileController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet adminEditCategoryController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -70,16 +66,15 @@ public class adminEditCategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String cId = request.getParameter("cId");
-            CategoryDAO db = new CategoryDAO();
-            Category cate = db.getCategoryById(cId);
-            request.setAttribute("cate", cate);
-            request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
-        } catch (Exception e) {
+            Account accountSession = (Account) request.getSession().getAttribute("account");
+            AccountDAO db = new AccountDAO();
+            Account accounts = db.getAccount(accountSession.getUserName());
+            request.setAttribute("account", accounts);
+            request.getRequestDispatcher("view/profile.jsp").forward(request, response);
+        } catch (IOException | SQLException | ServletException e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
-
     }
 
     /**
@@ -94,37 +89,33 @@ public class adminEditCategoryController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            Validate v = new Validate();
-            boolean checkValidate = false;
-            String cateId = request.getParameter("categoryID");
-            String cateName = request.getParameter("categoryName");
-            //validate categoryName            
-            if (!v.checkName(cateName)) {
-                request.setAttribute("cateName", "name is wrong");
-                checkValidate = true;
+            Account accountSession = (Account) request.getSession().getAttribute("account");
+            AccountDAO db = new AccountDAO();
+            Account account = db.getAccount(accountSession.getUserName());
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String phone = request.getParameter("phone");
+            // update Account and save in database
+            account.setPassword(password);
+            account.setEmail(email);
+            account.setPhone(phone);
+            // validate email
+            if (!Validate.isValid(email)) {
+                request.setAttribute("account", account);
+                request.setAttribute("messResponse", "Your Email is not correct !!!");
+                request.getRequestDispatcher("./view/profile.jsp").forward(request, response);
             }
-            //if checkValidate true (all variable correct) => update
-            if (!checkValidate) {
-                Category category = new Category(cateId, cateName);
-                CategoryDAO db = new CategoryDAO();
-                request.setAttribute("cate", category);
-                int count = db.updateCategory(category);
-                request.setAttribute("mess", count);
-                if (count != 0) {
-                    request.setAttribute("mess", "Update success!!");
-                } else {
-                    request.setAttribute("mess", "Update fail!!");
-                }
-                request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
-//                return;
-            } else {
-                Category category = new Category(cateId, cateName);
-                CategoryDAO db = new CategoryDAO();
-                request.setAttribute("cate", category);
-                //if one variable false => return page and variable false
-                request.getRequestDispatcher("adminview/adminEditCategory.jsp").forward(request, response);
+            // validate phoneNumber
+            if (!Validate.checkPhoneNumber(phone)) {
+                request.setAttribute("account", account);
+                request.setAttribute("messResponse", "Your Phone is not correct !!!");
+                request.getRequestDispatcher("./view/profile.jsp").forward(request, response);
             }
-        } catch (Exception ex) {
+            db.updateProfile(account);
+            request.setAttribute("messResponse", "Update profile success");
+            request.getRequestDispatcher("./view/profile.jsp").forward(request, response);
+
+        } catch (IOException | SQLException | ServletException e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }

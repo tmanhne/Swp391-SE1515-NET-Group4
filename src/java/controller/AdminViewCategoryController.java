@@ -1,7 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ * 
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-21         1.0               manhtthe140619      First Implement
  */
 package controller;
 
@@ -17,6 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import model.Category;
 
 /**
+ ** The class contains method respond for initialize, view. 
+ * Using Category value from database to get information form data base from Category
+ * table in database. The method will throw an object of
+ * <code>java.lang.Exception</code> class if there is any error occurring when finding
  *
  * @author t.manh
  */
@@ -62,16 +69,17 @@ public class AdminViewCategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        try{
+        try {
             CategoryDAO db = new CategoryDAO();
+            //get value form databse
             List<Category> list = db.getAllCategories();
             request.setAttribute("list", list);
             request.getRequestDispatcher("adminview/adminCategory.jsp").forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
-        
+
     }
 
     /**

@@ -1,12 +1,16 @@
 /*
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-21      1.0                 VUDM               Sencond Implement
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ * 
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-21         1.0               VUDMHE140017      First Implement
  */
 package controller;
 
 import dao.ProductDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -27,7 +31,7 @@ public class AddToCartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>POST</code> methods.
-     *
+     * The method is used to add products to cart on cookie
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -36,29 +40,32 @@ public class AddToCartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            ProductDAO bd = new ProductDAO();
-            String id = request.getParameter("id");
-            Product product = bd.getProductById(id);
-            if (product == null) {
-                //response.sendRedirect(""); error page
-                return;
-            }
-            Cookie[] cookies = request.getCookies();
+         try{
+                  ProductDAO bd = new ProductDAO();
+                  String productID = request.getParameter("id");
+                  Product product = bd.getProductById(productID);
+                  if (product == null) {
+                        return;
+                  }
+                  Cookie[] cookies = request.getCookies();
 
-            Cookie cookie = editCart(cookies, id);
-            if (cookie != null) {
-                response.addCookie(cookie);
-            }
-
-            request.getRequestDispatcher("/home").forward(request, response);
-        } catch (Exception e) {
-            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
-            request.getRequestDispatcher("error/error.jsp").forward(request, response);
-        }
-
+                  Cookie cookie = editCart(cookies, productID);
+                  if (cookie != null) {
+                        response.addCookie(cookie);
+                   }
+                  response.sendRedirect("home");
+         }catch(IOException | SQLException ex){
+             request.setAttribute("message", ex.getMessage());
+            request.getRequestDispatcher("view/Error.jsp").forward(request, response);
+         }
     }
 
+    /**
+     * The method is used to create cart and set value,age
+     * @param productID is <code>String<code>
+     * @param cookie are array <code>Cookie<code>
+     * @return  cartCookie
+     */
     private Cookie editCart(Cookie[] cookie, String productID) {
         String cartValue = "";
         Cookie cartCookie = null;
@@ -84,6 +91,12 @@ public class AddToCartController extends HttpServlet {
         return cartCookie;
     }
 
+    /**
+     * The method is used to update value
+     * @param cartValue is <code>String<code>
+     * @param productID is a <code>String<code>
+     * @return sb.toString()
+     */
     private String updateCartValue(String cartValue, String productID) {
         String regex1 = "%&%";
         String regex2 = "%";
@@ -97,15 +110,14 @@ public class AddToCartController extends HttpServlet {
             String[] arrCart = cartValue.split(regex1);
 
             //check for book
-            for (int i = 0; i < arrCart.length; i++) {
+            for (String arrCart1 : arrCart) {
                 //if product is exist on cart
-                if (arrCart[i].contains(productID)) {
+                if (arrCart1.contains(productID)) {
                     addNew = false;
                     //split sring to get [bookid] and [quantity]
-                    String[] temp = arrCart[i].split(regex2);
+                    String[] temp = arrCart1.split(regex2);
                     //count up quantity
                     int quantity = Integer.parseInt(temp[1]) + 1;
-
                     //rebuild [bookid]%[quantity]%&% then continue
                     sb.append(productID)
                             .append(regex2)
@@ -114,8 +126,7 @@ public class AddToCartController extends HttpServlet {
                     continue;
                 }
                 //rebuild [bookid]%[quantity]%&%
-                sb.append(arrCart[i])
-                        .append(regex1);
+                sb.append(arrCart1).append(regex1);
             }
         }
 

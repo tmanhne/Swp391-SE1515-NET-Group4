@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.BooksDAO;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -35,7 +35,7 @@ public class SearchController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
           try{
-              BooksDAO db = new BooksDAO();
+              ProductDAO db = new ProductDAO();
               String name = "";
               //check search parameter
               if (request.getParameter("search") != null) {
@@ -45,10 +45,10 @@ public class SearchController extends HttpServlet {
               }
 
               ArrayList<Product> books = new ArrayList<>();
-              books = db.getBookByName(name);
+              books = db.getProductByName(name);
 
               ArrayList<Product> bestSellerBooks = new ArrayList<>();
-              bestSellerBooks = db.getBestSellerBooks();
+              bestSellerBooks = db.getBestSellerProducts();
 
               request.setAttribute("books", books);
               request.setAttribute("bestSellerBooks", bestSellerBooks);

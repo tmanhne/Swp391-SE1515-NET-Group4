@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.BooksDAO;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -63,10 +63,9 @@ public class HomeAdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
           try{
-              BooksDAO db = new BooksDAO();
+              ProductDAO db = new ProductDAO();
 //        List<Book> books = new ArrayList<>();
 //        books = db.getAllBooks();
-
               String indexPage = request.getParameter("index");
               if (indexPage == null) {
                   indexPage = "1";
@@ -78,9 +77,8 @@ public class HomeAdminController extends HttpServlet {
                   endPage++;
               }
               List<Product> listPage = db.pagingProduct(index);
-
               request.setAttribute("listPage", listPage);
-//        request.setAttribute("list", books);
+//            request.setAttribute("list", books);
               request.setAttribute("endPage", endPage);
               request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
         }catch(Exception e){
@@ -109,9 +107,9 @@ public class HomeAdminController extends HttpServlet {
                       name = request.getParameter("search").toString().trim();//if parameter is not empty
                   }
               }
-              BooksDAO db = new BooksDAO();
+              ProductDAO db = new ProductDAO();
               List<Product> books = new ArrayList<>();
-              books = db.getBookByName(name);
+              books = db.getProductByName(name);
 
               request.setAttribute("listPage", books);
               request.setAttribute("searchname", name);

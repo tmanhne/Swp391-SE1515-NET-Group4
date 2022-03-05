@@ -1,7 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ * 
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-14        1.0               manhtthe140619      First Implement
  */
 package controller;
 
@@ -13,13 +16,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.BooksDAO;
 import dao.ProductDAO;
 import java.util.ArrayList;
 import model.Product;
 import model.Product;
 
 /**
+ ** The class contains method respond for initialize update new attribute
+ * get value form jsp insert to database.
+ * validate value after update.
+ * table in database. The method will throw an object of
+ * <code>java.lang.Exception</code> class if there is any error occurring when
  *
  * @author t.manh
  */
@@ -55,15 +62,14 @@ public class AdminEditProductController extends HttpServlet {
         try {
             processRequest(request, response);
             String pid = request.getParameter("pid");
-            BooksDAO db = new BooksDAO();
-            Product b = db.getBookById(pid);
+            ProductDAO db = new ProductDAO();
+            Product b = db.getProductById(pid);
             request.setAttribute("book", b);
             request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
-
 //        request.getRequestDispatcher("adminview/adminViewProduct.jsp").forward(request, response);
     }
 
@@ -87,7 +93,6 @@ public class AdminEditProductController extends HttpServlet {
             boolean isContinues = Boolean.parseBoolean(request.getParameter("isContinue"));
             String ratting = request.getParameter("ratting").trim();
 //        Product b = new Book(productId, pName, pDes, uPrice, uInStock, ratting, isContinues);
-
             Validate validate = new Validate();
             boolean checkValidate = false;
             // validate name of product
@@ -119,6 +124,7 @@ public class AdminEditProductController extends HttpServlet {
             System.out.println("product " + b.toString());
             ProductDAO db = new ProductDAO();
             request.setAttribute("book", b);
+            //if all parametter is true 
             if (!checkValidate) {
                 request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
                 return;

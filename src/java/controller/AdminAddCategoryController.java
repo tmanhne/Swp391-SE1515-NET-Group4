@@ -1,7 +1,10 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ * 
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-21         1.0               manhtthe140619      First Implement
  */
 package controller;
 
@@ -18,6 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import model.Category;
 
 /**
+ ** The class contains method respond for initialize add new attribute
+ * get value form jsp insert to database.
+ * validate value after insert.
+ * table in database. The method will throw an object of
+ * <code>java.lang.Exception</code> class if there is any error occurring when
  *
  * @author t.manh
  */
@@ -68,7 +76,7 @@ public class AdminAddCategoryController extends HttpServlet {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
-        
+
     }
 
     /**

@@ -6,6 +6,8 @@
 package dao;
 
 import dal.DBConnection;
+import interfaceDAO.IAccountDAO;
+import interfaceDAO.IFeedBackDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,14 +20,16 @@ import model.FeedBack;
  *
  * @author Thongchu
  */
-public class FeedBackDAO extends DBConnection {
+public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
     
      /**
      *
      * @param NO 
      * @return return all FeedBack of member  
+     * @throws java.lang.Exception  
      */
-     public List<FeedBack> getAllFeedBack() throws Exception {
+     @Override
+     public List<FeedBack> getAllFeedBack() throws Exception  {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -61,7 +65,8 @@ public class FeedBackDAO extends DBConnection {
         return feedBacks;
     }
     
-     public List<FeedBack> getAllFeedBackByQuerry (String customerPara,String productPara)throws Exception{
+     @Override
+     public List<FeedBack> getAllFeedBackByQuerry (String customerPara,String productPara,String rattingPara)throws Exception{
          Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -76,13 +81,21 @@ public class FeedBackDAO extends DBConnection {
                 if(!productPara.equals("all")) {
                     sql=sql +" and f.ProductID = "+productPara+" " ;
                 }
+                if(!rattingPara.equals("all")) {
+                    sql=sql +" and f.Ratting = "+rattingPara+" " ;
+                }
             }
             else {
                 if(!productPara.equals("all")) {
                     sql.concat(" where f.ProductID = "+productPara+" ");
-                }    
+                    if(!rattingPara.equals("all")) {
+                        sql=sql +" and f.Ratting = "+rattingPara+" " ;
+                    }
+                }
+                else if(!rattingPara.equals("all")) {
+                    sql=sql +" where f.Ratting = "+rattingPara+" " ;
+                }
             } 
-            System.out.println(sql);
             con = super.open();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

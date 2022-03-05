@@ -51,15 +51,45 @@ public interface IProductDAO {
      * @throws java.sql.SQLException
      */
      public Product getProductById(String pid) throws SQLException;
-
+     
+    /**
+     * This method used search all products by name from Products table
+     * @param name is a <code>String</code>
+     * @return account is a ArrayList <code>books</code>
+     * @throws java.lang.Exception
+     */
     public void insertProduct(Product p) throws Exception;
-
+    
+    /**
+     * This method used search all products by name from Products table
+     * @param name is a <code>String</code>
+     * @return account is a ArrayList <code>books</code>
+     * @throws java.lang.Exception
+     */
     public int updateBook(Product product) throws Exception;
 
+    /**
+     * This method used search all products by name from Products table
+     * @param name is a <code>String</code>
+     * @return account is a ArrayList <code>books</code>
+     * @throws java.lang.Exception
+     */
     public int getTotalProduct() throws Exception;
     
+    /**
+     * This method used search all products by name from Products table
+     * @param name is a <code>String</code>
+     * @return account is a ArrayList <code>books</code>
+     * @throws java.lang.Exception
+     */
     public List<Product> pagingProduct(int index) throws Exception;
     
+    /**
+     * This method used search all products by name from Products table
+     * @param name is a <code>String</code>
+     * @return account is a ArrayList <code>books</code>
+     * @throws java.lang.Exception
+     */
     public void removeProduct(String pid) throws Exception;
 
 }

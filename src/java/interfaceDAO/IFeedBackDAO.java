@@ -13,6 +13,6 @@ import model.FeedBack;
  * @author Thongchu
  */
 public interface IFeedBackDAO {
-    public List<FeedBack> getAllFeedBack();
-    public List<FeedBack> getAllFeedBackByQuerry(String customerPara,String productPara);
+    public List<FeedBack> getAllFeedBack() throws Exception;
+    public List<FeedBack> getAllFeedBackByQuerry(String customerPara,String productPara,String rattingPara) throws Exception;
 }

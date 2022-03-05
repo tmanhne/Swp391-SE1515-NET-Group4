@@ -51,20 +51,21 @@
                             </c:if>
                             <c:if test="${customer.customerID != requestScope.productPara}">
                                 <option value="${product.productID}">${product.productName}</option>
-                            </c:if> 
+                            </c:if>
                         </c:forEach>
                     </select>
-                    <select name="productID">
+                    Ratting :
+                   <select name="rattingID">
                         <option value="all">All</option>
-                        <c:forEach var="product" items="${requestScope.products}">
-                            <c:if test="${product.productID == requestScope.productPara}">
-                                <option value="${product.productID}" selected>${product.productName}</option>
+                        <c:forTokens items="1,2,3,4,5" delims="," var="rate">  
+                            <c:if test="${rate == requestScope.rattingPara}">
+                                <option value="${rate}" selected>${rate}</option>
                             </c:if>
-                            <c:if test="${customer.customerID != requestScope.productPara}">
-                                <option value="${product.productID}">${product.productName}</option>
-                            </c:if> 
-                        </c:forEach>
-                    </select> 
+                            <c:if test="${rate != requestScope.rattingPara}">
+                                <option value="${rate}" >${rate}</option>
+                            </c:if>  
+                        </c:forTokens> 
+                    </select>
 
                     <input type="submit" value="Search" name="searchViewFeedBack"  />
                     <c:choose>

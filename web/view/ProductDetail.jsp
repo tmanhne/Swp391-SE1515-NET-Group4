@@ -14,8 +14,12 @@
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
         <!------ Include the above in your HEAD tag ---------->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="./public/style/productCommet.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 
@@ -63,7 +67,7 @@
                                         <button class="btn btn-primary btn-md my-0 p" type="submit">Buy Now</button>
                                     </a>
                                 </form>
-                                    <br>
+                                <br>
                                 <!-- Default input -->
                                 <a href="/Swp391-SE1515-NET-Group4/home">
                                     <button class="btn btn-primary btn-md my-0 p" type="submit">Back</button>
@@ -111,6 +115,76 @@
                     <div class="col-lg-4 col-md-12 mb-4">
 
                         <img src="${book.getImagePath()}" class="img-fluid" alt="">
+
+
+                    </div>
+
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+                
+               <!--Link tham khao-->
+                <!--https://www.bootdey.com/snippets/view/Blog-Comments-With-Form#html--> 
+                <!--Grid row-->
+                <div class="row wow fadeIn">
+                        
+                    <!--Grid column-->
+                    <div class="col-lg-4 col-md-12 mb-4">
+
+                        <div class="container">
+                            <div class="be-comment-block">
+                                <h1 class="comments-title">Comments (${requestScope.feedBacks.size()})</h1>
+                                <!--comment-->
+                                <c:forEach var="feedBack" items="${requestScope.feedBacks}">
+                                    <div class="be-comment">
+                                        <div class="be-img-comment">	
+                                            <a href="blog-detail-2.html">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+                                            </a>
+                                        </div>
+                                        <div class="be-comment-content">
+
+                                            <span class="be-comment-name">
+                                                <a href="blog-detail-2.html">${feedBack.customerName}</a>
+                                            </span>
+                                            <span class="be-comment-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                ${feedBack.feedbackDate}
+                                            </span>
+                                            <p class="be-comment-text">
+                                               ${feedBack.description}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                                
+                                <form action="viewDetail" method="post" class="form-block">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 fl_icon">
+                                                <div class="rate">
+                                            <input type="radio" id="star5" name="rate" value="5" />
+                                            <label for="star5" title="text">5 stars</label>
+                                            <input type="radio" id="star4" name="rate" value="4" />
+                                            <label for="star4" title="text">4 stars</label>
+                                            <input type="radio" id="star3" name="rate" value="3" />
+                                            <label for="star3" title="text">3 stars</label>
+                                            <input type="radio" id="star2" name="rate" value="2" />
+                                            <label for="star2" title="text">2 stars</label>
+                                            <input type="radio" id="star1" name="rate" value="1" />
+                                            <label for="star1" title="text">1 star</label>
+                                          </div>
+                                        </div>
+                                        <div class="col-xs-12">									
+                                            <div class="form-group">
+                                                <textarea class="form-input" required="" placeholder="Add you comment here" name="text-comment"></textarea>
+                                            </div>
+                                        </div>
+                                        <input class="btn btn-primary pull-right" type="submit" value="Submit" name="btn-submit-comment" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div> 
 
 
                     </div>

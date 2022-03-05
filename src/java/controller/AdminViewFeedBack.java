@@ -50,6 +50,7 @@ public class AdminViewFeedBack extends HttpServlet {
             ArrayList<FeedBack> feedBacks=new ArrayList<>();
             ArrayList<Customer> customers=new ArrayList<>();
             ArrayList<Product> products=new ArrayList<>();
+            int[] rates = { 1, 2, 3, 4, 5 };
             // get all feedback in database             
             feedBacks = (ArrayList<FeedBack>) feedBackDAO.getAllFeedBack();
             customers = (ArrayList<Customer>) customerDAO.getAllCustomer();
@@ -58,6 +59,7 @@ public class AdminViewFeedBack extends HttpServlet {
             request.setAttribute("feedBacks", feedBacks);
             request.setAttribute("customers", customers);
             request.setAttribute("products", products);
+            request.setAttribute("rates", rates);
             request.getRequestDispatcher("./adminview/adminViewFeedBack.jsp").forward(request, response);
         } 
         catch (Exception e) {
@@ -91,12 +93,13 @@ public class AdminViewFeedBack extends HttpServlet {
             if (null != searchViewFeedBack) {
                 String customerPara = request.getParameter("customerID");
                 String productPara = request.getParameter("productID");
+                String rattingPara = request.getParameter("rattingID");
                 
                 // check null for parameter
                 if (null!=customerPara && null!=productPara) {
                     FeedBackDAO feedBackDAO=new FeedBackDAO();
                     ArrayList<FeedBack> feedBacks=new ArrayList<>();
-                    feedBacks = (ArrayList<FeedBack>) feedBackDAO.getAllFeedBackByQuerry(customerPara,productPara);
+                    feedBacks = (ArrayList<FeedBack>) feedBackDAO.getAllFeedBackByQuerry(customerPara,productPara,rattingPara);
                     // check contain data 
                     if(feedBacks.size() >0 ) {
                         request.setAttribute("feedBacks", feedBacks);
@@ -104,6 +107,7 @@ public class AdminViewFeedBack extends HttpServlet {
                         request.setAttribute("products", products);
                         request.setAttribute("customerPara", customerPara);
                         request.setAttribute("productPara", productPara);
+                        request.setAttribute("rattingPara", rattingPara);
                         request.getRequestDispatcher("./adminview/adminViewFeedBack.jsp").forward(request, response);
                     }
                     else {
@@ -112,6 +116,7 @@ public class AdminViewFeedBack extends HttpServlet {
                         request.setAttribute("products", products);
                         request.setAttribute("customerPara", customerPara);
                         request.setAttribute("productPara", productPara);
+                        request.setAttribute("rattingPara", rattingPara);
                         request.setAttribute("message", "Dont have data");
                         request.getRequestDispatcher("./adminview/adminViewFeedBack.jsp").forward(request, response);
                     }

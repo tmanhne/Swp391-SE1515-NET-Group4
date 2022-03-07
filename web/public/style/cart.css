@@ -305,11 +305,19 @@ aside {
     text-align: right;
 }
 .summary-ship,
-.total-ship {
+.total-ship,
+.date-ship,
+.payment-method {
     width: 50%;
     color: #111;
 }
-.total-ship {
+.address {
+    width: 80%;
+    color: #111;
+}
+.total-ship,
+.date-ship,
+.payment-method {
     text-align: right;
 }
 .total-title {

@@ -35,6 +35,8 @@
                                     <div class="divTableCell">Category ID: </div>
                                     <div class="divTableCell">
                                         <input type="text" class="form-control" name="categoryId" value="${requestScope.category.getCategoryID()}">
+                                        <br>
+                                        <p style="color: red;">${requestScope.cateId}</p>
                                     </div>
                                 </div>
                                 <div class="divTableRow">

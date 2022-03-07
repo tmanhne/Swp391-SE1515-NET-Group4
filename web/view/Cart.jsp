@@ -76,33 +76,45 @@
             </div>
 
             <form name="buy" action="cart" method="POST">
-                <aside>
-                    <div class="summary">
-                        <div class="summary-total-items">
-                            <span class="total-items"></span> Items in your Bag
-                        </div>
-                        <div class="summary-subtotal">
-                            <div class="subtotal-title">Subtotal</div>
-                            <div class="subtotal-value final-value" id="basket-subtotal">
-                                ${requestScope.totalAmount}
-                            </div>
-                        </div>
-                        <div class="summary-delivery">
-                            <div class="summary-ship">Ship</div>
-                            <div class="total-ship" id="basket-total">${requestScope.ship}</div>
-                        </div>
-                        <div class="summary-total">
-                            <div class="total-title">Total</div>
-                            <div class="total-value final-value" id="basket-total">
-                                ${requestScope.totalAmount+requestScope.ship}
-                            </div>
-                        </div>
-                        <div class="summary-checkout">
-                            <button type="submit" class="checkout-cta">Checkout Cart</button>
-                            ${requestScope.mess}
-                        </div>
-                    </div>
-                </aside>  
+                   <aside>
+              <div class="summary">
+                  <div class="summary-total-items">
+                      <span class="total-items"></span> Items in your Bag
+                  </div>
+                  <div class="summary-subtotal">
+                      <div class="subtotal-title">Subtotal</div>
+                      <div class="subtotal-value final-value" id="basket-subtotal">
+                          ${requestScope.totalAmount}
+                      </div>
+                  </div>
+                  <div class="summary-delivery">
+                      <div class="summary-ship">Ship</div>
+                      <div class="total-ship" id="basket-total">${requestScope.ship}</div>
+                  </div>
+                  <div class="summary-delivery">
+                    <div class="summary-ship">Order Date</div>
+                    <div class="date-ship" id="basket-total">12:02</div>
+                </div>
+                <div class="summary-delivery">
+                  <div class="summary-ship">Address</div>
+                  <input class="address" id="basket-total"></input>
+              </div>
+                <div class="summary-delivery">
+                  <div class="summary-ship">Payment</div>
+                  <div class="payment-method" id="basket-total">Cash</div>
+              </div>
+                  <div class="summary-total">
+                      <div class="total-title">Total</div>
+                      <div class="total-value final-value" id="basket-total">
+                          ${requestScope.totalAmount+requestScope.ship}
+                      </div>
+                  </div>
+                  <div class="summary-checkout">
+                      <button type="submit" class="checkout-cta">Checkout Cart</button>
+                      ${requestScope.mess}
+                  </div>
+              </div>
+          </aside> 
             </form>
         </main>
     </body>

@@ -26,7 +26,7 @@ import javax.naming.NamingException;
  */
 public class Validate {
 
-    private static String regexname = "^[\\w\\d\\@\\.\\p{L}]+$";
+    private static String regexname = "^[\\w\\d\\@\\{3,15}\\.\\p{L}]+$";
     private static String regexpass = "^[\\w\\d\\@]+$";
     private static String regexInt = "^\\d+$";
     private static String regexDouble = "^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$";
@@ -188,8 +188,10 @@ public class Validate {
 
         return true;
     }
+
     /**
      * Check email
+     *
      * @param email
      * @return email is valid
      */
@@ -205,8 +207,8 @@ public class Validate {
         }
         return pat.matcher(email).matches();
     }
-    public static boolean checkPhoneNumber(String s)
-    {
+
+    public static boolean checkPhoneNumber(String s) {
         Pattern p = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})\\b");
         Matcher m = p.matcher(s);
         return (m.matches());

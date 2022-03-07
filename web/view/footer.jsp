@@ -15,7 +15,7 @@
         <style>
             .section-footer{
                 width: 100%;
-                background-color:rgb(243, 245, 244);
+                background-color:#00FA9A;
                 padding-top: 2%;
                 padding-left: 40%;
             }

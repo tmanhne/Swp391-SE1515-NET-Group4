@@ -22,11 +22,10 @@ import model.Product;
 import model.Product;
 
 /**
- ** The class contains method respond for initialize update new attribute
- * get value form jsp insert to database.
- * validate value after update.
- * table in database. The method will throw an object of
- * <code>java.lang.Exception</code> class if there is any error occurring when
+ ** The class contains method respond for initialize update new attribute get
+ * value form jsp insert to database. validate value after update. table in
+ * database. The method will throw an object of <code>java.lang.Exception</code>
+ * class if there is any error occurring when
  *
  * @author t.manh
  */
@@ -60,7 +59,6 @@ public class AdminEditProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            processRequest(request, response);
             String pid = request.getParameter("pid");
             ProductDAO db = new ProductDAO();
             Product b = db.getProductById(pid);
@@ -119,23 +117,30 @@ public class AdminEditProductController extends HttpServlet {
             double unitInPrice = Double.parseDouble(uPrice);
             int unitInStock = Integer.parseInt(uInStock);
             int uratting = Integer.parseInt(ratting);
-            Product b = new Product(productId, pName, pDes, unitInPrice, unitInStock, isContinues, uratting);
-            // update to database
-            System.out.println("product " + b.toString());
-            ProductDAO db = new ProductDAO();
-            request.setAttribute("book", b);
+
             //if all parametter is true 
             if (!checkValidate) {
+                Product b = new Product(productId, pName, pDes, unitInPrice, unitInStock, isContinues, uratting);
+                // update to database
+                ProductDAO db = new ProductDAO();
+                request.setAttribute("book", b);
+                int count = db.updateBook(b);
+                request.setAttribute("mess", count);
+                if (count != 0) {
+                    request.setAttribute("mess", "Update success!!");
+                } else {
+                    request.setAttribute("mess", "Update fail!!");
+                }
                 request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
-                return;
-            }
-            int count = db.updateBook(b);
-            request.setAttribute("mess", count);
-            if (count != 0) {
-                request.setAttribute("mess", "Update success!!");
             } else {
-                request.setAttribute("mess", "Update fail!!");
+                Product b = new Product(productId, pName, pDes, unitInPrice, unitInStock, isContinues, uratting);
+                // update to database
+                ProductDAO db = new ProductDAO();
+                request.setAttribute("book", b);
+                //if one variable false => return page and variable false
+                request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
             }
+
             request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");

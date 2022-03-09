@@ -15,4 +15,6 @@ import model.FeedBack;
 public interface IFeedBackDAO {
     public List<FeedBack> getAllFeedBack() throws Exception;
     public List<FeedBack> getAllFeedBackByQuerry(String customerPara,String productPara,String rattingPara) throws Exception;
+    public List<FeedBack> getFeedBackBYProductID(String productID) throws Exception;
+    public void insertFeeback(FeedBack feedBack) throws Exception;
 }

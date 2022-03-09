@@ -98,7 +98,6 @@ public class AdminAddProductController extends RequiredAdminAccount {
                 double unitInPrice = Double.parseDouble(unitPricePara);
                 int unitInStock = Integer.parseInt(unitInStockPara);
                 Date date = new Date();
-                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 
                 // add all attribute to class 
                 Product product = new Product(idPara, namePara, imagePara, date, descriptionPara, unitInPrice, unitInStock, isContinue, 5, categoryID);

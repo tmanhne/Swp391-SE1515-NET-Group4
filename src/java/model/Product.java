@@ -26,13 +26,23 @@ public class Product {
     private String categoryID;
     private ArrayList<String> authors;
 
-   
     public Product() {
     }
 
     public Product(String productID, String productName, String description, double unitPrice, int unitInStock, boolean isContinue, int ratting) {
         this.productID = productID;
         this.productName = productName;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.unitInStock = unitInStock;
+        this.isContinue = isContinue;
+        this.ratting = ratting;
+    }
+
+    public Product(String productID, String productName, String imagePath, String description, double unitPrice, int unitInStock, boolean isContinue, int ratting) {
+        this.productID = productID;
+        this.productName = productName;
+        this.imagePath = imagePath;
         this.description = description;
         this.unitPrice = unitPrice;
         this.unitInStock = unitInStock;
@@ -132,7 +142,7 @@ public class Product {
     public void setCategoryID(String categoryID) {
         this.categoryID = categoryID;
     }
-    
+
     public ArrayList<String> getAuthors() {
         return authors;
     }

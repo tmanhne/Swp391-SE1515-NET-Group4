@@ -91,5 +91,4 @@ public interface IProductDAO {
      * @throws java.lang.Exception
      */
     public void removeProduct(String pid) throws Exception;
-
 }

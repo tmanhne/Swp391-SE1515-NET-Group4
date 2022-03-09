@@ -15,7 +15,7 @@
         <style>
             .section-footer{
                 width: 100%;
-                background-color:#00FA9A;
+                background-color:rgb(243, 245, 244);
                 padding-top: 2%;
                 padding-left: 40%;
             }
@@ -29,6 +29,9 @@
                 </p>
 
             </div><!-- //container -->
+            <div>
+                <a href="ReportController" style="text-align: center">Send Report</a>
+            </div>
         </footer>
     </body>
 </html>

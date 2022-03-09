@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -77,7 +75,7 @@ public class ProductDetailController extends HttpServlet {
                     request.setAttribute("rate", rate);
                     request.setAttribute("rates", rateForEachStar);
                     request.setAttribute("id", productID);
-                    request.getRequestDispatcher("view/ProductDetail.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
                 }
                 else if(!validate.checkInvalidComment(comment)) {
                     request.setAttribute("book", product);
@@ -100,7 +98,7 @@ public class ProductDetailController extends HttpServlet {
                     request.setAttribute("id", productID);
                     request.setAttribute("rate", rate);
                     request.setAttribute("rates", rateForEachStar);
-                    request.getRequestDispatcher("view/ProductDetail?.jsp").forward(request, response);
+                    request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
                 }    
                 
             }
@@ -110,7 +108,7 @@ public class ProductDetailController extends HttpServlet {
                 request.setAttribute("rate", rate);
                 request.setAttribute("rates", rateForEachStar);
                 request.setAttribute("id", 4);           
-                request.getRequestDispatcher("view/ProductDetail.jsp").forward(request, response);
+                request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
             }
             
         }catch(IOException | SQLException | ServletException   ex){

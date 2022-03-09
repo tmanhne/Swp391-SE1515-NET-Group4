@@ -1,9 +1,6 @@
 /*
  * Copyright(C)2021, FPT University
  * SWP 391
-/*
- * Copyright(C)2021, FPT University
- * SWP 391
  * 
  * Record of change
  * DATE             VERSION             AUTHOR              DESCRIPTION
@@ -26,7 +23,7 @@ import model.Category;
 import model.Product;
 
 /**
- * The class contain method doGet used BooksDAO to get products then forward to
+ * The class contain method doGet used ProductDAO to get products then forward to
  * LandingPage
  *
  * @author vudm
@@ -37,7 +34,7 @@ public class HomeController extends HttpServlet {
     /**
      * Get all book,best seller and highest price of products from database then
      * setAttribute and forward to LangdingPage.jsp
-     *
+     * 
      * @param request is HttpServletRequest
      * @param response is HttpServletResponse
      * @throws ServletException if a servlet-specific error occurs
@@ -61,7 +58,7 @@ public class HomeController extends HttpServlet {
             request.setAttribute("books", products);
             request.setAttribute("bestSellerBooks", bestSellerProducts);
             request.setAttribute("highestPricerBooks", highestPricerProducts);
-            request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
+            request.getRequestDispatcher("view/landingPage.jsp").forward(request, response);
         } catch (Exception ex) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);

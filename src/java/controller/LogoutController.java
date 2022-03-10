@@ -38,7 +38,7 @@ public class LogoutController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LogoutController</title>");            
+            out.println("<title>Servlet LogoutController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LogoutController at " + request.getContextPath() + "</h1>");
@@ -60,20 +60,18 @@ public class LogoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if(session!=null){
+        if (session != null) {
             session.invalidate();
         }
-        
+
         //remove remmember password
         Cookie[] cookie = request.getCookies();
         if (cookie != null) {
             for (Cookie c : cookie) {
-                if (c.getName().equals("user")) {
-
+                if (c.getName().equals("Username")) {
                     c.setMaxAge(0);
                     response.addCookie(c);
-                } else if (c.getName().equals("pass")) {
-
+                } else if (c.getName().equals("Password")) {
                     c.setMaxAge(0);
                     response.addCookie(c);
                 }

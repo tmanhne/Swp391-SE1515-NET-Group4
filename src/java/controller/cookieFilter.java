@@ -22,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hfyl
  */
-@WebFilter(filterName = "cookieFilter", urlPatterns = {"/home","/cart"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
+@WebFilter(filterName = "cookieFilter"
+        , urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class cookieFilter implements Filter {
 
     private static final boolean debug = true;
@@ -47,16 +48,20 @@ public class cookieFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+        String servletPath = req.getServletPath();
+        if (servletPath.equalsIgnoreCase("/Login")) {
+			chain.doFilter(request, response);
+			return;
+		}
+        if (null != req.getSession().getAttribute("account")) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         Throwable problem = null;
         try {
-            HttpServletRequest req = (HttpServletRequest) request;
-            HttpServletResponse res = (HttpServletResponse) response;
-            if(null!=req.getSession().getAttribute("account")){
-                chain.doFilter(request, response);
-                return;
-            }
-            
             Cookie[] cookies = req.getCookies();
             boolean userfound = false;
             boolean passfound = false;
@@ -80,11 +85,11 @@ public class cookieFilter implements Filter {
                 }
             }
 
-            if (passfound && userfound && passfound == true) {
+            if ((passfound && userfound) && (passfound == true)) {
                 res.sendRedirect("Login");
-            }else{
-                chain.doFilter(request, response);
+                return;
             }
+            chain.doFilter(request, response);
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then

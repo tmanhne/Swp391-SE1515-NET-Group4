@@ -1,15 +1,10 @@
-html,
-html a {
-    -webkit-font-smoothing: antialiased;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+* {
+    box-sizing: border-box;
 }
 
 body {
-    background-color: #fff;
-    color: #666;
-    font-family: "Open Sans", sans-serif;
-    font-size: 62.5%;
-    margin: 0 auto;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -84,7 +79,7 @@ button,
     display: none;
 }
 
-main {
+.body-cart {
     clear: both;
     font-size: 0.75rem;
     margin: 0 auto;
@@ -411,7 +406,7 @@ aside {
 }
 
 @media screen and (max-width: 960px) {
-    main {
+    .body-cart {
         width: 100%;
     }
     .product-details {

@@ -14,7 +14,7 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <main>
+        <div class="body-cart">
             <div class="basket">
                 <div class="basket-labels">
                     <ul>
@@ -117,6 +117,6 @@
               </div>
           </aside> 
             </form>
-        </main>
+        </div>
     </body>
 </html>

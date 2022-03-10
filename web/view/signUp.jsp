@@ -126,12 +126,12 @@
             body {
                 background: #76b852;
 /*                 fallback for old browsers */
-/*              background: -webkit-linear-gradient(to top, #76b852, #8DC26F);
+              background: -webkit-linear-gradient(to top, #76b852, #8DC26F);
                 background: -moz-linear-gradient(to top, #76b852, #8DC26F);
                 background: -o-linear-gradient(to top, #76b852, #8DC26F);
                 background: linear-gradient(to top, #76b852, #8DC26F);
                 background-size: cover;
-                background-attachment: fixed;*/
+                background-attachment: fixed;
                 font-family: 'Roboto', sans-serif;
             }
 
@@ -777,10 +777,12 @@
                 }
             }
         </style>
+        
     </head>
     <body>
         <!-- main -->
-        <div class="main-w3layouts wrapper">
+        
+        <div class="main-w3layouts-wrapper">
             <h1>Creative SignUp Form</h1>
             <div class="main-agileinfo">
                 <div class="agileits-top">
@@ -864,9 +866,10 @@
                                     </c:otherwise>
                            </c:choose>
                         
-                            <div>${notification}</div>
+                                        <div style="color: red">${notification}</div>
                         <input type="submit" value="SIGNUP">
                     </form>
+                        <a href="home"><button value="Back">Back</button></a>
                     <p>Don't have an Account? <a href="Login"> Login Now!</a></p>
                 </div>
             </div>

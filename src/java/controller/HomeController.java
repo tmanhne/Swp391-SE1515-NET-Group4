@@ -58,7 +58,7 @@ public class HomeController extends HttpServlet {
             request.setAttribute("books", products);
             request.setAttribute("bestSellerBooks", bestSellerProducts);
             request.setAttribute("highestPricerBooks", highestPricerProducts);
-            request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
+            request.getRequestDispatcher("view/landingPage.jsp").forward(request, response);
         } catch (Exception ex) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);

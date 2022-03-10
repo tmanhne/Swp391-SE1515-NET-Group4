@@ -54,7 +54,7 @@
                                 <div class="form-inline" type="checkbox" name="remember"> <input type="checkbox" name="remember" id="remember"/> <label name="remember" for="remember" class="text-muted">Remember me</label> <a href="#" id="forgot" class="font-weight-bold">Forgot password?</a> </div>
                                 <label>${requestScope.Message}</label><br/>
                                 <button class="btn btn-primary btn-block mt-3">Login</button>
-                                <div class="text-center pt-4 text-muted">Don't have an account? <a href="view/SignUp.jsp">Sign up</a> </div>
+                                <div class="text-center pt-4 text-muted">Don't have an account? <a href="view/signUp.jsp">Sign up</a> </div>
                             </form>
                         </div>
                     </div>

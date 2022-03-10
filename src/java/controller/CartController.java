@@ -98,11 +98,11 @@ public class CartController extends HttpServlet {
             }
 
             if (page == -1) {
-                request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
+                request.getRequestDispatcher("view/cart.jsp").forward(request, response);
                 return;
             }
             request.setAttribute("page", page);
-            request.getRequestDispatcher("view/Cart.jsp?page=" + page).forward(request, response);
+            request.getRequestDispatcher("view/cart.jsp?page=" + page).forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
@@ -203,11 +203,11 @@ public class CartController extends HttpServlet {
                 request.setAttribute("ship", 0);
             }
             if (page == -1) {
-                request.getRequestDispatcher("view/Cart.jsp").forward(request, response);
+                request.getRequestDispatcher("view/cart.jsp").forward(request, response);
                 return;
             }
             request.setAttribute("page", page);
-            request.getRequestDispatcher("view/Cart.jsp?page=" + page).forward(request, response);
+            request.getRequestDispatcher("view/cart.jsp?page=" + page).forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);

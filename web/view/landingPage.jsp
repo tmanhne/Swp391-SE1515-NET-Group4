@@ -74,7 +74,6 @@
                                     </form>
                                     <div class="price">${book.getUnitPrice()}$</div>
                                 </div>
-
                             </div>
                         </c:forEach>
                         <span class="title">  Highest Price!!!  </span>

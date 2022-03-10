@@ -3,7 +3,7 @@
     Created on : Jan 18, 2022, 5:18:01 PM
     Author     : admin
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -28,8 +28,10 @@
                     </form>
                 </div>
                 <div class="group-manager">
-                    <a class="btn-login" href="#">Login</a>
-                    <a href="#">Logout</a>
+                    <c:if test="${null!=sessionScope.account}">
+                        <a href="logout">Logout</a>
+                        <p style="display: inline">Hello ${sessionScope.account.getUserName()}</p>
+                    </c:if>
                 </div>
             </div>
         </div>

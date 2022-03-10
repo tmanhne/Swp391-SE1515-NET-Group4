@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2022-02-14      1.0                 ThongCT               Second Implement
  */
 package model;
 
@@ -13,18 +13,24 @@ import java.util.Date;
  */
 public class FeedBack {
     private String customerID;
+    private String customerName;
     private Date feedbackDate;
     private String description;
     private String productID;
+    private String productName;
+    private int ratting ;
 
     public FeedBack() {
     }
 
-    public FeedBack(String customerID, Date feedbackDate, String description, String productID) {
+    public FeedBack(String customerID, String customerName, Date feedbackDate, String description, String productID, String productName, int ratting) {
         this.customerID = customerID;
+        this.customerName = customerName;
         this.feedbackDate = feedbackDate;
         this.description = description;
         this.productID = productID;
+        this.productName = productName;
+        this.ratting = ratting;
     }
 
     public String getCustomerID() {
@@ -33,6 +39,14 @@ public class FeedBack {
 
     public void setCustomerID(String customerID) {
         this.customerID = customerID;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public Date getFeedbackDate() {
@@ -58,6 +72,22 @@ public class FeedBack {
     public void setProductID(String productID) {
         this.productID = productID;
     }
-    
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public int getRatting() {
+        return ratting;
+    }
+
+    public void setRatting(int ratting) {
+        this.ratting = ratting;
+    }
+
     
 }

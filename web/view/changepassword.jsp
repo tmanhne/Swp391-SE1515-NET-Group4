@@ -54,22 +54,27 @@
                     <div class="col-md-7 ml-6">
                         <div class="row group">
                             <div class="col-sm-4"><h2 class="h4">Email</h2></div>
-                            <div class="col-sm-8"> <input type="text" class="form-control" name="email" value="${requestScope.account.email}" required="" placeholder="" /></div>
+                            <div class="col-sm-8"> <input type="text" class="form-control" name="email" value="${requestScope.email}" required="" placeholder="" />
+                                ${requestScope.messEmail}
+                            </div>
                         </div>
                         
                         <div class="row group">
                             <div class="col-sm-4"><h2 class="h4">Current Password</h2></div>
                             <div class="col-sm-8"> <input type="password" class="form-control" name="curPassword" id="password" value="${requestScope.password}" required="" placeholder=""/></div>
+                            ${requestScope.messCurrPassword}
                         </div>
 
                         <div class="row group">
                             <div class="col-sm-4"><h2 class="h4">New Password</h2></div>
                             <div class="col-sm-8"> <input type="password" class="form-control" name="password" id="password" value="${requestScope.password}" required="" placeholder=""/></div>
+                            ${requestScope.messPassWord}
                         </div>
                         
                         <div class="row group">
                             <div class="col-sm-4"><h2 class="h4">Confirm Password</h2></div>
                             <div class="col-sm-8"> <input type="password" class="form-control" name="rePassword" id="password" value="${requestScope.rePassword}" required="" placeholder=""/></div>
+                            ${requestScope.messRePassWord}
                         </div>
 
                         <div class="row group">

@@ -4,9 +4,8 @@
  *
  * Record of change
  * DATE             VERSION             AUTHOR              DESCRIPTION
- * 2022-02-08         1.0               VUDMHE140017      First Implement
+ * 2022-02-08         1.0               VUDMHE140017,THONGCT      First Implement
  */
-
 package dao;
 
 import interfaceDAO.IProductDAO;
@@ -26,7 +25,7 @@ import java.util.List;
  * @author vudm
  */
 public class ProductDAO extends dal.DBConnection implements IProductDAO {
-    
+
     /**
      * The method is used get all products from database
      *
@@ -67,7 +66,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
                 products.add(product);
             }
 
-        }  catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex;
         } finally {
             //close connection
@@ -79,11 +78,12 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     /**
      * Get top 3 best seller products from database
-     *  @return ArrayList products
-     *  @throws java.sql.SQLException
+     *
+     * @return ArrayList products
+     * @throws java.sql.SQLException
      */
     @Override
-    public ArrayList<Product> getBestSellerProducts() throws SQLException{
+    public ArrayList<Product> getBestSellerProducts() throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -116,7 +116,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
                 products.add(product);
             }
 
-        }  catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex;
         } finally {
             //close connection
@@ -128,12 +128,13 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     /**
      * Get top 2 highest price products from database
+     *
      * @return ArrayList products
      * @throws java.sql.SQLException
-     * 
+     *
      */
     @Override
-    public ArrayList<Product> getHighestPriceProducts() throws SQLException{
+    public ArrayList<Product> getHighestPriceProducts() throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -235,12 +236,13 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         return pageList;
     }
 
-     /**
+    /**
      * Get top 2 highest price products from database
+     *
      * @param pid is a <code>String</code>
      * @return ArrayList products
      * @throws java.sql.SQLException
-     * 
+     *
      */
     @Override
     public Product getProductById(String pid) throws SQLException {
@@ -394,7 +396,19 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = " UPDATE [dbo].[Products] "
+        String sql = "";
+        if(null!=product.getImagePath()){
+            sql = " UPDATE [dbo].[Products] "
+                + "   SET [ProductName] = ?  "
+                + "      ,[Description] = ?  "
+                + "      ,[UnitPrice] = ?  "
+                + "      ,[UnitInStock] = ?  "
+                + "      ,[IsContinue] = ?  "
+                + "      ,[Ratting] = ?  "
+                + "      ,[ImagePath] = ? "
+                + " WHERE [ProductID] = ? ";
+        }else{
+            sql = " UPDATE [dbo].[Products] "
                 + "   SET [ProductName] = ?  "
                 + "      ,[Description] = ?  "
                 + "      ,[UnitPrice] = ?  "
@@ -402,6 +416,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
                 + "      ,[IsContinue] = ?  "
                 + "      ,[Ratting] = ?  "
                 + " WHERE [ProductID] = ? ";
+        }
         try {
             //open connection
             con = super.open();
@@ -412,7 +427,12 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             ps.setInt(4, product.getUnitInStock());
             ps.setBoolean(5, product.isIsContinue());
             ps.setInt(6, product.getRatting());
-            ps.setString(7, product.getProductID());
+            if (null != product.getImagePath()) {
+                ps.setString(7, product.getImagePath());
+                ps.setString(8, product.getProductID());
+            } else {
+                ps.setString(7, product.getProductID());
+            }
             result = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -422,7 +442,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         }
         return result;
     }
-    
+
     public void removeProduct(String pid) throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
@@ -441,5 +461,43 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         }
     }
 
-}
+    /**
+     *
+     * @param NO
+     * @return return all FeedBack of member
+     */
+    public List<Product> getAllProduct() throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Product> products = new ArrayList<>();
+        try {
+            String sql = "select * from Products";
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            // IF database have feedback of customer            
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductID(rs.getString(1));
+                product.setProductName(rs.getString(2));
+                product.setImagePath(rs.getString(3));
+                product.setCreateDate(rs.getDate(4));
+                product.setDescription(rs.getString(5));
+                product.setUnitPrice(rs.getDouble(6));
+                product.setUnitInStock(rs.getInt(7));
+                product.setIsContinue(rs.getBoolean(8));
+                product.setRatting(rs.getInt(9));
+                product.setCategoryID(rs.getString(10));
+                products.add(product);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        } finally {
+            super.close(con, ps, rs);
+        }
+        return products;
+    }
 
+}

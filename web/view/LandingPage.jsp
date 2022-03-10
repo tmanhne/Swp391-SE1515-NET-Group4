@@ -6,22 +6,27 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-      <link href="./public/style/LandingPage.css" rel="stylesheet" type="text/css"/>
+        <link href="./public/style/landingPage.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <script>
+            function addToCart() {
+                alert("Add Successfull!");
+            }
+        </script>
         <div>
             <jsp:include page="header.jsp"></jsp:include>
-            
-            <div id="home">
-                <div id="home-content">
-                    <div id="home-content-left">
-                    <c:forEach items="${requestScope.books}" var="book">
+
+                <div id="home">
+                    <div id="home-content">
+                        <div id="home-content-left">
+                        <c:forEach items="${requestScope.books}" var="book">
                             <div class="book-container">
                                 <div class="book-container-header">
                                     <div class="book-thumbnail">
@@ -34,13 +39,13 @@
                                                 <span class="author">${author}</span>
                                             </c:forEach>
                                         </div>
-                                            <div class="description">${book.getDescription()}</div>
+                                        <div class="description">${book.getDescription()}</div>
                                     </div>
                                 </div> 
                                 <div class="book-container-footer">
                                     <form action="AddToCart" method="POST">
                                         <input type="hidden" value="${book.getProductID()}" name="id">
-                                        <input type="submit" value="Buy" class="form-button">
+                                        <input onclick="addToCart()" type="submit" value="Buy" class="form-button">
                                     </form>
                                     <div class="price">${book.getUnitPrice()}$</div>
                                 </div>
@@ -65,11 +70,11 @@
                                 <div class="buy-section">
                                     <form action="AddToCart" method="POST" class="button-container">
                                         <input type="hidden" value="${book.getProductID()}" name="id" >
-                                        <input type="submit" value="Buy" class="form-button">
+                                        <input onclick="addToCart()" type="submit" value="Buy" class="form-button">
                                     </form>
                                     <div class="price">${book.getUnitPrice()}$</div>
                                 </div>
-                                
+
                             </div>
                         </c:forEach>
                         <span class="title">  Highest Price!!!  </span>
@@ -93,10 +98,10 @@
                                     </form>
                                     <div class="price">${book.getUnitPrice()}$</div>
                                 </div>
-                                
+
                             </div>
                         </c:forEach>
-                        
+
                     </div>
                 </div>
                 <div class="clearfix"></div>

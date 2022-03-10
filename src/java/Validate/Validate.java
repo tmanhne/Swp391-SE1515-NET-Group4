@@ -25,12 +25,15 @@ import javax.naming.NamingException;
  * @author Chu Tuan Thong
  */
 public class Validate {
-
+ 
     private static String regexname = "^[\\w\\d\\@\\{3,15}\\.\\p{L}]+$";
-    private static String regexpass = "^[\\w\\d\\@]+$";
-    private static String regexInt = "^\\d+$";
-    private static String regexDouble = "^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$";
-    private static String regexEmail = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\]";
+    private static String regexpass="^[\\w\\d\\@]+$"; 
+    private static String regexInt="^\\d+$"; 
+    private static String regexDouble="^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$"; 
+    private static String regexEmail="^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$"; 
+    private static int LENGTH_COMMENT = 1024; 
+    private static  String[] INVALID_WORD= {"Tien Manh"};
+
 
     //ThongCT - Validate Name function   
     public static boolean checkName(String name) {
@@ -212,5 +215,30 @@ public class Validate {
         Pattern p = Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})\\b");
         Matcher m = p.matcher(s);
         return (m.matches());
+    }
+    /**
+     * Check length of comment
+     * @param comment 
+     * @return email is valid
+     */
+    public static boolean checkLengthComment(String s)
+    {
+        return s.length() <= LENGTH_COMMENT ;
+    }
+    
+    /**
+     * Check comment content invalid word 
+     * @param comment 
+     * @return email is valid
+     */
+    public static boolean checkInvalidComment(String comment)
+    {
+        String commentLowerKey = comment.toLowerCase();
+        for(int i= 0 ; i<INVALID_WORD.length ; ++i) {
+            if (commentLowerKey.contains(INVALID_WORD[i].toLowerCase())) {
+                return false;
+            }
+        }
+        return true ; 
     }
 }

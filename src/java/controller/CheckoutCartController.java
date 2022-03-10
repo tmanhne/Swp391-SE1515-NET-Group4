@@ -79,12 +79,11 @@ public class CheckoutCartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-
         try {
             Cookie cartCookie = getCartCookie(request.getCookies());
             ArrayList<BookOnCart> lst = decodeCart(cartCookie);
-
+            
+            
         } catch (Exception e) {
 
         }

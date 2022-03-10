@@ -74,8 +74,8 @@
                         </c:if>
                     </div>
                 </form>
-            </div> 
-                    
+            </div>
+
             <form name="buy" action="cart" method="POST">
                    <aside>
               <div class="summary">
@@ -115,10 +115,8 @@
                       ${requestScope.mess}
                   </div>
               </div>
-           
           </aside> 
             </form>
-
         </main>
     </body>
 </html>

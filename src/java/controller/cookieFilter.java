@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hfyl
  */
-@WebFilter(filterName = "cookieFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
+@WebFilter(filterName = "cookieFilter", urlPatterns = {"/home","/cart"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class cookieFilter implements Filter {
 
     private static final boolean debug = true;

@@ -8,30 +8,20 @@ package controller;
 import Validate.Validate;
 import dao.CategoryDAO;
 import dao.ProductDAO;
+import java.io.File;
 import model.Category;
 import model.Product;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -40,7 +30,7 @@ import javax.servlet.http.Part;
 @WebServlet(name = "AdminAddProductController", urlPatterns = {"/adminAddProduct"})
 
 public class AdminAddProductController extends RequiredAdminAccount {
-
+    private final String UPLOAD_DIRECTORY = "C:\\Users\\Hfyl\\Desktop\\s7\\SWP391\\Swp391-SE1515-NET-Group4\\web\\public\\image";
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -68,8 +58,51 @@ public class AdminAddProductController extends RequiredAdminAccount {
             String unitInStockPara = request.getParameter("unitInStock");
             boolean isContinue = Boolean.parseBoolean(request.getParameter("isContinue"));
             String categoryID = request.getParameter("categoryID");
-            String imagePara = request.getParameter("image");
+            String imagePara = null;
 
+            //get param
+            if (ServletFileUpload.isMultipartContent(request)) {
+                List<FileItem> multiparts = new ServletFileUpload(
+                        new DiskFileItemFactory()).parseRequest(request);
+                for (FileItem item : multiparts) {
+                    if (item.isFormField()) {
+                        String paramname = item.getFieldName();
+                        switch (paramname) {
+                            case "id": {
+                                idPara = item.getString();
+                                break;
+                            }
+                            case "name": {
+                                namePara = item.getString();
+                                break;
+                            }
+                            case "description": {
+                                descriptionPara = item.getString();
+                                break;
+                            }
+                            case "unitPrice": {
+                                unitPricePara = item.getString();
+                                break;
+                            }
+                            case "unitInStock": {
+                                unitInStockPara = item.getString();
+                                break;
+                            }
+                            case "isContinue": {
+                                isContinue = item.getString().contains("Yes");
+                                break;
+                            }
+                            case "categoryID": {
+                                categoryID = item.getString().trim();
+                                break;
+                            }
+                        }
+                    } else {
+                        imagePara = uploadImage(item);
+                    }
+                }
+            }
+            
             Validate validate = new Validate();
             boolean checkValidate = false;
             // validate name of product
@@ -92,23 +125,29 @@ public class AdminAddProductController extends RequiredAdminAccount {
                 request.setAttribute("unitInStockPara", "Your Unit in stock is wrong");
                 checkValidate = true;
             }
-
+            Date date = new Date();
+            Product product = new Product(idPara, namePara, imagePara, date, descriptionPara, 0, 0, isContinue, 5, categoryID);
             // if all parameters is true 
             if (!checkValidate) {
                 double unitInPrice = Double.parseDouble(unitPricePara);
                 int unitInStock = Integer.parseInt(unitInStockPara);
-                Date date = new Date();
+                
 
                 // add all attribute to class 
-                Product product = new Product(idPara, namePara, imagePara, date, descriptionPara, unitInPrice, unitInStock, isContinue, 5, categoryID);
-                System.out.println("product " + product.toString());
-
+                product.setUnitPrice(unitInPrice);
+                product.setUnitInStock(unitInStock);
                 // update to sql 
                 ProductDAO productDAO = new ProductDAO();
                 productDAO.insertProduct(product);
-            } else {
-
             }
+            CategoryDAO categoryDAO = new CategoryDAO();
+            List<Category> categories = categoryDAO.getAllCategories();
+
+            request.setAttribute("categories", categories);
+            request.setAttribute("unitPrice", unitPricePara);
+            request.setAttribute("UnitInStock", unitInStockPara);
+            request.setAttribute("cateSelected", categoryID);
+            request.setAttribute("book", product);
             request.getRequestDispatcher("./adminview/adminaddproduct.jsp").forward(request, response);
 
         } catch (Exception e) {
@@ -118,4 +157,15 @@ public class AdminAddProductController extends RequiredAdminAccount {
 
     }
 
+    private String uploadImage(FileItem item) throws Exception {
+        String relativePath = null;
+        try {
+            String name = new File(item.getName()).getName();
+            item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
+            relativePath = "./public/image/" + name;
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return relativePath;
+    }
 }

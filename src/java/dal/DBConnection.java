@@ -22,14 +22,13 @@ import java.util.logging.Logger;
 public class DBConnection {
     
     /**
-     * Open connection with database
-     * @param
-     * @return null
+     * Open connection with database@return null
+     * @return 
      */
     protected Connection open() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=BooksShopOnline", "sa", "Anhvu123");
+            return DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=BooksShopOnline", "sa", "123");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -37,9 +36,10 @@ public class DBConnection {
     }
     
     /**
-     * Close connection with database
-     * @param
-     * @return null
+     * Close connection with database@return null
+     * @param conn
+     * @param stmt
+     * @param rs
      */
     protected void close(Connection conn, Statement stmt,ResultSet rs) {
         try {

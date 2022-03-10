@@ -43,16 +43,16 @@
                 </div>
 
                 <div id="header-right">
-                    <c:if test="${sessionScope.account.username==null}">
-                        <a href="/BookStore/register">Register</a>
-                        <a href="/BookStore/login">Login</a>
+                    <c:if test="${null!=sessionScope.account}">
+                        <a href="logout">Logout</a>
+                        <a href="/FinalAssignment/update">update</a>
+                        <a href="profile">Hello ${sessionScope.account.getUserName()}</a>
                     </c:if>
-                    <c:if test="${sessionScope.account.username!=null}">
-                        <a href="/BookStore/logout">Logout</a>
-                        <a href="#" class="account">${sessionScope.account.username}</a>
-                        <a href="/BookStore/update">update</a>
+                    <c:if test="${null==sessionScope.account}">
+                        <a href="SignUpController">Register</a>
+                        <a href="Login">Login</a>
                     </c:if>
-                    <a href="/BookStore/cart"><span class="glyphicon glyphicon-shopping-cart" style="padding: 0px 10px;"></span></a>
+                    <a href="cart"><span class="glyphicon glyphicon-shopping-cart" style="padding: 0px 10px;"></span></a>
                 </div>
             </div>
         </div>

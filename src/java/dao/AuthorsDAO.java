@@ -1,9 +1,11 @@
-/*
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-07      1.0                 VUDM               AuthorsDAO
+/**
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ *
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-02-07         1.0               VUDMHE140017      First Implement
  */
-
 package dao;
 
 import dal.DBConnection;
@@ -12,24 +14,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.Connection;
 
 /**
- * The class contain method to contact with database
+ * The class contain method to get authors from database
  * @author vudm
  */
-public class AuthorsDAO extends DBConnection implements IAuthorsDAO{
-    
+public class AuthorsDAO extends DBConnection implements IAuthorsDAO {
+
     /**
-     * Get author by bookId from database
-     * @param bookId is the variable passed
+     *  The method is used to get author by bookId from database
+     *
+     * @param bookId is a <code>String</code>
      * @return authors
+     * @throws java.sql.SQLException
      */
-    
     @Override
-    public ArrayList<String> getAuthorsByBookId(int bookId) {
+    public ArrayList<String> getAuthorsByBookId(String bookId) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -44,7 +45,7 @@ public class AuthorsDAO extends DBConnection implements IAuthorsDAO{
             //open connection
             con = super.open();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, bookId);
+            ps.setString(1, bookId);
             rs = ps.executeQuery();
             //assign data to authors
             while (rs.next()) {
@@ -52,7 +53,7 @@ public class AuthorsDAO extends DBConnection implements IAuthorsDAO{
                 authors.add(author);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AuthorsDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
         } finally {
             //close connection
             super.close(con, ps, rs);

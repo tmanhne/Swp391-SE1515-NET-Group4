@@ -7,7 +7,9 @@ and open the template in the editor.
     Created on : Feb 10, 2022, 2:52:30 PM
     Author     : phamthithi
 */
-.text-light{
+.section-footer{
     width: 100%;
-    background-color: #6495ED;
+    background-color:#00FA9A;
+    padding-top: 2%;
+   padding-left: 40%;
 }

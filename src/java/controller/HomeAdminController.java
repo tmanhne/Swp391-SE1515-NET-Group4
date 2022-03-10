@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.BooksDAO;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Book;
+import model.Product;
 
 /**
  *
@@ -62,10 +62,10 @@ public class HomeAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BooksDAO db = new BooksDAO();
+
+        ProductDAO db = new ProductDAO();
 //        List<Book> books = new ArrayList<>();
 //        books = db.getAllBooks();
-
         String indexPage = request.getParameter("index");
         if (indexPage == null) {
             indexPage = "1";
@@ -76,12 +76,11 @@ public class HomeAdminController extends HttpServlet {
         if (count % 3 != 0) {
             endPage++;
         }
-        List<Book> listPage = db.pagingProduct(index);
-
+        List<Product> listPage = db.pagingProduct(index);
         request.setAttribute("listPage", listPage);
-//        request.setAttribute("list", books);
+//            request.setAttribute("list", books);
         request.setAttribute("endPage", endPage);
-        request.getRequestDispatcher("view/HomePageForAdmin.jsp").forward(request, response);
+        request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
     }
 
     /**
@@ -95,20 +94,26 @@ public class HomeAdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = "";
-        //check search parameter
-        if (request.getParameter("search") != null) {
-            if (!request.getParameter("search").toString().trim().isEmpty()) {
-                name = request.getParameter("search").toString().trim();//if parameter is not empty
+        try {
+            String name = "";
+            //check search parameter
+            if (request.getParameter("search") != null) {
+                if (!request.getParameter("search").toString().trim().isEmpty()) {
+                    name = request.getParameter("search").toString().trim();//if parameter is not empty
+                }
             }
-        }
-        BooksDAO db = new BooksDAO();
-        List<Book> books = new ArrayList<>();
-        books = db.getBookByName(name);
+            ProductDAO db = new ProductDAO();
+            List<Product> books = new ArrayList<>();
+            books = db.getProductByName(name);
 
-        request.setAttribute("listPage", books);
-        request.setAttribute("searchname", name);
-        request.getRequestDispatcher("view/HomePageForAdmin.jsp").forward(request, response);
+            request.setAttribute("listPage", books);
+            request.setAttribute("searchname", name);
+            request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
+
     }
 
     /**

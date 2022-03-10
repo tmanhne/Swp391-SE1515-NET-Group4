@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,19 +13,41 @@ import java.util.Date;
  * @author Thongchu
  */
 public class Product {
-    
-    private String productID ;
-    private String productName ;
-    private String imagePath ;
-    private Date createDate ;
-    private String description ;
-    private double unitPrice ;
-    private int unitInStock ;
-    private boolean isContinue ;
-    private int ratting ;
-    private String categoryID ;
+
+    private String productID;
+    private String productName;
+    private String imagePath;
+    private Date createDate;
+    private String description;
+    private double unitPrice;
+    private int unitInStock;
+    private boolean isContinue;
+    private int ratting;
+    private String categoryID;
+    private ArrayList<String> authors;
 
     public Product() {
+    }
+
+    public Product(String productID, String productName, String description, double unitPrice, int unitInStock, boolean isContinue, int ratting) {
+        this.productID = productID;
+        this.productName = productName;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.unitInStock = unitInStock;
+        this.isContinue = isContinue;
+        this.ratting = ratting;
+    }
+
+    public Product(String productID, String productName, String imagePath, String description, double unitPrice, int unitInStock, boolean isContinue, int ratting) {
+        this.productID = productID;
+        this.productName = productName;
+        this.imagePath = imagePath;
+        this.description = description;
+        this.unitPrice = unitPrice;
+        this.unitInStock = unitInStock;
+        this.isContinue = isContinue;
+        this.ratting = ratting;
     }
 
     public Product(String productID, String productName, String imagePath, Date createDate, String description, double unitPrice, int unitInStock, boolean isContinue, int ratting, String categoryID) {
@@ -120,11 +143,17 @@ public class Product {
         this.categoryID = categoryID;
     }
 
+    public ArrayList<String> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(ArrayList<String> authors) {
+        this.authors = authors;
+    }
+
     @Override
     public String toString() {
         return "Product{" + "productID=" + productID + ", productName=" + productName + ", imagePath=" + imagePath + ", createDate=" + createDate + ", description=" + description + ", unitPrice=" + unitPrice + ", unitInStock=" + unitInStock + ", isContinue=" + isContinue + ", ratting=" + ratting + ", categoryID=" + categoryID + '}';
     }
 
-    
-    
 }

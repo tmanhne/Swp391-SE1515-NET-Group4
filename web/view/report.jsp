@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <!--        change name-->
         <div class="row">
             <form class="form-horizontal" action="ReportController" method="POST">
 

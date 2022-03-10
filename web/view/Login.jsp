@@ -16,6 +16,7 @@
 
     </head>
     <body>
+<!--        change name-->
         <div class="container">
             <div class="row">
                 <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
@@ -56,6 +57,7 @@
                                 <button class="btn btn-primary btn-block mt-3">Login</button>
                                 <div class="text-center pt-4 text-muted">Don't have an account? <a href="view/SignUp.jsp">Sign up</a> </div>
                             </form>
+                                <a href="home"><button class="btn btn-primary btn-block mt-3">Back </button></a>
                         </div>
                     </div>
                 </div>

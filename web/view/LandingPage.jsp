@@ -21,6 +21,7 @@
             }
         </script>
         <div>
+            <!--        change name-->
             <jsp:include page="header.jsp"></jsp:include>
 
                 <div id="home">

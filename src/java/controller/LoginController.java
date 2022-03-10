@@ -6,7 +6,7 @@
  * DATE             VERSION             AUTHOR              DESCRIPTION
  * 2022-02-16         1.0               VUDMHE140017      First Implement
  */
-package controller.authen;
+package controller;
 
 import dao.AccountDAO;
 import interfaceDAO.IAccountDAO;

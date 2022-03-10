@@ -13,6 +13,7 @@
         <link href="./public/style/cart.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <main>
             <div class="basket">
                 <div class="basket-labels">

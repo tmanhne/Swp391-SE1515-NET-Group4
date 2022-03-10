@@ -6,9 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -25,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Hfyl
  */
-@WebFilter(filterName = "cookieFilter", urlPatterns = {"/cart", "/home"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
+@WebFilter(filterName = "cookieFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class cookieFilter implements Filter {
 
     private static final boolean debug = true;

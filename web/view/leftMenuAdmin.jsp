@@ -25,6 +25,9 @@
             <div class="list-manager">
                 <a href="AdminViewCategory">Category</a>
             </div>
+            <div class="list-manager">
+                <a href="adminViewReport">View Report And Insurance</a>
+            </div>
         </div>
     </body>
 </html>

@@ -14,7 +14,7 @@
     </head>
     <body>
         <jsp:include page="../view/headerAdmin.jsp"></jsp:include>
-            <form action="AdminEditProduct" method="post">
+            <form action="AdminEditProduct" method="post" enctype="multipart/form-data" >
                 <div id="admin-main-content">
                 <jsp:include page="../view/leftMenuAdmin.jsp"></jsp:include>
                     <div class="admin-manager-detail">
@@ -34,6 +34,14 @@
                                     <div class="divTableCell">BookID</div>
                                     <div class="divTableCell">
                                         <input type="text" class="form-control" name="productId" value="${requestScope.book.getProductID()}" readonly>
+                                    </div>
+                                </div>
+                                <div class="divTableRow">
+                                    <div class="divTableCell">Image</div>
+                                    <div class="divTableCell">
+                                        <img src="${requestScope.book.getImagePath()}" style="width: 150px;height: 150px;"/> 
+                                        <br>
+                                        <input type="file" name="image" placeholder="Image"/><br>
                                     </div>
                                 </div>
                                 <div class="divTableRow">
@@ -71,7 +79,7 @@
                                     </div>
                                 </div>
 
-                                <div class="divTableRow">
+<!--                                <div class="divTableRow">
                                     <div class="divTableCell">IsContinue</div>
                                     <div class="divTableCell    ">
                                         <div class="checkbox">
@@ -82,7 +90,7 @@
                                             No <input type="radio"  name="isContinue" value="No">
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="divTableRow">
                                     <div class="divTableCell">Ratting</div>
                                     <div class="divTableCell">

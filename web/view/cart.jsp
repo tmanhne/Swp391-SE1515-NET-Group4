@@ -13,6 +13,7 @@
         <link href="./public/style/cart.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <main>
             <div class="basket">
                 <div class="basket-labels">
@@ -73,10 +74,10 @@
                         </c:if>
                     </div>
                 </form>
-            </div>
-
-          
-              <aside>
+            </div> 
+                    
+            <form name="buy" action="cart" method="POST">
+                   <aside>
               <div class="summary">
                   <div class="summary-total-items">
                       <span class="total-items"></span> Items in your Bag
@@ -114,8 +115,10 @@
                       ${requestScope.mess}
                   </div>
               </div>
-          </aside>   
            
+          </aside> 
+            </form>
+
         </main>
     </body>
 </html>

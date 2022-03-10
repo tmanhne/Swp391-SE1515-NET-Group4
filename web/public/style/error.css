@@ -55,5 +55,6 @@ button {
     border-radius: 6px;
     border: 1px solid black;
     background-color: rgb(134, 134, 196);
+    margin: 0 auto;
 }
 

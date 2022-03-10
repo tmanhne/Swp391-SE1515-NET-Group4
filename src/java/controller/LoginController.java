@@ -6,7 +6,7 @@
  * DATE             VERSION             AUTHOR              DESCRIPTION
  * 2022-02-16         1.0               VUDMHE140017      First Implement
  */
-package controller.authen;
+package controller;
 
 import dao.AccountDAO;
 import interfaceDAO.IAccountDAO;
@@ -22,7 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 import model.Account;
 
 /**
- * The class uses <code>AccountDAO</code> to get data of account then forward to the Login page
+ * The class uses <code>AccountDAO</code> to get data of account then forward to the login page
+ *
  * @author vudm
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/Login"})
@@ -30,8 +31,8 @@ public class LoginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
-     * This method used to get username and password throw cookie value 
+     * Handles the HTTP <code>GET</code> method. This method used to get username and password throw cookie value
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -60,13 +61,18 @@ public class LoginController extends HttpServlet {
                 IAccountDAO accountDAO = new AccountDAO();
                 Account account = accountDAO.checkAccountByUsernameAndPassword(userName, passWord);
                 if (account != null) {// if get account success
+
                     request.getSession().setAttribute("account", account);
                     response.sendRedirect("home");
                 } else {
-                    request.getRequestDispatcher("view/Login.jsp").forward(request, response);
+                    request.setAttribute("user", null);
+                    request.setAttribute("pass", null);
+                    request.getRequestDispatcher("view/login.jsp").forward(request, response);
                 }
             } else {
-                request.getRequestDispatcher("view/Login.jsp").forward(request, response);
+                request.setAttribute("user", null);
+                request.setAttribute("pass", null);
+                request.getRequestDispatcher("view/login.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
@@ -76,8 +82,8 @@ public class LoginController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method. 
-     * This method is used to login to system and add username and password to cookie
+     * Handles the HTTP <code>POST</code> method. This method is used to login to system and add username and password to cookie
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -91,16 +97,19 @@ public class LoginController extends HttpServlet {
             String password = request.getParameter("password");
             String remember = request.getParameter("remember");
 
-            Pattern pattern = Pattern.compile("^[A-Z]|[0-9]|[@. #%&*|]+$");
+            Pattern pattern = Pattern.compile("^[0-9]|[@. #%&*|]+$");
+            Pattern patternCheck = Pattern.compile("[A-Za-z0-9]{250,}");
             Pattern pattern1 = Pattern.compile("^[@. #%&*|]$");
             Matcher matcher = pattern.matcher(username);
+            Matcher matcherCheck = patternCheck.matcher(username);
             Matcher matcher1 = pattern1.matcher(password);
-            if (matcher.find()) {//if username contain special characters
-                request.setAttribute("Message", "Don't use special character in Username!!! ");
-                request.getRequestDispatcher("view/Login.jsp").forward(request, response);
+
+            if (matcher.find() || matcherCheck.find()) {//if username contain special characters
+                request.setAttribute("Message", "Please check User Name again!!! ");
+                request.getRequestDispatcher("view/login.jsp").forward(request, response);
             } else if (matcher1.find()) {//if password contain special characters
                 request.setAttribute("Message", "Don't use special character in Password!!! ");
-                request.getRequestDispatcher("view/Login.jsp").forward(request, response);
+                request.getRequestDispatcher("view/login.jsp").forward(request, response);
             }
             IAccountDAO accountDAO = new AccountDAO();
             Account account = accountDAO.checkAccountByUsernameAndPassword(username, password);
@@ -110,15 +119,17 @@ public class LoginController extends HttpServlet {
                 if (remember != null) {// check user clicked remember account
                     Cookie user = new Cookie("Username", account.getUserName());
                     Cookie pass = new Cookie("Password", password.trim());
-                    user.setMaxAge(60 * 60);
-                    pass.setMaxAge(60 * 60);
+                    user.setMaxAge(60 * 60 * 24 * 7);
+                    pass.setMaxAge(60 * 60 * 24 * 7);
                     response.addCookie(user);
                     response.addCookie(pass);
                 }
-                response.sendRedirect("../Swp391-SE1515-NET-Group4/home");
+                response.sendRedirect("home");
             } else { // if account null
+                request.setAttribute("user", username);
+                request.setAttribute("pass", password);
                 request.setAttribute("Message", "Please check your username or password!!! ");
-                request.getRequestDispatcher("view/Login.jsp").forward(request, response);
+                request.getRequestDispatcher("view/login.jsp").forward(request, response);
             }
         } catch (Exception ex) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");

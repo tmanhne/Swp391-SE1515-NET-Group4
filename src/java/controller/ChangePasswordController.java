@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Riel
+ * @author ThongChu
  */
 @WebServlet(name = "ChangePasswordController", urlPatterns = {"/changePassword"})
 public class ChangePasswordController extends HttpServlet {
@@ -33,8 +33,7 @@ public class ChangePasswordController extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @return redirect user to jsp to change password 
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,8 +48,7 @@ public class ChangePasswordController extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @description : handle email and new password of user and change password for user 
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -75,7 +73,7 @@ public class ChangePasswordController extends HttpServlet {
                     request.getRequestDispatcher("./view/changepassword.jsp").forward(request, response);
                 }
                 // check email contain account  
-                else if (accountCF.getAccountID().equals("") ) {
+                else if (accountCF.getAccountID() == null ) {
                     request.setAttribute("email", email);
                     request.setAttribute("password", password);
                     request.setAttribute("rePassword", rePassword);
@@ -125,6 +123,7 @@ public class ChangePasswordController extends HttpServlet {
                     request.getRequestDispatcher("./view/changepassword.jsp").forward(request, response);
                 }
         } catch (Exception e) {
+            System.out.println("Error"+ e);
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }

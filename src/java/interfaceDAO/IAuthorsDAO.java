@@ -18,6 +18,7 @@ public interface IAuthorsDAO {
      *
      * @param bookId is a <code>String</code>
      * @return account is a ArrayList <code>authors</code>
+     * @throws java.lang.Exception
      */
     public ArrayList<String> getAuthorsByBookId(String bookId) throws Exception;
 }

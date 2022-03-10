@@ -29,46 +29,61 @@
                         <p>Add Product</p>
                     </div>             
                     <div style="margin: 20px 20px;">
-                        <form action="adminAddProduct" method="post">
+                        <form action="adminAddProduct" method="post" enctype="multipart/form-data" >
                             <div class="form-group">
                                 <label>Product ID </label>
-                                <input type="text" class="form-control" name="id" value="" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="name" value="" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <input type="text" class="form-control" name="description" value="" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Quantity Stock</label>
-                                <input type="number" class="form-control" name="unitPrice" value="" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Operating System</label>
-                                <input type="number" class="form-control" name="unitInStock" value="" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select class="form-control" name="isContinue">
-                                    <option value = "1" >Yes</option>
-                                    <option value = "0" >No</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select class="form-control" name="categoryID">
+                                <input type="text" class="form-control" name="id" value="${requestScope.book.getProductID()}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" value="${requestScope.book.getProductName()}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" name="description" value="${requestScope.book.getDescription()}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Unit Price</label>
+                            <input type="number" class="form-control" name="unitPrice" value="${requestScope.unitPrice}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Unit In Stock</label>
+                            <input type="number" class="form-control" name="unitInStock" value="${requestScope.UnitInStock}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Is Continue</label>
+                            <select class="form-control" name="isContinue">
+                                <c:if test="${null!=requestScope.book.isIsContinue()&&!requestScope.book.isIsContinue()}">
+                                    <option value = "Yes" selected>Yes</option>
+                                    <option value = "No" >No</option>
+                                </c:if>
+                                <c:if test="${null==requestScope.book.isIsContinue()||!requestScope.book.isIsContinue()}">
+                                    <option value = "Yes" selected>Yes</option>
+                                    <option value = "No" >No</option>
+                                </c:if>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="form-control" name="categoryID">
                                 <c:forEach var="o" items="${requestScope.categories}">
-                                    <option value="${o.categoryID}">${o.categoryName}</option>
+                                    <c:if test="${requestScope.cateSelected==o.categoryID}">
+                                        <option value="${o.categoryID}" selected>${o.categoryName}</option>
+                                    </c:if>
+                                    <c:if test="${requestScope.cateSelected!=o.categoryID}">
+                                        <option value="${o.categoryID}">${o.categoryName}</option>
+                                    </c:if>
                                 </c:forEach>
+
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Image Path</label>
                             <!--<input type="text" name="description" />-->
-                            <input type="text" class="form-control" name="image" value="" required>
+                            <input type="file" class="form-control" name="image" required>
+                            <c:if test="${null!=requestScope.book.getImagePath()}">
+                                <br><img src="${requestScope.book.getImagePath()}" style="width: 150px;height: 150px;"/>
+                            </c:if>
                         </div>     
                         <div class="form-btn">
                             <input class="btn btn-primary center-block" type="submit" value="Add"/>

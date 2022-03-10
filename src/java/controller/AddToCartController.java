@@ -55,8 +55,8 @@ public class AddToCartController extends HttpServlet {
                    }
                   response.sendRedirect("home");
          }catch(IOException | SQLException ex){
-             request.setAttribute("message", ex.getMessage());
-            request.getRequestDispatcher("view/Error.jsp").forward(request, response);
+             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
          }
     }
 
@@ -92,7 +92,7 @@ public class AddToCartController extends HttpServlet {
     }
 
     /**
-     * The method is used to update value
+     * The method is used to update value on cart
      * @param cartValue is <code>String<code>
      * @param productID is a <code>String<code>
      * @return sb.toString()
@@ -112,7 +112,7 @@ public class AddToCartController extends HttpServlet {
             //check for book
             for (String arrCart1 : arrCart) {
                 //if product is exist on cart
-                if (arrCart1.contains(productID)) {
+                if (arrCart1.split(regex2)[0].contains(productID)) {
                     addNew = false;
                     //split sring to get [bookid] and [quantity]
                     String[] temp = arrCart1.split(regex2);
@@ -128,6 +128,7 @@ public class AddToCartController extends HttpServlet {
                 //rebuild [bookid]%[quantity]%&%
                 sb.append(arrCart1).append(regex1);
             }
+            
         }
 
         //if product is not exist on cart

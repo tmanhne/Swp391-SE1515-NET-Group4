@@ -53,7 +53,7 @@ public class SearchController extends HttpServlet {
               request.setAttribute("books", books);
               request.setAttribute("bestSellerBooks", bestSellerBooks);
               request.setAttribute("searchname", name);
-              request.getRequestDispatcher("view/LandingPage.jsp").forward(request, response);
+              request.getRequestDispatcher("view/landingPage.jsp").forward(request, response);
         }catch(Exception e){
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);

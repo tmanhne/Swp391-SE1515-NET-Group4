@@ -6,7 +6,11 @@
     </filter>
     <filter-mapping>
         <filter-name>filter</filter-name>
+<<<<<<< HEAD
         <url-pattern>/*</url-pattern>
+=======
+        <url-pattern>/login</url-pattern>
+>>>>>>> f985f7f21e3aff9164876d4720a86fa69b3bde70
     </filter-mapping>
     <session-config>
         <session-timeout>

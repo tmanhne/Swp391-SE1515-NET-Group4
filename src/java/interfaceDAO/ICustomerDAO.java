@@ -13,5 +13,7 @@ import model.Customer;
  * @author Thongchu
  */
 public interface ICustomerDAO {
-    public List<Customer> getAllCustomer();
+    public List<Customer> getAllCustomer() throws Exception;
+    public Customer getCustomer(String accountId) throws Exception;
+    public String addCustomer(Customer customer) throws Exception;
 }

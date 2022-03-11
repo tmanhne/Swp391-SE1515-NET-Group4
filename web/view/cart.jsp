@@ -62,8 +62,8 @@
                         </c:forEach>
                     </c:if>
                     <div>
-                        <c:if test="${(requestScope.epage!=null)}">
-                            <c:forEach var="i" begin="${requestScope.bpage}" end="${requestScope.epage}" step="1">
+                        <c:if test="${(requestScope.totalPage!=null)}">
+                            <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
                                 <c:if test="${i==requestScope.page}">
                                     <strong>${i}<strong>
                                 </c:if>
@@ -76,7 +76,7 @@
                 </form>
             </div>
 
-            <form name="buy" action="cart" method="POST">
+            <form name="buy" action="checkoutcart" method="POST">
                    <aside>
               <div class="summary">
                   <div class="summary-total-items">
@@ -98,7 +98,7 @@
                 </div>
                 <div class="summary-delivery">
                   <div class="summary-ship">Address</div>
-                  <input class="address" id="basket-total"></input>
+                  <input name="address" class="address" id="basket-total" value="${requestScope.address}" required></input>
               </div>
                 <div class="summary-delivery">
                   <div class="summary-ship">Payment</div>
@@ -112,7 +112,7 @@
                   </div>
                   <div class="summary-checkout">
                       <button type="submit" class="checkout-cta">Checkout Cart</button>
-                      ${requestScope.mess}
+                      <p style="color: red">${requestScope.mess}</p>
                   </div>
               </div>
           </aside> 

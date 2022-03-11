@@ -45,7 +45,7 @@ public class CartController extends HttpServlet {
         try {
             Cookie cartCookie = getCartCookie(request.getCookies());
 
-            int page = -1;
+            int page = 1;
             if (null != request.getParameter("page")) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
@@ -53,56 +53,31 @@ public class CartController extends HttpServlet {
             if (null != cartCookie && !cartCookie.getValue().isEmpty()) {
                 //encode books cookie
                 ArrayList<BookOnCart> booklst = decodeCart(cartCookie);
-
-                int offset = page < 0 ? 0 : ((page - 1) * FETCH);
-                int size = booklst.size();
-
-                if (offset >= size) {
-                    offset = size % FETCH == 0 ? (size - FETCH) : (size % FETCH);
-                } else {
-                    size = size < (offset + FETCH) ? size : (offset + FETCH);
-                }
                 ArrayList<BookOnCart> lst = new ArrayList<>();
-                for (int i = offset; i < size; i++) {
+                int offset = (page - 1) * FETCH;
+                int totalPage = 0;
+                if (offset > booklst.size()) {
+                    offset = booklst.size() - (booklst.size() % FETCH);
+                }
+                int count = 0;
+                for (int i = offset; i < booklst.size(); i++) {
                     lst.add(booklst.get(i));
-                }
-
-                size = Math.floorDiv(booklst.size(), FETCH);
-                //if has more than 1 page
-                if (size > 1) {
-                    size = booklst.size() % FETCH > 0 ? size + 1 : size;
-                    int crpage = page != -1 ? page : 1;
-                    int bpage;
-                    int epage;
-                    if (crpage <= 2) {
-                        bpage = 1;
-                        epage = size > 5 ? 5 : size;
-                    } else {
-                        if (size <= 4) {
-                            bpage = 1;
-                            epage = size;
-                        } else {
-                            bpage = size - crpage <= 2 ? size - 4 : crpage - 2;
-                            epage = size - crpage <= 2 ? size : crpage + 2;
-                        }
+                    count++;
+                    if (count == FETCH) {
+                        break;
                     }
-
-                    request.setAttribute("bpage", bpage);
-                    request.setAttribute("epage", epage);
                 }
+                totalPage = Math.floorDiv(booklst.size(), FETCH) + (booklst.size() % FETCH > 0 ? 1 : 0);
 
                 float subtotal = getSubTotal(booklst);
+                request.setAttribute("totalPage", totalPage);
                 request.setAttribute("books", lst);
                 request.setAttribute("totalAmount", subtotal);
                 request.setAttribute("ship", 0);
             }
 
-            if (page == -1) {
-                request.getRequestDispatcher("view/cart.jsp").forward(request, response);
-                return;
-            }
             request.setAttribute("page", page);
-            request.getRequestDispatcher("view/cart.jsp?page=" + page).forward(request, response);
+            request.getRequestDispatcher("view/cart.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
@@ -127,7 +102,7 @@ public class CartController extends HttpServlet {
             String delete = request.getParameter("delete");
             Cookie cartCookie = getCartCookie(request.getCookies());
 
-            int page = -1;
+            int page = 1;
             if (null != request.getParameter("page")) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
@@ -146,6 +121,7 @@ public class CartController extends HttpServlet {
                 //case remove book from cart
                 if (null != delete) {
                     booklst = updateCartValue(booklst, delete, 0);
+                    page = 1;
                 }
 
                 /*update cartCookie*/
@@ -161,53 +137,32 @@ public class CartController extends HttpServlet {
                 response.addCookie(cartCookie);
 
                 /*Pagingnation*/
-                int offset = page < 0 ? 0 : ((page - 1) * FETCH);
-                int size = booklst.size();
-
-                if (offset >= size) {
-                    offset = size % FETCH == 0 ? (size - FETCH) : (size % FETCH);
-                } else {
-                    size = size < (offset + FETCH) ? size : (offset + FETCH);
-                }
                 ArrayList<BookOnCart> lst = new ArrayList<>();
-                for (int i = offset; i < size; i++) {
+                int offset = (page - 1) * FETCH;
+                int totalPage = 0;
+                if (offset > booklst.size()) {
+                    offset = booklst.size() - (booklst.size() % FETCH);
+                }
+                int count = 0;
+                for (int i = offset; i < booklst.size(); i++) {
                     lst.add(booklst.get(i));
-                }
-
-                size = Math.floorDiv(booklst.size(), FETCH);
-                //if has more than 1 page
-                if (size > 1) {
-                    size = booklst.size() % FETCH > 0 ? size + 1 : size;
-                    int crpage = page != -1 ? page : 1;
-                    int bpage;
-                    int epage;
-                    if (crpage <= 2) {
-                        bpage = 1;
-                        epage = size > 5 ? 5 : size;
-                    } else {
-                        if (size <= 4) {
-                            bpage = 1;
-                            epage = size;
-                        } else {
-                            bpage = size - crpage <= 2 ? size - 4 : crpage - 2;
-                            epage = size - crpage <= 2 ? size : crpage + 2;
-                        }
+                    count++;
+                    if (count == FETCH) {
+                        break;
                     }
-
-                    request.setAttribute("bpage", bpage);
-                    request.setAttribute("epage", epage);
                 }
+                totalPage = Math.floorDiv(booklst.size(), FETCH) + (booklst.size() % FETCH > 0 ? 1 : 0);
+
                 float subtotal = getSubTotal(booklst);
+                request.setAttribute("totalPage", totalPage);
                 request.setAttribute("books", lst);
                 request.setAttribute("totalAmount", subtotal);
                 request.setAttribute("ship", 0);
             }
-            if (page == -1) {
-                request.getRequestDispatcher("view/cart.jsp").forward(request, response);
-                return;
-            }
+
             request.setAttribute("page", page);
-            request.getRequestDispatcher("view/cart.jsp?page=" + page).forward(request, response);
+            request.getRequestDispatcher("view/cart.jsp").forward(request, response);
+
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);

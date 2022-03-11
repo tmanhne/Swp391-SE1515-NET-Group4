@@ -23,13 +23,13 @@ import javax.servlet.http.HttpServletResponse;
  * @author Hfyl
  */
 @WebFilter(filterName = "cookieFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
-public class cookieFilter implements Filter {
+public class CookieFilter implements Filter {
     
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
 
-    public cookieFilter() {
+    public CookieFilter() {
     }
 
     /**

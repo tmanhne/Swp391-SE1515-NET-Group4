@@ -6,9 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -26,21 +23,20 @@ import model.Account;
  * @author Hfyl
  */
 @WebFilter(filterName = "adminFilter", urlPatterns = {
-            "/AdminAddCategory","/adminAddProduct","/adminDeleteReport",
-            "/AdminEditProduct","/AdminEditReportController","/AdminViewCategory",
-            "/AdminViewFeedBack", "/AdminViewProduct","/adminViewReport",
-            "/AdminViewReportDetail","/homeadmin","/adminEditCategory"
-        }, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
-public class adminFilter implements Filter {
-    
+    "/AdminAddCategory", "/adminAddProduct", "/adminDeleteReport",
+    "/AdminEditProduct", "/AdminEditReportController", "/AdminViewCategory",
+    "/AdminViewFeedBack", "/AdminViewProduct", "/adminViewReport",
+    "/AdminViewReportDetail", "/homeadmin", "/adminEditCategory",
+}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
+public class SessionFilter implements Filter {
+
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
-    
-    public adminFilter() {
-    }    
-    
-        /**
+    public SessionFilter() {
+    }
+
+    /**
      *
      * @param request The servlet request we are processing
      * @param response The servlet response we are creating
@@ -52,20 +48,20 @@ public class adminFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
-        
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        
+
         if (null == req.getSession().getAttribute("account")) {
             res.sendRedirect("home");
             return;
         }
-        
+
         Throwable problem = null;
         try {
             Account account = (Account) req.getSession().getAttribute("account");
-            if(!account.getRole().equalsIgnoreCase("admin")){
-                res.sendRedirect("home");
+            if (!account.getRole().equalsIgnoreCase("admin")) {
+                res.sendRedirect("Login");
                 return;
             }
             chain.doFilter(request, response);
@@ -76,26 +72,24 @@ public class adminFilter implements Filter {
             problem = t;
             t.printStackTrace();
         }
-        
 
-       
     }
 
     /**
      * Return the filter configuration object for this filter.
-    
-
-    /**
+     *
+     *
+     * /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
-      
+    public void init(FilterConfig filterConfig) {
+
     }
-    
+
 }

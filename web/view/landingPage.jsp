@@ -27,7 +27,7 @@
                 <div id="home">
                     <div id="home-content">
                         <div id="home-content-left">
-                        <c:forEach items="${requestScope.books}" var="book">
+                        <c:forEach items="${requestScope.listPage}" var="book">
                             <div class="book-container">
                                 <div class="book-container-header">
                                     <div class="book-thumbnail">
@@ -75,6 +75,7 @@
                                     </form>
                                     <div class="price">${book.getUnitPrice()}$</div>
                                 </div>
+
                             </div>
                         </c:forEach>
                         <span class="title">  Highest Price!!!  </span>
@@ -105,7 +106,13 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
+                <div class="pagination-page">
+                    <c:forEach begin="1" end="${endPage}" var="i">
+                        <a href="home?index=${i}">${i}</a>
+                    </c:forEach>
+                </div>
             </div>
+            
             <jsp:include page="footer.jsp"></jsp:include>
         </div>
     </body>

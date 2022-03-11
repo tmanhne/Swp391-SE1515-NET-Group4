@@ -29,8 +29,8 @@
                 </p>
 
             </div><!-- //container -->
-            <div>
-                <a href="ReportController" style="text-align: center">Send Report</a>
+            <div class="report">
+                <a href="ReportController" >Send Report</a>
             </div>
         </footer>
     </body>

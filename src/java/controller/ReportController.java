@@ -1,7 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ /*
+ * Copyright(C)2021, FPT University
+ * SWP 391
+ * 
+ * Record of change
+ * DATE             VERSION             AUTHOR              DESCRIPTION
+ * 2022-03-05         1.0               VUDMHE140017      First Implement
  */
 package controller;
 
@@ -20,7 +23,7 @@ import model.Account;
 import model.Reports;
 
 /**
- *
+ * The class contain method <code>doGet</code> and <code>doPost</code>  to implement function about report
  * @author vudm
  */
 @WebServlet(name = "ReportController", urlPatterns = {"/ReportController"})
@@ -28,8 +31,9 @@ public class ReportController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method. The method is used to link to  Report.jsp
-     *
+     * Handles the HTTP <code>GET</code> method. 
+     * The method is used to link to  Report.jsp
+     * This method contain <code>Account</code> object to check login of user and forward to report.jsp
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -55,7 +59,9 @@ public class ReportController extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     *
+     * This method contain <code>Pattern</code> to check input of user
+     * This method contain <code>Account</code> object to check login of user and forward to report.jsp
+     * This method contain <code>ReportDAO</code> to implement insert an report in database
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -92,7 +98,7 @@ public class ReportController extends HttpServlet {
                 Pattern pPhone = Pattern.compile("^[0-9]{10}$");
                 Matcher mPhone = pPhone.matcher(phone);
 
-                if (!mTitle.find()) {
+                if (!mTitle.find()) {//if title is found
                     request.setAttribute("title", title);
                     request.setAttribute("customerName", customerName);
                     request.setAttribute("email", email);
@@ -100,7 +106,7 @@ public class ReportController extends HttpServlet {
                     request.setAttribute("descriptions", descriptions);
                     request.setAttribute("notification", "Please title again!");
                     request.getRequestDispatcher("view/report.jsp").forward(request, response);
-                } else if (!mCustomerName.find()) {
+                } else if (!mCustomerName.find()) {//check customer name
                     request.setAttribute("title", title);
                     request.setAttribute("customerName", customerName);
                     request.setAttribute("email", email);
@@ -108,7 +114,7 @@ public class ReportController extends HttpServlet {
                     request.setAttribute("descriptions", descriptions);
                     request.setAttribute("notification", "Please name again!");
                     request.getRequestDispatcher("view/report.jsp").forward(request, response);
-                } else if (!mEmail.find()) {
+                } else if (!mEmail.find()) {//check email
                     request.setAttribute("title", title);
                     request.setAttribute("customerName", customerName);
                     request.setAttribute("email", email);
@@ -116,7 +122,7 @@ public class ReportController extends HttpServlet {
                     request.setAttribute("descriptions", descriptions);
                     request.setAttribute("notification", "Please email again!");
                     request.getRequestDispatcher("view/report.jsp").forward(request, response);
-                } else if (!mPhone.find()) {
+                } else if (!mPhone.find()) {// check phone
                     request.setAttribute("title", title);
                     request.setAttribute("customerName", customerName);
                     request.setAttribute("email", email);
@@ -124,7 +130,7 @@ public class ReportController extends HttpServlet {
                     request.setAttribute("descriptions", descriptions);
                     request.setAttribute("notification", "Please phone again!");
                     request.getRequestDispatcher("view/report.jsp").forward(request, response);
-                } else if (descriptions.length() > 250 || descriptions.length()<=0) {
+                } else if (descriptions.length() > 250 || descriptions.length()<=0) {//check description
                     request.setAttribute("title", title);
                     request.setAttribute("customerName", customerName);
                     request.setAttribute("email", email);

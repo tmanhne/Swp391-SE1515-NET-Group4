@@ -39,9 +39,12 @@ public class ProductDetailController extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
-     * @author : ThongCTHE140606 
+     * This method is used <code>IProductDAO</code> to implement get all information of product by id
+     * This method is used <code>IFeedBackDAO</code> to implement get feedback of product
      * @param request servlet request
      * @param response servlet response
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
      * @description : handle email and new password of user and change password for user 
      */
     @Override
@@ -54,8 +57,7 @@ public class ProductDetailController extends HttpServlet {
             IFeedBackDAO feedBackDAO= new FeedBackDAO();
             Product product = productDAO.getProductById(productID);
             // get all feedback in database
-            ArrayList<FeedBack> feedBacks=new ArrayList<>();
-            feedBacks = (ArrayList<FeedBack>) feedBackDAO.getFeedBackBYProductID(productID);
+            ArrayList<FeedBack> feedBacks=(ArrayList<FeedBack>) feedBackDAO.getFeedBackBYProductID(productID);
             int rate = calcRate(feedBacks);
             double[] rateForEachStar = calcRateForEachStar(feedBacks);
             
@@ -122,7 +124,7 @@ public class ProductDetailController extends HttpServlet {
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * Handles the HTTP <code>POST</code> method.
      * @author : ThongCTHE140606 
      * @param request servlet request
      * @param response servlet response

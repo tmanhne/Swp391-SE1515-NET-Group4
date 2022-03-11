@@ -54,15 +54,14 @@ public interface IProductDAO {
      
     /**
      * This method used search all products by name from Products table
-     * @param name is a <code>String</code>
-     * @return account is a ArrayList <code>books</code>
+     * @param p is a <code>Object</code>
      * @throws java.lang.Exception
      */
     public void insertProduct(Product p) throws Exception;
     
     /**
      * This method used search all products by name from Products table
-     * @param name is a <code>String</code>
+     * @param product is a <code>Object</code>
      * @return account is a ArrayList <code>books</code>
      * @throws java.lang.Exception
      */
@@ -70,7 +69,6 @@ public interface IProductDAO {
 
     /**
      * This method used search all products by name from Products table
-     * @param name is a <code>String</code>
      * @return account is a ArrayList <code>books</code>
      * @throws java.lang.Exception
      */
@@ -78,7 +76,7 @@ public interface IProductDAO {
     
     /**
      * This method used search all products by name from Products table
-     * @param name is a <code>String</code>
+     * @param index is a<code>int</code>
      * @return account is a ArrayList <code>books</code>
      * @throws java.lang.Exception
      */
@@ -86,8 +84,7 @@ public interface IProductDAO {
     
     /**
      * This method used search all products by name from Products table
-     * @param name is a <code>String</code>
-     * @return account is a ArrayList <code>books</code>
+     * @param pid is a <code>String</code>
      * @throws java.lang.Exception
      */
     public void removeProduct(String pid) throws Exception;

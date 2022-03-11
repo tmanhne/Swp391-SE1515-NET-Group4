@@ -53,7 +53,7 @@
                                                             <div class="input-field"> <span class="fas fa-lock px-2"></span> <input name="password"  type="password" placeholder="Enter your Password" required> <button class="btn bg-white text-muted"> <span class="far fa-eye-slash"></span> </button> </div>-->
                                 <!--                        </div>-->
                                 <div class="form-inline" type="checkbox" name="remember"> <input type="checkbox" name="remember" id="remember"/> <label name="remember" for="remember" class="text-muted">Remember me</label> <a href="#" id="forgot" class="font-weight-bold">Forgot password?</a> </div>
-                                <label>${requestScope.Message}</label><br/>
+                                <label style="color: red">${requestScope.Message}</label><br/>
                                 <button class="btn btn-primary btn-block mt-3">Login</button>
                                 <div class="text-center pt-4 text-muted">Don't have an account? <a href="view/signUp.jsp">Sign up</a> </div>
                             </form>

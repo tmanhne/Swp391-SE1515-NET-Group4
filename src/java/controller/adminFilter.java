@@ -6,6 +6,9 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,25 +17,30 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 
 /**
  *
  * @author Hfyl
  */
-@WebFilter(filterName = "cookieFilter", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
-public class cookieFilter implements Filter {
+@WebFilter(filterName = "adminFilter", urlPatterns = {
+            "/AdminAddCategory","/adminAddProduct","/adminDeleteReport",
+            "/AdminEditProduct","/AdminEditReportController","/AdminViewCategory",
+            "/AdminViewFeedBack", "/AdminViewProduct","/adminViewReport",
+            "/AdminViewReportDetail","/homeadmin","/adminEditCategory"
+        }, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
+public class adminFilter implements Filter {
     
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
     // configured. 
-
-    public cookieFilter() {
-    }
-
-    /**
+    
+    public adminFilter() {
+    }    
+    
+        /**
      *
      * @param request The servlet request we are processing
      * @param response The servlet response we are creating
@@ -44,45 +52,20 @@ public class cookieFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
+        
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        String servletPath = req.getServletPath();
-        if (servletPath.equalsIgnoreCase("/Login")) {
-			chain.doFilter(request, response);
-			return;
-		}
-        if (null != req.getSession().getAttribute("account")) {
-            chain.doFilter(request, response);
+        
+        if (null == req.getSession().getAttribute("account")) {
+            res.sendRedirect("home");
             return;
         }
-
+        
         Throwable problem = null;
         try {
-            Cookie[] cookies = req.getCookies();
-            boolean userfound = false;
-            boolean passfound = false;
-
-            if (cookies != null) { // if get cookie get value
-                for (Cookie cookie1 : cookies) {
-                    if (cookie1.getName().equals("Username")) {
-                        userfound = true;
-                        if (passfound) {
-                            break;
-                        }
-                        continue;
-                    }
-                    if (cookie1.getName().equals("Password")) {
-                        passfound = true;
-                        if (userfound) {
-                            break;
-                        }
-                        continue;
-                    }
-                }
-            }
-
-            if ((passfound && userfound) && (passfound == true)) {
-                res.sendRedirect("Login");
+            Account account = (Account) req.getSession().getAttribute("account");
+            if(!account.getRole().equalsIgnoreCase("admin")){
+                res.sendRedirect("home");
                 return;
             }
             chain.doFilter(request, response);
@@ -93,19 +76,26 @@ public class cookieFilter implements Filter {
             problem = t;
             t.printStackTrace();
         }
+        
+
+       
     }
+
+    /**
+     * Return the filter configuration object for this filter.
+    
 
     /**
      * Destroy method for this filter
      */
-    public void destroy() {
+    public void destroy() {        
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {
-
+    public void init(FilterConfig filterConfig) {        
+      
     }
     
 }

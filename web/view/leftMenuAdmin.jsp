@@ -17,7 +17,7 @@
                 <a href="homeadmin">Manager Products</a>
             </div>
             <div class="list-manager">
-                <a href="#">Manager Bills</a>
+                <a href="billmanager">Manager Bills</a>
             </div>
             <div class="list-manager">
                 <a href="adminAddProduct">Add New Product</a>

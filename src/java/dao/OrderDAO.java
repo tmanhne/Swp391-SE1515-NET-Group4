@@ -10,17 +10,73 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import model.OrderOnAdmin;
 
 /**
  *
  * @author Hfyl
  */
-public class OrderDAO extends DBConnection{
+public class OrderDAO extends DBConnection {
 
     public OrderDAO() {
     }
 
-    public String insertOrder(String customerId, String oddate) throws Exception{
+    public int setFlagStatus(String orderId, String status) throws SQLException {
+        int result = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = " UPDATE [dbo].[Orders] "
+                + "   SET [Status] = ? "
+                + " WHERE [OrderID] = ? ";
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, status);
+            ps.setString(2, orderId);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return result;
+    }
+
+    public ArrayList<OrderOnAdmin> getOrdersAdmin() throws SQLException {
+        ArrayList<OrderOnAdmin> lst = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT o.OrderID, c.CustomerName, o.OrderDate, o.Ship, o.PaymentMethod FROM "
+                + " (SELECT * FROM Orders) AS o "
+                + " INNER JOIN "
+                + " (SELECT * FROM Customer) AS c "
+                + " ON o.CustomerID = c.CustomerID "
+                + " WHERE o.Status = 'Waitting' ";
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lst.add(new OrderOnAdmin(rs.getString(1),
+                        rs.getString(2),
+                        rs.getDate(3),
+                        rs.getString(4),
+                        rs.getString(5)));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return lst;
+    }
+
+    public String insertOrder(String customerId, String oddate) throws Exception {
         String sql = "INSERT INTO [dbo].[Orders] "
                 + "           ([OrderID] "
                 + "           ,[CustomerID] "
@@ -50,8 +106,8 @@ public class OrderDAO extends DBConnection{
             ps.setString(4, "Waitting");
             ps.setString(5, "Cash");
             rs = ps.executeQuery();
-            while(rs.next()){
-                orderId= rs.getString(1);
+            while (rs.next()) {
+                orderId = rs.getString(1);
             }
         } catch (SQLException ex) {
             throw ex;

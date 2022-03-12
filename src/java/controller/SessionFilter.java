@@ -27,6 +27,7 @@ import model.Account;
     "/AdminEditProduct", "/AdminEditReportController", "/AdminViewCategory",
     "/AdminViewFeedBack", "/AdminViewProduct", "/adminViewReport",
     "/AdminViewReportDetail", "/homeadmin", "/adminEditCategory",
+    "/billmanager"
 }, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class SessionFilter implements Filter {
 

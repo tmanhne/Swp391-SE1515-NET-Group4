@@ -241,4 +241,8 @@ public class Validate {
         }
         return true ; 
     }
+
+    public boolean checkNumberInRange(int discount, int min, int max) {
+        return (min<= discount && discount <=max);
+    }
 }

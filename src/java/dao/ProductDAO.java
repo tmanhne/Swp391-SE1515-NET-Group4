@@ -284,7 +284,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
     }
 
     @Override
-    public int getTotalProduct() {
+    public int getTotalProduct() throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -308,7 +308,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
     }
 
     @Override
-    public List<Product> pagingProduct(int index) {
+    public List<Product> pagingProduct(int index) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

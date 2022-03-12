@@ -30,7 +30,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @WebServlet(name = "AdminAddProductController", urlPatterns = {"/adminAddProduct"})
 
 public class AdminAddProductController extends RequiredAdminAccount {
-    private final String UPLOAD_DIRECTORY = "C:\\Users\\Hfyl\\Desktop\\s7\\SWP391\\Swp391-SE1515-NET-Group4\\web\\public\\image";
+    private final String UPLOAD_DIRECTORY = "D:\\LearnFPT\\Term6\\SWP391\\Code\\Swp391-SE1515-NET-Group4\\web\\public\\image";
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

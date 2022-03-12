@@ -62,25 +62,30 @@ public class HomeAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        ProductDAO db = new ProductDAO();
+        try {
+            ProductDAO db = new ProductDAO();
 //        List<Book> books = new ArrayList<>();
 //        books = db.getAllBooks();
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
-        int count = db.getTotalProduct();//7
-        int endPage = count / 3;//7/3=2
-        if (count % 3 != 0) {
-            endPage++;
-        }
-        List<Product> listPage = db.pagingProduct(index);
-        request.setAttribute("listPage", listPage);
+            String indexPage = request.getParameter("index");
+            if (indexPage == null) {
+                indexPage = "1";
+            }
+            int index = Integer.parseInt(indexPage);
+            int count = db.getTotalProduct();//7
+            int endPage = count / 3;//7/3=2
+            if (count % 3 != 0) {
+                endPage++;
+            }
+            List<Product> listPage = db.pagingProduct(index);
+            request.setAttribute("listPage", listPage);
 //            request.setAttribute("list", books);
-        request.setAttribute("endPage", endPage);
-        request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
+            request.setAttribute("endPage", endPage);
+            request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
+
     }
 
     /**

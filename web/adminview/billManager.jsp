@@ -50,6 +50,7 @@
                     </form>
                 </div>
             </div>
-            <jsp:include page="../view/footer.jsp"></jsp:include>
+        </div>
+        <jsp:include page="../view/footer.jsp"></jsp:include>
     </body>
 </html>

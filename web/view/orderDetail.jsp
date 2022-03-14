@@ -50,7 +50,7 @@
                             <tr>
                                 <td>${product.getProductID()}</td>
                                 <td>${product.getProductName()}</td>
-                                <td><img src="${product.getImagePath()}" alt="Product image"/></td>
+                                <td><img src="${product.getImagePath()}" style="width: 150px;height: 150px;" alt="Product image"/></td>
                                 <td>${product.getQuantity()}</td>
                                 <td>${product.getUnitPrice()}</td>
                                 <td>${product.getUnitPrice()*product.getQuantity()}</td>

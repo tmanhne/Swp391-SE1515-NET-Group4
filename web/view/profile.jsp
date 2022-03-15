@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Checkout History</label><br>
-                                    <a href="checkouthistory">Go to history</a>
+                                    <a style="border: 1px solid black; padding: 5px;" href="checkouthistory">Go to history</a>
                                 </div>
 
                             </div>

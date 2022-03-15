@@ -87,7 +87,7 @@ public class OrderDAO extends DBConnection {
                 + "           ,[PaymentMethod]) "
                 + "           OUTPUT INSERTED.[OrderID] "
                 + "     VALUES "
-                + "            ('OD'+CAST((SELECT TOP(1)CAST(SUBSTRING(OrderID,3,10)AS INT)+1 FROM Orders ORDER BY OrderID DESC) AS VARCHAR(10)), "
+                + "            ('OD'+CAST((SELECT IIF(Count(*)=0,1,(SELECT TOP(1)CAST(SUBSTRING(OrderID,3,10)AS INT)+1 FROM Orders ORDER BY OrderID DESC)) FROM Orders) AS VARCHAR(10)), "
                 + "            ? , "
                 + "            ? , "
                 + "            ? , "

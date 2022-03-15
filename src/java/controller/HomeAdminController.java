@@ -63,7 +63,8 @@ public class HomeAdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ProductDAO db = new ProductDAO();
+        try {
+            ProductDAO db = new ProductDAO();
 //        List<Book> books = new ArrayList<>();
 //        books = db.getAllBooks();
         String indexPage = request.getParameter("index");
@@ -81,6 +82,10 @@ public class HomeAdminController extends HttpServlet {
 //            request.setAttribute("list", books);
         request.setAttribute("endPage", endPage);
         request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
+        }
     }
 
     /**

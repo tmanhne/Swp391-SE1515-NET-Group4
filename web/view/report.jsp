@@ -1,5 +1,5 @@
 <%-- 
-    Document   : SignUp
+    Document   : report
     Created on : Feb 28, 2022, 3:41:54 PM
     Author     : vudm
 --%>
@@ -56,6 +56,7 @@
                                                                     <p class="help-block">Supporting help text</p>
                                                                 </div>-->
                                     <select name="insurance" class="controls">
+                                        <option value="None">None</option>
                                         <option value="6 months">6 months</option>
                                         <option value="1 year" selected="selected">1 year</option>
                                     </select>
@@ -111,6 +112,7 @@
                                                                     <p class="help-block">Supporting help text</p>
                                                                 </div>-->
                                     <select name="insurance" class="controls">
+                                        <option value="None">None</option>
                                         <option value="6 months">6 months</option>
                                         <option value="1 year" selected="selected">1 year</option>
                                     </select>
@@ -130,7 +132,7 @@
                 </c:choose>
 
 
-                <div>${notification}</div>
+                <div style="color: red;">${notification}</div>
                 <div class="span6">
                     <button>Submit</button>
                     

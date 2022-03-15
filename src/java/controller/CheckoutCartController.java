@@ -91,11 +91,6 @@ public class CheckoutCartController extends HttpServlet {
         try {
             //get current account in session
             Account account = (Account) request.getSession().getAttribute("account");
-            //Redirect to login if account is not login
-            if (null == account) {
-                response.sendRedirect("Login");
-                return;
-            }
 
             Cookie cartCookie = getCartCookie(request.getCookies());
             //cart empty => no checkout

@@ -23,8 +23,8 @@ import model.Category;
 import model.Product;
 
 /**
- * The class contain method doGet used ProductDAO to get products then forward to
- * LandingPage
+ * The class contain method doGet used ProductDAO to get products then forward
+ * to LandingPage
  *
  * @author vudm
  */
@@ -33,8 +33,9 @@ public class HomeController extends HttpServlet {
 
     /**
      * Get all book,best seller and highest price of products from database then
-     * setAttribute and forward to LangdingPage.jsp
-     * This method uses <code>ProductDAO</code> to get all product on home page for user
+     * setAttribute and forward to LangdingPage.jsp This method uses
+     * <code>ProductDAO</code> to get all product on home page for user
+     *
      * @param request is HttpServletRequest
      * @param response is HttpServletResponse
      * @throws ServletException if a servlet-specific error occurs
@@ -45,21 +46,21 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         try {
             IProductDAO productDAO = new ProductDAO();
-            
+
             String indexPage = request.getParameter("index");
-              if (indexPage == null) {
-                  indexPage = "1";
-              }
-              int index = Integer.parseInt(indexPage);
-              int count = productDAO.getTotalProduct();//7
-              int endPage = count / 3;//7/3=2
-              if (count % 3 != 0) {
-                  endPage++;
-              }
-              List<Product> listPage = productDAO.pagingProduct(index);
-              request.setAttribute("listPage", listPage);
+            if (indexPage == null) {
+                indexPage = "1";
+            }
+            int index = Integer.parseInt(indexPage);
+            int count = productDAO.getTotalProduct();//7
+            int endPage = count / 3;//7/3=2
+            if (count % 3 != 0) {
+                endPage++;
+            }
+            List<Product> listPage = productDAO.pagingProduct(index);
+            request.setAttribute("listPage", listPage);
 //            request.setAttribute("list", books);
-              request.setAttribute("endPage", endPage);
+            request.setAttribute("endPage", endPage);
 
             ArrayList<Product> products = productDAO.getAllProducts();//get all products
 
@@ -69,8 +70,7 @@ public class HomeController extends HttpServlet {
             CategoryDAO db = new CategoryDAO();
             //          get value form databse
             List<Category> list = db.getAllCategories();
-            
-            
+
             request.setAttribute("list", list);
             request.setAttribute("books", products);
             request.setAttribute("bestSellerBooks", bestSellerProducts);

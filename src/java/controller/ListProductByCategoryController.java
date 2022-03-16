@@ -43,7 +43,7 @@ public class ListProductByCategoryController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListProductByCategoryController</title>");            
+            out.println("<title>Servlet ListProductByCategoryController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ListProductByCategoryController at " + request.getContextPath() + "</h1>");
@@ -64,17 +64,21 @@ public class ListProductByCategoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       try {
-            ProductDAO db = new ProductDAO();
+        try {
+            CategoryDAO db = new CategoryDAO();
+            List<Category> listC = db.getAllCategories();
+            request.setAttribute("list", listC);
+
+            ProductDAO db1 = new ProductDAO();
             String cid = request.getParameter("categoryID");
-            ArrayList<Product> list = db.getProductByCategory(cid);
+            ArrayList<Product> list = db1.getProductByCategory(cid);
             request.setAttribute("listP", list);
             request.getRequestDispatcher("view/show.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
-        
+
     }
 
     /**

@@ -51,11 +51,12 @@ public class OrderDAO extends DBConnection {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT o.OrderID, c.CustomerName, o.OrderDate, o.Ship, o.PaymentMethod FROM "
-                + " (SELECT * FROM Orders) AS o "
-                + " INNER JOIN "
-                + " (SELECT * FROM Customer) AS c "
-                + " ON o.CustomerID = c.CustomerID "
+        String sql = " SELECT o.OrderID, c.CustomerName, o.OrderDate, od.UnitPrice, o.Ship, o.PaymentMethod "
+                + " FROM dbo.Orders AS o "
+                + " JOIN dbo.OrderDetail AS od "
+                + " ON od.OrderID = o.OrderID "
+                + " JOIN dbo.Customer AS c "
+                + " ON c.CustomerID = o.CustomerID "
                 + " WHERE o.Status = 'Waitting' ";
         try {
             con = super.open();
@@ -65,8 +66,10 @@ public class OrderDAO extends DBConnection {
                 lst.add(new OrderOnAdmin(rs.getString(1),
                         rs.getString(2),
                         rs.getDate(3),
-                        rs.getString(4),
-                        rs.getString(5)));
+                        rs.getDouble(4),
+                        rs.getString(5), 
+                        rs.getString(6)
+                ));
             }
         } catch (SQLException ex) {
             throw ex;

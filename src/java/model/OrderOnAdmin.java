@@ -16,16 +16,18 @@ public class OrderOnAdmin {
     private String orderID;
     private String customer;
     private Date orderDate;
+    private double unitPrice;
     private String ship;
     private String paymentMethod;
 
     public OrderOnAdmin() {
     }
 
-    public OrderOnAdmin(String orderID, String customer, Date orderDate, String ship, String paymentMethod) {
+    public OrderOnAdmin(String orderID, String customer, Date orderDate, double unitPrice, String ship, String paymentMethod) {
         this.orderID = orderID;
         this.customer = customer;
         this.orderDate = orderDate;
+        this.unitPrice = unitPrice;
         this.ship = ship;
         this.paymentMethod = paymentMethod;
     }
@@ -54,6 +56,14 @@ public class OrderOnAdmin {
         this.orderDate = orderDate;
     }
 
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
     public String getShip() {
         return ship;
     }
@@ -69,6 +79,5 @@ public class OrderOnAdmin {
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-    
-    
+
 }

@@ -56,6 +56,7 @@
                                                                     <p class="help-block">Supporting help text</p>
                                                                 </div>-->
                                     <select name="insurance" class="controls">
+                                        
                                         <option value="None">None</option>
                                         <option value="6 months">6 months</option>
                                         <option value="1 year" selected="selected">1 year</option>
@@ -80,28 +81,28 @@
                                 <div class="control-group">
                                     <label class="control-label" for="input01">Title</label>
                                     <div class="controls">
-                                        <input type="text" name="title" class="input-xlarge" id="input01">
+                                        <input type="text" name="title" class="input-xlarge" id="input01" required="">
                                         <p class="help-block">Supporting help text</p>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="input01">Customer's Name</label>
                                     <div class="controls">
-                                        <input type="text" name="customerName" class="input-xlarge" id="input01">
+                                        <input type="text" name="customerName" class="input-xlarge" id="input01" required="">
                                         <p class="help-block">Supporting help text</p>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="input01">Email</label>
                                     <div class="controls">
-                                        <input type="text" name="email" class="input-xlarge" id="input01">
+                                        <input type="text" name="email" class="input-xlarge" id="input01" required="">
                                         <p class="help-block">Supporting help text</p>
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label" for="input01">Phone</label>
                                     <div class="controls">
-                                        <input type="text" name="phone" class="input-xlarge" id="input01">
+                                        <input type="text" name="phone" class="input-xlarge" id="input01" required="">
                                         <p class="help-block">Supporting help text</p>
                                     </div>
                                 </div> 

@@ -19,19 +19,18 @@
     </head>
     <body>
         <div class="topnav">
-            <a href="home">ShoesShop Online</a>
+            <a href="home">Book Shop Online</a>
             <div class="dropdown">
                 <button class="dropbtn">Category</button>
                 <div class="dropdown-content">
-                    <form action="StoryController" method="GET">
-                        <div class="item">Story</div>
-                    </form>
-                    <form action="BookController" method="GET">
-                        <div class="item">Book</div>
-                    </form>
-                    <form action="NovelController" method="GET">
-                        <div class="item">Novel</div>
-                    </form>
+                    <div class="item">
+                        <c:forEach var="cate" items="${requestScope.list}">
+                            <form action="listProductByCategory" method="GET">
+                                <a href="listProductDetail?categoryID=${cate.getCategoryID()}">${cate.getCategoryName()}</a>
+                            </form>
+                        </c:forEach>
+                    </div>
+
 
                 </div>
             </div>

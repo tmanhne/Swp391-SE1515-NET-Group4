@@ -14,6 +14,11 @@
         <link href="./public/style/landingAdmin.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <script>
+            function updateOk() {
+                alert("Update Successfull!");
+            }
+        </script>
         <div id="admin-main-content">
             <jsp:include page="../view/leftMenuAdmin.jsp"></jsp:include>
                 <div class="admin-manager-detail">
@@ -41,6 +46,7 @@
                                 <td><div class="divTableCell">
                                          <select name="reportStatus" class="controls">
                                                 <option value="${rpt.getStatus()}" selected="selected">${rpt.getStatus()}</option>
+                                                <option value="Peding">Pending</option>
                                                 <option value="Doing">Doing</option>
                                                 <option value="Completed" >Completed</option>
                                         </select>
@@ -48,7 +54,7 @@
                                     </div></td>
                                 <%--  <td><img src="${product.getPathImage()}"style="width: 100%"/></td>--%>
                             
-                                <td><button value="save">Save</button></td>
+                                <td><button value="save" onclick="updateOk()">Save</button></td>
                             
                             </tr>
                         </c:forEach>

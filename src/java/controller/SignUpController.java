@@ -64,7 +64,7 @@ public class SignUpController extends HttpServlet {
             String phone = request.getParameter("phone").trim();
             String cfPassword = request.getParameter("cfPassword").trim();
 
-            Pattern pUser = Pattern.compile("^[A-Za-z][A-Za-z0-9_]{6,50}$");
+            Pattern pUser = Pattern.compile("^[A-Za-z][A-Za-z0-9_]{4,50}$");
             Matcher mUser = pUser.matcher(username);
 
             Pattern pEmail = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -109,8 +109,13 @@ public class SignUpController extends HttpServlet {
                 boolean checkUsername = accountDAO.isUsernameExist(username);
 
                 Random random = new Random();
-                int accountID = random.nextInt(2);
+                int accountID = random.nextInt(99);
                 if (checkUsername) {//check username is exist
+                    request.setAttribute("user", username);
+                    request.setAttribute("email", email);
+                    request.setAttribute("phone", phone);
+                    request.setAttribute("pass", password);
+                    request.setAttribute("cfpass", cfPassword);
                     request.setAttribute("notification", "Username already exists.");
                     request.getRequestDispatcher("view/signUp.jsp").forward(request, response);
                 } else {
@@ -121,8 +126,8 @@ public class SignUpController extends HttpServlet {
                 }
             }
         } catch (Exception ex) {
-            request.setAttribute("message", ex.getMessage());
-            request.getRequestDispatcher("view/Error.jsp").forward(request, response);
+            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
+            request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
 
     }

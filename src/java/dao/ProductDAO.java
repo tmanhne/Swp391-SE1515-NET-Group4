@@ -397,25 +397,25 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "";
-        if(null!=product.getImagePath()){
+        if (null != product.getImagePath()) {
             sql = " UPDATE [dbo].[Products] "
-                + "   SET [ProductName] = ?  "
-                + "      ,[Description] = ?  "
-                + "      ,[UnitPrice] = ?  "
-                + "      ,[UnitInStock] = ?  "
-                + "      ,[IsContinue] = ?  "
-                + "      ,[Ratting] = ?  "
-                + "      ,[ImagePath] = ? "
-                + " WHERE [ProductID] = ? ";
-        }else{
+                    + "   SET [ProductName] = ?  "
+                    + "      ,[Description] = ?  "
+                    + "      ,[UnitPrice] = ?  "
+                    + "      ,[UnitInStock] = ?  "
+                    + "      ,[IsContinue] = ?  "
+                    + "      ,[Ratting] = ?  "
+                    + "      ,[ImagePath] = ? "
+                    + " WHERE [ProductID] = ? ";
+        } else {
             sql = " UPDATE [dbo].[Products] "
-                + "   SET [ProductName] = ?  "
-                + "      ,[Description] = ?  "
-                + "      ,[UnitPrice] = ?  "
-                + "      ,[UnitInStock] = ?  "
-                + "      ,[IsContinue] = ?  "
-                + "      ,[Ratting] = ?  "
-                + " WHERE [ProductID] = ? ";
+                    + "   SET [ProductName] = ?  "
+                    + "      ,[Description] = ?  "
+                    + "      ,[UnitPrice] = ?  "
+                    + "      ,[UnitInStock] = ?  "
+                    + "      ,[IsContinue] = ?  "
+                    + "      ,[Ratting] = ?  "
+                    + " WHERE [ProductID] = ? ";
         }
         try {
             //open connection
@@ -498,6 +498,50 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             super.close(con, ps, rs);
         }
         return products;
+    }
+
+    @Override
+    public ArrayList<Product> getProductByCategory(String categoryID) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        AuthorsDAO au;
+        ArrayList<Product> books = new ArrayList<>();
+        String sql = "SELECT * FROM Products WHERE CategoryID = ? ";
+
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1,categoryID);
+            rs = ps.executeQuery();
+
+            //assign data to books
+            while (rs.next()) {
+                Product book = new Product();
+                book.setProductID(rs.getString("ProductID"));
+                book.setProductName(rs.getString("ProductName"));
+                book.setImagePath(rs.getString("ImagePath"));
+                book.setCreateDate(rs.getDate("CreatedDate"));
+                book.setDescription(rs.getString("Description"));
+                book.setUnitPrice(rs.getFloat("UnitPrice"));
+                book.setUnitInStock(rs.getInt("UnitInStock"));
+                book.setIsContinue(rs.getBoolean("IsContinue"));
+                book.setRatting(rs.getInt("Ratting"));
+
+                books.add(book);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+
+        return books;
     }
 
 }

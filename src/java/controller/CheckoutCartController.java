@@ -91,11 +91,6 @@ public class CheckoutCartController extends HttpServlet {
         try {
             //get current account in session
             Account account = (Account) request.getSession().getAttribute("account");
-            //Redirect to login if account is not login
-            if (null == account) {
-                response.sendRedirect("Login");
-                return;
-            }
 
             Cookie cartCookie = getCartCookie(request.getCookies());
             //cart empty => no checkout
@@ -111,7 +106,6 @@ public class CheckoutCartController extends HttpServlet {
                 request.setAttribute("mess", "You can't checkout in admin role");
                 request.getRequestDispatcher("view/cart.jsp").forward(request, response);
                 return;
-
             }
 
             //check address
@@ -128,7 +122,7 @@ public class CheckoutCartController extends HttpServlet {
                 CustomerDAO customerdb = new CustomerDAO();
                 //check customer
                 Customer customer = customerdb.getCustomer(account.getAccountID());
-                //customer is not exist yet
+                //customer is not exist yet -> create new cus
                 if (null == customer) {
                     customer = new Customer();
                     customer.setAccountID(account.getAccountID());

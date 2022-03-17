@@ -1,32 +1,35 @@
 /*
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2022-02-07      1.0                 ThiPT            First Implement
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package controller;
 
-import dao.ProductDAO;
+import dao.CustomerDAO;
+import dao.OrderDAO;
+import dao.OrderDetailDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Product;
+import model.Account;
+import model.Customer;
+import model.Orders;
 
 /**
  *
- * @author phamthithi
+ * @author Hfyl
  */
-@WebServlet(name = "HomeAdminController", urlPatterns = {"/homeadmin"})
-public class HomeAdminController extends HttpServlet {
+@WebServlet(name = "CheckOutHistoryController", urlPatterns = {"/checkouthistory"})
+public class CheckOutHistoryController extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -41,10 +44,10 @@ public class HomeAdminController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeAdminController</title>");
+            out.println("<title>Servlet CheckOutHistoryController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeAdminController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CheckOutHistoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,26 +65,17 @@ public class HomeAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        try {
-            ProductDAO db = new ProductDAO();
-//        List<Book> books = new ArrayList<>();
-//        books = db.getAllBooks();
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
-        int count = db.getTotalProduct();//7
-        int endPage = count / 3;//7/3=2
-        if (count % 3 != 0) {
-            endPage++;
-        }
-        List<Product> listPage = db.pagingProduct(index);
-        request.setAttribute("listPage", listPage);
-//            request.setAttribute("list", books);
-        request.setAttribute("endPage", endPage);
-        request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
+        try{
+            OrderDAO dAO = new OrderDAO();
+            Account user = (Account) request.getSession().getAttribute("account");
+            String accountId = user.getAccountID();
+            CustomerDAO cdao = new CustomerDAO();
+            Customer customer = cdao.getCustomer(accountId);
+            if(null!=customer){
+                ArrayList<Orders> lst = dAO.getOrderByCustomerID(customer.getCustomerID());
+                request.setAttribute("orders", lst);
+            }
+            request.getRequestDispatcher("view/checkoutHistory.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
@@ -99,26 +93,6 @@ public class HomeAdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String name = "";
-            //check search parameter
-            if (request.getParameter("search") != null) {
-                if (!request.getParameter("search").toString().trim().isEmpty()) {
-                    name = request.getParameter("search").toString().trim();//if parameter is not empty
-                }
-            }
-            ProductDAO db = new ProductDAO();
-            List<Product> books = new ArrayList<>();
-            books = db.getProductByName(name);
-
-            request.setAttribute("listPage", books);
-            request.setAttribute("searchname", name);
-            request.getRequestDispatcher("view/landingAdmin.jsp").forward(request, response);
-        } catch (Exception e) {
-            request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
-            request.getRequestDispatcher("error/error.jsp").forward(request, response);
-        }
-
     }
 
     /**

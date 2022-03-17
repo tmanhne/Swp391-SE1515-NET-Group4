@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.OrderOnAdmin;
+import model.Orders;
 
 /**
  *
@@ -50,11 +51,12 @@ public class OrderDAO extends DBConnection {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT o.OrderID, c.CustomerName, o.OrderDate, o.Ship, o.PaymentMethod FROM "
-                + " (SELECT * FROM Orders) AS o "
-                + " INNER JOIN "
-                + " (SELECT * FROM Customer) AS c "
-                + " ON o.CustomerID = c.CustomerID "
+        String sql = " SELECT o.OrderID, c.CustomerName, o.OrderDate, od.UnitPrice, o.Ship, o.PaymentMethod "
+                + " FROM dbo.Orders AS o "
+                + " JOIN dbo.OrderDetail AS od "
+                + " ON od.OrderID = o.OrderID "
+                + " JOIN dbo.Customer AS c "
+                + " ON c.CustomerID = o.CustomerID "
                 + " WHERE o.Status = 'Waitting' ";
         try {
             con = super.open();
@@ -64,8 +66,10 @@ public class OrderDAO extends DBConnection {
                 lst.add(new OrderOnAdmin(rs.getString(1),
                         rs.getString(2),
                         rs.getDate(3),
-                        rs.getString(4),
-                        rs.getString(5)));
+                        rs.getDouble(4),
+                        rs.getString(5), 
+                        rs.getString(6)
+                ));
             }
         } catch (SQLException ex) {
             throw ex;
@@ -86,7 +90,7 @@ public class OrderDAO extends DBConnection {
                 + "           ,[PaymentMethod]) "
                 + "           OUTPUT INSERTED.[OrderID] "
                 + "     VALUES "
-                + "            ('OD'+CAST((SELECT COUNT(*)+1 FROM Orders) AS VARCHAR(10)), "
+                + "            ('OD'+CAST((SELECT IIF(Count(*)=0,1,(SELECT TOP(1)CAST(SUBSTRING(OrderID,3,10)AS INT)+1 FROM Orders ORDER BY OrderID DESC)) FROM Orders) AS VARCHAR(10)), "
                 + "            ? , "
                 + "            ? , "
                 + "            ? , "
@@ -116,5 +120,82 @@ public class OrderDAO extends DBConnection {
             super.close(con, ps, rs);
         }
         return orderId;
+    }
+
+    public ArrayList<Orders> getOrderByCustomerID(String customerId) throws SQLException {
+        ArrayList<Orders> lst = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM [dbo].[Orders] WHERE [CustomerID] = ? ";
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, customerId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lst.add(new Orders(rs.getString(1),
+                        rs.getString(2),
+                        rs.getDate(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6)));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return lst;
+    }
+
+    public Orders getOrderByOrderID(String orderId) throws SQLException {
+        Orders order = null;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM [dbo].[Orders] WHERE [OrderID] = ? ";
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, orderId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                order = new Orders(rs.getString(1),
+                        rs.getString(2),
+                        rs.getDate(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return order;
+    }
+
+    public int cancelOrder(String orderId) throws SQLException {
+        int result = 0;
+        Orders order = null;
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "DELETE FROM [dbo].[Orders] WHERE OrderID = ? ";
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, orderId);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return result;
     }
 }

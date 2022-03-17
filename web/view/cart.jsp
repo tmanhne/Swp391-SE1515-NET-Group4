@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -94,7 +95,8 @@
                   </div>
                   <div class="summary-delivery">
                     <div class="summary-ship">Order Date</div>
-                    <div class="date-ship" id="basket-total">12:02</div>
+                    <%java.text.DateFormat df = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm"); %>
+                    <div class="date-ship" id="basket-total"><%= df.format(new java.util.Date()) %></div>
                 </div>
                 <div class="summary-delivery">
                   <div class="summary-ship">Address</div>
@@ -112,8 +114,9 @@
                   </div>
                   <div class="summary-checkout">
                       <button type="submit" class="checkout-cta">Checkout Cart</button>
-                      <p style="color: red">${requestScope.mess}</p>
-                  </div>
+                      
+                  </div> 
+                  <p style="color: red; font-size: 16px">${requestScope.mess}</p>
               </div>
           </aside> 
             </form>

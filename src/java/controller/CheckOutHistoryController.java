@@ -7,10 +7,8 @@ package controller;
 
 import dao.CustomerDAO;
 import dao.OrderDAO;
-import dao.OrderDetailDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +26,8 @@ import model.Orders;
 @WebServlet(name = "CheckOutHistoryController", urlPatterns = {"/checkouthistory"})
 public class CheckOutHistoryController extends HttpServlet {
 
+    private static final int FETCH  = 10;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -44,7 +44,7 @@ public class CheckOutHistoryController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckOutHistoryController</title>");            
+            out.println("<title>Servlet CheckOutHistoryController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CheckOutHistoryController at " + request.getContextPath() + "</h1>");
@@ -65,21 +65,55 @@ public class CheckOutHistoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
+        try {
+            int page = 1;
+            if ((null != request.getParameter("page")) && (!request.getParameter("page").trim().isEmpty())) {
+                page = Integer.parseInt(request.getParameter("page").trim());
+            }
             OrderDAO dAO = new OrderDAO();
             Account user = (Account) request.getSession().getAttribute("account");
             String accountId = user.getAccountID();
             CustomerDAO cdao = new CustomerDAO();
             Customer customer = cdao.getCustomer(accountId);
-            if(null!=customer){
+            if (null != customer) {
                 ArrayList<Orders> lst = dAO.getOrderByCustomerID(customer.getCustomerID());
-                request.setAttribute("orders", lst);
+                int[] result = pagingnation(page, lst.size());
+                int totalPage = result[0];
+                int offset = result[1];
+                ArrayList<Orders> currentlst = getData(lst, offset);
+                request.setAttribute("page", page);
+                request.setAttribute("orders", currentlst);
+                request.setAttribute("totalPage", totalPage);
             }
             request.getRequestDispatcher("view/checkoutHistory.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
+    }
+
+    private ArrayList<Orders> getData(ArrayList<Orders> alllst, int offset) {
+        ArrayList<Orders> lst = new ArrayList<>();
+        int count = 0;
+        for (int i = offset; i < alllst.size(); i++) {
+            lst.add(alllst.get(i));
+            count++;
+            if (count == FETCH) {
+                break;
+            }
+        }
+        return lst;
+    }
+
+    private int[] pagingnation(int page, int size) {
+        int offset = (page - 1) * FETCH;
+        int totalPage = 0;
+        if (offset > size) {
+            offset = size - (size % FETCH);
+        }
+        totalPage = Math.floorDiv(size, FETCH) + (size % FETCH > 0 ? 1 : 0);
+        int[] array = {totalPage, offset};
+        return array;
     }
 
     /**

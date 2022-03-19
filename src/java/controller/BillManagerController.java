@@ -23,7 +23,7 @@ import model.OrderOnAdmin;
 @WebServlet(name = "BillManagerController", urlPatterns = {"/billmanager"})
 public class BillManagerController extends HttpServlet {
 
-    private final int FETCH = 1;
+    private final int FETCH = 10;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -92,7 +92,7 @@ public class BillManagerController extends HttpServlet {
                 int[] result = pagingnation(page, lst.size());
                 int totalPage = result[0];
                 int offset = result[1];
-                ArrayList<OrderOnAdmin> currentlst = getData(lst, page, offset);
+                ArrayList<OrderOnAdmin> currentlst = getData(lst, offset);
 
                 request.setAttribute("page", page);
                 request.setAttribute("orders", currentlst);
@@ -150,7 +150,7 @@ public class BillManagerController extends HttpServlet {
                 int[] result = pagingnation(1, lst.size());
                 int totalPage = result[0];
                 int offset = result[1];
-                ArrayList<OrderOnAdmin> currentlst = getData(lst, 1, offset);
+                ArrayList<OrderOnAdmin> currentlst = getData(lst, offset);
 
                 request.setAttribute("page", 1);
                 request.setAttribute("orders", currentlst);
@@ -163,7 +163,7 @@ public class BillManagerController extends HttpServlet {
         }
     }
 
-    private ArrayList<OrderOnAdmin> getData(ArrayList<OrderOnAdmin> alllst, int page, int offset) {
+    private ArrayList<OrderOnAdmin> getData(ArrayList<OrderOnAdmin> alllst, int offset) {
         ArrayList<OrderOnAdmin> lst = new ArrayList<>();
         int count = 0;
         for (int i = offset; i < alllst.size(); i++) {

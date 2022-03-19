@@ -44,10 +44,21 @@
                         </c:forEach>
                     </tbody>
                 </table>
-            </c:if>
+                <div>
+                    <c:if test="${(requestScope.totalPage!=null)}">
+                        <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
+                            <c:if test="${i==requestScope.page}">
+                                <strong>${i}<strong>
+                                    </c:if>
+                                    <c:if test="${i!=requestScope.page}">
+                                        <a href="checkouthistory?page=${i}" >${i}</a>
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
+                        </c:if>
+                        </div>
+                        </div>
+                        <jsp:include page="footer.jsp"></jsp:include>
+                        </body>
 
-        </div>
-        <jsp:include page="footer.jsp"></jsp:include>
-    </body>
-
-</html>
+                        </html>

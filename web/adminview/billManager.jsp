@@ -27,6 +27,7 @@
                                     <th>Order ID</th>
                                     <th>Customer</th>
                                     <th>Order Date</th>
+                                    <th>Cost</th>
                                     <th>Ship</th>
                                     <th>Payment Method</th>
                                     <th></th>
@@ -38,6 +39,7 @@
                                     <td>${order.getOrderID()}</td>
                                     <td>${order.getCustomer()}</td>
                                     <td>${order.getOrderDate()}</td>
+                                    <td>${order.getUnitPrice()}</td>
                                     <td>${order.getShip()}</td>
                                     <td>${order.getPaymentMethod()}</td>
 

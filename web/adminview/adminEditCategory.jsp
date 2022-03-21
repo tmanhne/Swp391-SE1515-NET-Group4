@@ -18,7 +18,7 @@
             <jsp:include page="../view/leftMenuAdmin.jsp"></jsp:include>
                 <div class="admin-manager-detail">
                     <div class="header-main">
-                        <p>The List of Category</p>
+                        <p>Edit Category</p>
                     </div>
                     <div class="mess">                          
                         <p>

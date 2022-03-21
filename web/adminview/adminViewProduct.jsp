@@ -19,7 +19,7 @@
                 <jsp:include page="../view/leftMenuAdmin.jsp"></jsp:include>
                     <div class="admin-manager-detail">
                         <div class="header-main">
-                            <p>The List of Products</p>
+                            <p>View Product Detail</p>
                         </div>                    
                         <div class="table-listProduct">
                             <div class="divTable">

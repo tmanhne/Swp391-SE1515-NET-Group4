@@ -11,8 +11,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        
     </head>
     <body>
+       
         <jsp:include page="header.jsp"></jsp:include>
 
             <div style="width: 70%; margin: 0 auto;">
@@ -20,7 +22,7 @@
             <c:if test="${null!=requestScope.order}">
                 <div>
                     <form action="orderdetail" method="POST">
-                        <table border="0" style="width: 100%">
+                        <table border="0" style="width: 100%" >
                             <tr>
                                 <th>OrderID: ${requestScope.order.getOrderID()}</th>
                                 <th>Order Date: ${requestScope.order.getOrderDate()}</th>
@@ -34,7 +36,7 @@
                         </table>
                     </form>
                 </div>
-                <table border="1" style="width: 100%">
+                <table border="1" style="width: 100%" id="tableExport">
                     <thead>
                         <tr>
                             <th>ProductID</th>
@@ -67,6 +69,7 @@
                     </tbody>
                 </table>
             </c:if>
+        
         </div>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>

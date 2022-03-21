@@ -23,15 +23,12 @@
             <div class="dropdown">
                 <button class="dropbtn">Category</button>
                 <div class="dropdown-content">
-                    <div class="item">
-                        <c:forEach var="cate" items="${requestScope.list}">
-                            <form action="listProductByCategory" method="GET">
-                                <a href="listProductDetail?categoryID=${cate.getCategoryID()}">${cate.getCategoryName()}</a>
-                            </form>
+                    <c:forEach var="cate" items="${requestScope.list}">
+                        <form action="listProductByCategory" method="GET">
+                            <div class="item">
+                                <a class="itemHref" href="listProductDetail?categoryID=${cate.getCategoryID()}">${cate.getCategoryName()}</a>
+                            </div></form>
                         </c:forEach>
-                    </div>
-
-
                 </div>
             </div>
             <div class="search-container">

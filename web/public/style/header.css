@@ -63,8 +63,8 @@ body {
     z-index: 1;
 }
 
-/* Links inside the dropdown */
-.dropdown-content .item {
+.dropdown-content .item .itemHref{
+    width: 100%;
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -72,7 +72,7 @@ body {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content .item:hover {
+.dropdown-content .item .itemHref:hover {
     background-color: #f1f1f1;
 }
 
@@ -124,7 +124,7 @@ body {
     .topnav .search-container button {
         float: none;
         text-align: left;
-        width: 100%;
+        /*        width: 100%;*/
         margin: 0;
         padding: 14px;
     }

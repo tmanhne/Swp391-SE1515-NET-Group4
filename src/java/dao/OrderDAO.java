@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import model.OrderOnAdmin;
 import model.Orders;
@@ -21,6 +22,52 @@ import model.Orders;
 public class OrderDAO extends DBConnection {
 
     public OrderDAO() {
+    }
+
+    public ArrayList<Integer> getGroupYear() throws SQLException {
+        ArrayList<Integer> lst = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = " SELECT YEAR(OrderDate) FROM Orders WHERE [Status] = 'Waitting' GROUP BY YEAR(OrderDate) ";
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lst.add(rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return lst;
+    }
+
+    public ArrayList<String> getGroupDate(String year) throws SQLException {
+        ArrayList<String> lst = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = " SELECT OrderDate FROM Orders WHERE YEAR(OrderDate) = ? AND [Status] = 'Waitting' GROUP BY OrderDate  ";
+        try {
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, year);
+            rs = ps.executeQuery();
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd");
+            while (rs.next()) {
+                lst.add(format.format(rs.getDate(1)));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return lst;
     }
 
     public int setFlagStatus(String orderId, String status) throws SQLException {
@@ -46,28 +93,30 @@ public class OrderDAO extends DBConnection {
         return result;
     }
 
-    public ArrayList<OrderOnAdmin> getOrdersAdmin() throws SQLException {
+    public ArrayList<OrderOnAdmin> getOrdersAdmin(String date) throws SQLException {
         ArrayList<OrderOnAdmin> lst = new ArrayList<>();
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = " SELECT o.OrderID, c.CustomerName, o.OrderDate, od.UnitPrice, o.Ship, o.PaymentMethod "
-                + " FROM dbo.Orders AS o "
-                + " JOIN dbo.OrderDetail AS od "
-                + " ON od.OrderID = o.OrderID "
-                + " JOIN dbo.Customer AS c "
-                + " ON c.CustomerID = o.CustomerID "
-                + " WHERE o.Status = 'Waitting' ";
+        String sql = "SELECT o.OrderID, c.CustomerName, o.OrderDate, od.Total, o.Ship, o.PaymentMethod "
+                + "	FROM (SELECT * FROM Orders WHERE OrderDate = ?) AS o "
+                + "	INNER JOIN  "
+                + "	(SELECT OrderID, SUM(Quantity*UnitPrice) AS Total FROM OrderDetail GROUP BY OrderID) AS od "
+                + "	ON od.OrderID = o.OrderID "
+                + "	INNER JOIN dbo.Customer AS c "
+                + "	ON c.CustomerID = o.CustomerID "
+                + "	WHERE o.Status = 'Waitting'";
         try {
             con = super.open();
             ps = con.prepareStatement(sql);
+            ps.setString(1, date);
             rs = ps.executeQuery();
             while (rs.next()) {
                 lst.add(new OrderOnAdmin(rs.getString(1),
                         rs.getString(2),
                         rs.getDate(3),
                         rs.getDouble(4),
-                        rs.getString(5), 
+                        rs.getString(5),
                         rs.getString(6)
                 ));
             }

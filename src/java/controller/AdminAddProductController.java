@@ -30,7 +30,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @WebServlet(name = "AdminAddProductController", urlPatterns = {"/adminAddProduct"})
 
 public class AdminAddProductController extends RequiredAdminAccount {
-    private final String UPLOAD_DIRECTORY = "C:\\Users\\Hfyl\\Desktop\\s7\\SWP391\\Swp391-SE1515-NET-Group4\\web\\public\\image";
+    private final String UPLOAD_DIRECTORY = "D:\\LearnFPT\\Term6\\SWP391\\Code\\Swp391-SE1515-NET-Group4\\web\\public\\image";
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,7 +39,7 @@ public class AdminAddProductController extends RequiredAdminAccount {
             List<Category> categories = categoryDAO.getAllCategories();
 
             request.setAttribute("categories", categories);
-            request.getRequestDispatcher("./adminview/adminaddproduct.jsp").forward(request, response);
+            request.getRequestDispatcher("adminview/adminaddproduct.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
@@ -148,7 +148,7 @@ public class AdminAddProductController extends RequiredAdminAccount {
             request.setAttribute("UnitInStock", unitInStockPara);
             request.setAttribute("cateSelected", categoryID);
             request.setAttribute("book", product);
-            request.getRequestDispatcher("./adminview/adminaddproduct.jsp").forward(request, response);
+            request.getRequestDispatcher("adminview/adminaddproduct.jsp").forward(request, response);
 
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");

@@ -42,7 +42,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @WebServlet(name = "AdminEditProductController", urlPatterns = {"/AdminEditProduct"})
 public class AdminEditProductController extends HttpServlet {
 
-    private final String UPLOAD_DIRECTORY = "C:\\Users\\Hfyl\\Desktop\\s7\\SWP391\\Swp391-SE1515-NET-Group4\\web\\public\\image";
+    private final String UPLOAD_DIRECTORY = "D:\\LearnFPT\\Term6\\SWP391\\Code\\Swp391-SE1515-NET-Group4\\web\\public\\image";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

@@ -23,6 +23,8 @@ import model.OrderOnAdmin;
 @WebServlet(name = "BillManagerController", urlPatterns = {"/billmanager"})
 public class BillManagerController extends HttpServlet {
 
+    private final int FETCH = 10;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -39,7 +41,7 @@ public class BillManagerController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BillManagerController</title>");            
+            out.println("<title>Servlet BillManagerController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet BillManagerController at " + request.getContextPath() + "</h1>");
@@ -60,11 +62,41 @@ public class BillManagerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
+        try {
+            int page = 1;
+            String year = null;
+            String date = null;
             OrderDAO dAO = new OrderDAO();
-            ArrayList<OrderOnAdmin> lst = dAO.getOrdersAdmin();
-            if(!lst.isEmpty()){
-                request.setAttribute("orders", lst);
+            if ((null != request.getParameter("page")) && (!request.getParameter("page").trim().isEmpty())) {
+                page = Integer.parseInt(request.getParameter("page").trim());
+            }
+            if ((null != request.getParameter("year")) && (!request.getParameter("year").trim().isEmpty())) {
+                year = request.getParameter("year").trim();
+                request.setAttribute("selyear", year);
+            }
+            if ((null != request.getParameter("date")) && (!request.getParameter("date").trim().isEmpty())) {
+                date = request.getParameter("date").trim();
+                request.setAttribute("seldate", date);
+            }
+
+            ArrayList<Integer> years = dAO.getGroupYear();
+            if (!years.isEmpty()) {
+                request.setAttribute("years", years);
+                year = null == year ? years.get(0).toString() : year;
+                ArrayList<String> dates = dAO.getGroupDate(year);
+                date = null == date ? dates.get(0).toString() : date;
+                request.setAttribute("dates", dates);
+                String datequerry = year + '/' + date;
+
+                ArrayList<OrderOnAdmin> lst = dAO.getOrdersAdmin(datequerry);
+                int[] result = pagingnation(page, lst.size());
+                int totalPage = result[0];
+                int offset = result[1];
+                ArrayList<OrderOnAdmin> currentlst = getData(lst, offset);
+
+                request.setAttribute("page", page);
+                request.setAttribute("orders", currentlst);
+                request.setAttribute("totalPage", totalPage);
             }
             request.getRequestDispatcher("adminview/billManager.jsp").forward(request, response);
         } catch (Exception e) {
@@ -84,21 +116,75 @@ public class BillManagerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
-            String orderId = null!=request.getParameter("accept")? request.getParameter("accept"):request.getParameter("deny");
-            boolean accept = null!=request.getParameter("accept");
-            String status = accept ? "Approved": "Denied";
+        try {
             OrderDAO dAO = new OrderDAO();
-            dAO.setFlagStatus(orderId, status);
-            ArrayList<OrderOnAdmin> lst = dAO.getOrdersAdmin();
-            if(!lst.isEmpty()){
-                request.setAttribute("orders", lst);
+
+            if (null == request.getParameter("search")) {
+                String orderId = null != request.getParameter("accept") ? request.getParameter("accept") : request.getParameter("deny");
+                boolean accept = null != request.getParameter("accept");
+                String status = accept ? "Approved" : "Denied";
+                dAO.setFlagStatus(orderId, status);
+                request.setAttribute("mess", status+" "+orderId+" successfully!");
+            }
+            String year = null;
+            String date = null;
+            if ((null != request.getParameter("year")) && (!request.getParameter("year").trim().isEmpty())) {
+                year = request.getParameter("year").trim();
+                request.setAttribute("selyear", year);
+            }
+            if ((null != request.getParameter("date")) && (!request.getParameter("date").trim().isEmpty())) {
+                date = request.getParameter("date").trim();
+                request.setAttribute("seldate", date);
+            }
+
+            ArrayList<Integer> years = dAO.getGroupYear();
+            if (!years.isEmpty()) {
+                request.setAttribute("years", years);
+                year = null == year ? years.get(0).toString() : year;
+                ArrayList<String> dates = dAO.getGroupDate(year);
+                date = null == date ? dates.get(0).toString() : date;
+                request.setAttribute("dates", dates);
+                String datequerry = year + '/' + date;
+
+                ArrayList<OrderOnAdmin> lst = dAO.getOrdersAdmin(datequerry);
+                int[] result = pagingnation(1, lst.size());
+                int totalPage = result[0];
+                int offset = result[1];
+                ArrayList<OrderOnAdmin> currentlst = getData(lst, offset);
+
+                request.setAttribute("page", 1);
+                request.setAttribute("orders", currentlst);
+                request.setAttribute("totalPage", totalPage);
             }
             request.getRequestDispatcher("adminview/billManager.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }
+    }
+
+    private ArrayList<OrderOnAdmin> getData(ArrayList<OrderOnAdmin> alllst, int offset) {
+        ArrayList<OrderOnAdmin> lst = new ArrayList<>();
+        int count = 0;
+        for (int i = offset; i < alllst.size(); i++) {
+            lst.add(alllst.get(i));
+            count++;
+            if (count == FETCH) {
+                break;
+            }
+        }
+        return lst;
+    }
+
+    private int[] pagingnation(int page, int size) {
+        int offset = (page - 1) * FETCH;
+        int totalPage = 0;
+        if (offset > size) {
+            offset = size - (size % FETCH);
+        }
+        totalPage = Math.floorDiv(size, FETCH) + (size % FETCH > 0 ? 1 : 0);
+        int[] array = {totalPage, offset};
+        return array;
     }
 
     /**

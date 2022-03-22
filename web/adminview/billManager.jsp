@@ -22,6 +22,31 @@
                     </div>
                     <div class="table-listProduct">
                         <form method="POST" action="billmanager">
+                            <div>
+                                <select name="year">
+                                <c:forEach var="year" items="${requestScope.years}">
+                                    <c:if test="${year eq requestScope.selyear}">
+                                        <option value="${year}" selected>${year}</option>
+                                    </c:if>
+                                    <c:if test="${year != requestScope.selyear}">
+                                        <option value="${year}">${year}</option>
+                                    </c:if>
+                                </c:forEach>
+                                </select>
+                                <select name="date">
+                                <c:forEach var="date" items="${requestScope.dates}">
+                                    <c:if test="${date eq requestScope.seldate}">
+                                        <option value="${date}" selected>${date}</option>
+                                    </c:if>
+                                    <c:if test="${date != requestScope.seldate}">
+                                            <option value="${date}">${date}</option>
+                                    </c:if>
+                                     
+                                </c:forEach>
+                                </select>
+                                <button type="submit" value="search" name="search">Search</button>
+                                <p style="color: red">${requestScope.mess}</p>
+                            <div>
                             <table>
                                 <tr>             
                                     <th>Order ID</th>
@@ -49,6 +74,18 @@
                                 </tr>
                             </c:forEach>
                         </table>
+                            <div>
+                        <c:if test="${(requestScope.totalPage!=null)}">
+                            <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
+                                <c:if test="${i==requestScope.page}">
+                                    <strong>${i}<strong>
+                                </c:if>
+                                <c:if test="${i!=requestScope.page}">
+                                    <a href="billmanager?page=${i}" >${i}</a>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
+                    </div>
                     </form>
                 </div>
             </div>

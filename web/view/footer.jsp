@@ -22,7 +22,7 @@
                     <li class="list-inline-item"><a href="home">Home</a></li>
                     <li class="list-inline-item"><a href="#">Services</a></li>
                     <li class="list-inline-item"><a href="#">About</a></li>
-                    <li class="list-inline-item"><a href="#">Terms</a></li>
+                    <li class="list-inline-item"><a href="ReportController">Report</a></li>
                     <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
                 </ul>
                 <p class="copyright">Company Name © 2018</p>

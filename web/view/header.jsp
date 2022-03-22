@@ -41,7 +41,9 @@
             <div class="control-container">
                 <c:if test="${null!=sessionScope.account}">
                     <a href="logout">Logout</a>
-                    <a href="/FinalAssignment/update">update</a>
+                    <c:if test="${sessionScope.account.getRole() eq 'admin'}">
+                        <a href="homeadmin">Admin home</a>
+                    </c:if>
                     <a href="profile">Hello ${sessionScope.account.getUserName()}</a>
                 </c:if>
                 <c:if test="${null==sessionScope.account}">

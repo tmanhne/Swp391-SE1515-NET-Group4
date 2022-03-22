@@ -156,7 +156,7 @@ public class CartController extends HttpServlet {
                 float subtotal = getSubTotal(booklst);
                 request.setAttribute("totalPage", totalPage);
                 request.setAttribute("books", lst);
-                request.setAttribute("totalAmount", subtotal);
+                request.setAttribute("vietnguvl", subtotal);
                 request.setAttribute("ship", 0);
             }
 

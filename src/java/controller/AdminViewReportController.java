@@ -8,15 +8,19 @@
  */
 package controller;
 
+import dao.ProductDAO;
 import dao.ReportDAO;
+import interfaceDAO.IProductDAO;
 import interfaceDAO.IReportDAO;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Product;
 import model.Reports;
 
 /**
@@ -53,10 +57,23 @@ public class AdminViewReportController extends HttpServlet {
               if (count % 3 != 0) {
                   endPage++;
               }
+              String name = "";
+            //check search parameter
+            if (request.getParameter("search") != null) {
+                if (!request.getParameter("search").trim().isEmpty()) {
+                    name = request.getParameter("search").trim();//if parameter is not empty
+                }
+            }
+             IProductDAO db = new ProductDAO();
+            List<Product> books = new ArrayList<>();
+            books = db.getProductByName(name);
+            request.setAttribute("searchname", name);
               List<Reports> listPage = reportDAO.pagingReport(index);
               request.setAttribute("listPage", listPage);
 //            request.setAttribute("list", books);
               request.setAttribute("endPage", endPage);
+              
+              
             
             request.getRequestDispatcher("adminview/adminViewReport.jsp").forward(request, response);
         }catch(Exception ex){

@@ -39,7 +39,7 @@ public class AdminAddProductController extends RequiredAdminAccount {
             List<Category> categories = categoryDAO.getAllCategories();
 
             request.setAttribute("categories", categories);
-            request.getRequestDispatcher("./adminview/adminaddproduct.jsp").forward(request, response);
+            request.getRequestDispatcher("adminview/adminaddproduct.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
@@ -148,7 +148,7 @@ public class AdminAddProductController extends RequiredAdminAccount {
             request.setAttribute("UnitInStock", unitInStockPara);
             request.setAttribute("cateSelected", categoryID);
             request.setAttribute("book", product);
-            request.getRequestDispatcher("./adminview/adminaddproduct.jsp").forward(request, response);
+            request.getRequestDispatcher("adminview/adminaddproduct.jsp").forward(request, response);
 
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");

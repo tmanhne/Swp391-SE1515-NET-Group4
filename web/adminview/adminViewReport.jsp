@@ -17,7 +17,7 @@
     </head>
     <link href="./public/style/landingAdmin.css" rel="stylesheet" type="text/css"/>
     <body>
-        
+        <jsp:include page="../view/headerAdmin.jsp"></jsp:include>
     <script>
         function myFunction() {
             alert("Delete ok!");

@@ -27,6 +27,7 @@ import model.Account;
     "/AdminEditProduct", "/AdminEditReportController", "/AdminViewCategory",
     "/AdminViewFeedBack", "/AdminViewProduct", "/adminViewReport",
     "/AdminViewReportDetail", "/homeadmin", "/adminEditCategory",
+    "/billmanager", "/profile","/checkoutcart","/checkouthistory"
 }, dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
 public class SessionFilter implements Filter {
 
@@ -53,14 +54,30 @@ public class SessionFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         if (null == req.getSession().getAttribute("account")) {
-            res.sendRedirect("home");
+            res.sendRedirect("Login");
             return;
         }
 
-        Throwable problem = null;
         try {
             Account account = (Account) req.getSession().getAttribute("account");
             if (!account.getRole().equalsIgnoreCase("admin")) {
+                String sevletPath = req.getServletPath();
+                if (sevletPath.equalsIgnoreCase("/profile")) {
+                    chain.doFilter(request, response);
+                    return;
+                }
+                if (sevletPath.equalsIgnoreCase("/checkoutcart")) {
+                    chain.doFilter(request, response);
+                    return;
+                }
+                if (sevletPath.equalsIgnoreCase("/checkouthistory")) {
+                    chain.doFilter(request, response);
+                    return;
+                }
+                if (sevletPath.equalsIgnoreCase("/orderdetail")) {
+                    chain.doFilter(request, response);
+                    return;
+                }
                 res.sendRedirect("Login");
                 return;
             }
@@ -69,7 +86,6 @@ public class SessionFilter implements Filter {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
             // rethrow the problem after that.
-            problem = t;
             t.printStackTrace();
         }
 

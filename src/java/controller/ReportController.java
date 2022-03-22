@@ -86,7 +86,7 @@ public class ReportController extends HttpServlet {
                 String insurance = request.getParameter("insurance").trim();
                 String descriptions = request.getParameter("descriptions").trim();
 
-                Pattern pTitle = Pattern.compile("^[A-Za-z][A-Za-z0-9- _]{1,250}$");
+                Pattern pTitle = Pattern.compile("^[A-Za-z][A-Za-z0-9- _]{1,150}$");
                 Matcher mTitle = pTitle.matcher(title);
 
                 Pattern pCustomerName = Pattern.compile("^[A-Za-z ]{1,50}$");

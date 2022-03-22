@@ -1,5 +1,5 @@
 <%-- 
-    Document   : SignUp
+    Document   : signUp
     Created on : Feb 28, 2022, 3:41:54 PM
     Author     : vudm
 --%>

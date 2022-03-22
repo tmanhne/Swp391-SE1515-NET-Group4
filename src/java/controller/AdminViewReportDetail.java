@@ -8,15 +8,19 @@
  */
 package controller;
 
+import dao.ProductDAO;
 import dao.ReportDAO;
+import interfaceDAO.IProductDAO;
 import interfaceDAO.IReportDAO;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Product;
 import model.Reports;
 
 /**
@@ -42,6 +46,11 @@ public class AdminViewReportDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          try {
+             String name = "";
+              IProductDAO db = new ProductDAO();
+            List<Product> books = new ArrayList<>();
+            books = db.getProductByName(name);
+            request.setAttribute("searchname", name);
             int reportID = Integer.parseInt(request.getParameter("rid"));
             IReportDAO reportDAO = new ReportDAO();
             ArrayList<Reports> reports = reportDAO.getReportByID(reportID);

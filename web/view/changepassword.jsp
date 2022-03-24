@@ -7,7 +7,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> Unistore Pro &middot; Premium Store</title>
-
+        <link href="./public/style/changePass.css" rel="stylesheet" type="text/css"/>
+        
         <link rel="icon" href="./assets/img/icons/browser-tab-icon.png">
 
         <!-- Bootstrap -->
@@ -21,108 +22,39 @@
         <link href="./assets/css/custom-scroll/jquery.mCustomScrollbar.css" rel="stylesheet">
     </head>
     <body>
-        <!--Cart-->
-        <%@include file="/components/cart.jsp"%>
-
-        <!--Very top-->
-        <%@include file="/components/very-top.jsp"%>
-
-        <!--Nav bar-->
-        <c:if test="${sessionScope.account.is_admin eq true}">
-            <%@include file="/components/adminnavbar.jsp"%>
-        </c:if>
-
-        <c:if test="${sessionScope.account.is_admin != true}">
-            <%@include file="/components/navbar.jsp"%>
-        </c:if>
-        
-        <hr class="offset-top">
-
-        <div class="white">
-            <div class="container checkout">
-                <h1>Change Password</h1>
-                <hr class="offset-sm">
-            </div>
-        </div>
-        <hr class="offset-md">
-
-        <div class="container checkout">
-
-            <div class="row">
-
-                <form action="changePassword" method="post">
-                    <div class="col-md-7 ml-6">
-                        <div class="row group">
-                            <div class="col-sm-4"><h2 class="h4">Email</h2></div>
-                            <div class="col-sm-8"> <input type="text" class="form-control" name="email" value="${requestScope.email}" required="" placeholder="" />
-                                ${requestScope.messEmail}
-                            </div>
-                        </div>
-                        
-                        <div class="row group">
-                            <div class="col-sm-4"><h2 class="h4">Current Password</h2></div>
-                            <div class="col-sm-8"> <input type="password" class="form-control" name="curPassword" id="password" value="${requestScope.password}" required="" placeholder=""/></div>
-                            ${requestScope.messCurrPassword}
-                        </div>
-
-                        <div class="row group">
-                            <div class="col-sm-4"><h2 class="h4">New Password</h2></div>
-                            <div class="col-sm-8"> <input type="password" class="form-control" name="password" id="password" value="${requestScope.password}" required="" placeholder=""/></div>
-                            ${requestScope.messPassWord}
-                        </div>
-                        
-                        <div class="row group">
-                            <div class="col-sm-4"><h2 class="h4">Confirm Password</h2></div>
-                            <div class="col-sm-8"> <input type="password" class="form-control" name="rePassword" id="password" value="${requestScope.rePassword}" required="" placeholder=""/></div>
-                            ${requestScope.messRePassWord}
-                        </div>
-
-                        <div class="row group">
-                            <div class="col-sm-2 ml-10"> <input type="submit" class="form-control" value="Save"/> ${requestScope.messResponse}</div>
-                            
-                            </div>
-                </form>
-
-                <div class="row group">
+        <jsp:include page="header.jsp"></jsp:include>
+            <div class="white">
+                <div class="container checkout">
+                    <h1>Change Password</h1>
+                    <hr class="offset-sm">
                 </div>
-
-                <hr class="offset-lg visible-xs visible-sm">
-                <hr class="offset-lg visible-xs">
             </div>
-
+            <div style="margin: 20px 20px;">
+                <form action="changePassword" method="post" enctype="multipart/form-data" >
+                    <div class="form-group">
+                        <label>Email </label>
+                        <input type="text" class="form-control" name="id" value="${requestScope.book.getProductID()}" required>
+                </div>
+                <div class="form-group">
+                    <label>Current password</label>
+                    <input type="text" class="form-control" name="name" value="${requestScope.book.getProductName()}" required>
+                </div>
+                <div class="form-group">
+                    <label>New Password</label>
+                    <input type="text" class="form-control" name="description" value="${requestScope.book.getDescription()}" required>
+                </div>
+                <div class="form-group">
+                    <label>Re-Enter new Password</label>
+                    <input type="number" class="form-control" name="unitPrice" value="${requestScope.unitPrice}" required>
+                </div>         
+                <div class="form-btn">
+                    <input class="btn btn-primary center-block" type="submit" value="Save change"/>
+                    <div class="backPage">
+                        <a href="home">Back</a>
+                    </div>   
+                </div>
+            </form>
         </div>
-    </div>
-
-    <hr class="offset-lg">
-    <hr class="offset-sm">
-
-    <!--Footer-->
-    <%@include file="/components/footer.jsp"%>
-
-    <!-- Modal Sign In-->
-    <%@include file="/components/modal-signin.jsp"%>
-
-    <!-- Modal-Registration-->
-    <%@include file="/components/modal-registration.jsp"%>
-
-    <!-- Modal-Forgot Password-->
-    <%@include file="/components/modal-forgotpassword.jsp"%>
-
-    <!-- Modal-New Pass-->
-    <%@include file="/components/modal-newpass.jsp"%>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="./assets/js/jquery-latest.min.js"></script>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="./assets/js/bootstrap.min.js"></script>
-    <script src="./assets/js/core.js"></script>
-    <script src="./assets/js/store.js"></script>
-    <script src="./assets/js/checkout.js"></script>
-
-    <script type="text/javascript" src="./assets/js/custom-scroll/jquery.mCustomScrollbar.concat.min.js"></script>
-
-    <script type="text/javascript" src="./assets/js/jquery-ui-1.11.4.js"></script>
-    <script type="text/javascript" src="./assets/js/jquery.ui.touch-punch.js"></script>
-</body>
+        
+    </body>
 </html>

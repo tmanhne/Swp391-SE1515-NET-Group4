@@ -36,7 +36,8 @@
                                 </div>
                                 <div class="col-md-12"style="column-count: 2;">
                                     <label class="labels">Password</label>
-                                    <input type="password" class="form-control" placeholder="Password" value="${account.password}"name="password">                
+                                    <input type="password" class="form-control" placeholder="Password" value="${account.password}"name="password">   
+                                    <a href="changePassword">Change Password</a>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="labels">Email</label>

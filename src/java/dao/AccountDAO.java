@@ -191,12 +191,13 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         Connection con = super.open();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Account account = new Account();
+        Account account = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
+                account = new Account();
                 account.setAccountID(rs.getString(1));
                 account.setUserName(rs.getString(2));
                 account.setPassword(rs.getString(3));

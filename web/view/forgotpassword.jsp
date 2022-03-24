@@ -13,12 +13,12 @@
         <jsp:include page="header.jsp"></jsp:include>
             <div class="body_forgot">
                 <h3>Forgot password</h3>
-                <form>
+                <form method="POST" action="forgotpassword">
                     <div class="send_otp">
                         <label for="email">Enter your email:</label>
-                        <input type="email" id="email" name="email">
-                        <a type="submit" href="">Send Email</a>
-                        <p>Message notification</p>
+                        <input type="email" id="email" name="email" value="${requestScope.email}">
+                        <input type="submit" value="Send OTP" />
+                        <p>${requestScope.mess}</p>
                     </div>
                 </form>
             </div>

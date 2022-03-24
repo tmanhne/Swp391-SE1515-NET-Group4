@@ -8,9 +8,7 @@
  */
 package controller;
 
-import Validate.Validate;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,13 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.ProductDAO;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import model.Product;
 import model.Product;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import model.Constants;
 
 /**
  * <<<<<<< HEAD * The class contains method respond for initialize update new
@@ -42,8 +39,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @WebServlet(name = "AdminEditProductController", urlPatterns = {"/AdminEditProduct"})
 public class AdminEditProductController extends HttpServlet {
 
-    private final String UPLOAD_DIRECTORY = "D:\\LearnFPT\\Term6\\SWP391\\Code\\Swp391-SE1515-NET-Group4\\web\\public\\image";
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -237,7 +233,7 @@ public class AdminEditProductController extends HttpServlet {
         String relativePath = null;
         try {
             String name = new File(item.getName()).getName();
-            item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
+            item.write(new File(Constants.UPLOAD_DIRECTORY + File.separator + name));
             relativePath = "./public/image/" + name;
         } catch (Exception ex) {
             throw ex;

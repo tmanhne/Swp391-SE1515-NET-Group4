@@ -15,7 +15,7 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.util.Date;
-
+import model.Constants;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @WebServlet(name = "AdminAddProductController", urlPatterns = {"/adminAddProduct"})
 
 public class AdminAddProductController extends RequiredAdminAccount {
-    private final String UPLOAD_DIRECTORY = "D:\\LearnFPT\\Term6\\SWP391\\Code\\Swp391-SE1515-NET-Group4\\web\\public\\image";
+
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -161,7 +161,7 @@ public class AdminAddProductController extends RequiredAdminAccount {
         String relativePath = null;
         try {
             String name = new File(item.getName()).getName();
-            item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
+            item.write(new File(Constants.UPLOAD_DIRECTORY + File.separator + name));
             relativePath = "./public/image/" + name;
         } catch (Exception ex) {
             throw ex;

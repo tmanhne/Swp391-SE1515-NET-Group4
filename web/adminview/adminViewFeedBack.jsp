@@ -55,7 +55,7 @@
                         </c:forEach>
                     </select>
                     Ratting :
-                   <select name="rattingID">
+                    <select name="rattingID">
                         <option value="all">All</option>
                         <c:forTokens items="1,2,3,4,5" delims="," var="rate">  
                             <c:if test="${rate == requestScope.rattingPara}">
@@ -67,14 +67,14 @@
                         </c:forTokens> 
                     </select>
 
-                    <input type="submit" value="Search" name="searchViewFeedBack"  />
+                    <input type="submit" value="Search" name="searchViewFeedBack"/>
                     <c:choose>
                         <c:when test="${null != message}">
                             <div style="color: red">${message}</div>
                         </c:when>
                         <c:otherwise>
-                            <table border="1">
-                                <thead>
+                            <div class="table-listProduct">
+                                <table>
                                     <tr>
                                         <th>Customer</th>
                                         <th>Date</th>
@@ -82,8 +82,7 @@
                                         <th>Product</th>
                                         <th>Ratting</th>
                                     </tr>
-                                </thead>
-                                <tbody>
+
                                     <c:forEach var="feedBack" items="${requestScope.feedBacks}">
                                         <tr>
                                             <td>${feedBack.customerName}</td>
@@ -93,18 +92,12 @@
                                             <td>${feedBack.ratting}</td>
                                         </tr>
                                     </c:forEach>
-
-
-                                </tbody>
-                            </table>
+                                </table>
+                            </div>
                         </c:otherwise>
                     </c:choose>
-
-
                 </form>
-
             </div>
         </div> 
-    </form
-</body>
+    </body>
 </html>

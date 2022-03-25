@@ -5,9 +5,6 @@
  */
 package controller;
 
-import Validate.Validate;
-import dao.AccountDAO;
-import model.Account;
 import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -50,7 +47,7 @@ public class ForgotPasswordController extends HttpServlet {
         String recipient = request.getParameter("email");
         String resultMess = "";
         try {
-            
+
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);

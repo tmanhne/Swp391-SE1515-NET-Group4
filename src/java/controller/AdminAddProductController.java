@@ -15,7 +15,7 @@ import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.util.Date;
-
+import model.Constants;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +30,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 @WebServlet(name = "AdminAddProductController", urlPatterns = {"/adminAddProduct"})
 
 public class AdminAddProductController extends RequiredAdminAccount {
-    private final String UPLOAD_DIRECTORY = "D:\\LearnFPT\\Term6\\SWP391\\Code\\Swp391-SE1515-NET-Group4\\web\\public\\image";
+
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -51,13 +51,13 @@ public class AdminAddProductController extends RequiredAdminAccount {
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String idPara = request.getParameter("id");
-            String namePara = request.getParameter("name");
-            String descriptionPara = request.getParameter("description");
-            String unitPricePara = request.getParameter("unitPrice");
-            String unitInStockPara = request.getParameter("unitInStock");
-            boolean isContinue = Boolean.parseBoolean(request.getParameter("isContinue"));
-            String categoryID = request.getParameter("categoryID");
+            String idPara = null;
+            String namePara = null;
+            String descriptionPara = null;
+            String unitPricePara = null;
+            String unitInStockPara = null;
+            boolean isContinue = true;
+            String categoryID = null;
             String imagePara = null;
 
             //get param
@@ -107,22 +107,30 @@ public class AdminAddProductController extends RequiredAdminAccount {
             boolean checkValidate = false;
             // validate name of product
             if (!validate.checkName(namePara)) {
-                request.setAttribute("namePara", "Your Name product is wrong");
+                request.setAttribute("messNamePara", "Your Name product is wrong");
                 checkValidate = true;
             }
             // validate description of product 
             if (!validate.checkName(descriptionPara)) {
-                request.setAttribute("descriptionPara", "Your Description product is wrong");
+                request.setAttribute("messDescriptionPara", "Your Description product is wrong");
                 checkValidate = true;
             }
             // validate price of product 
             if (!validate.checkPrice(unitPricePara)) {
-                request.setAttribute("unitPricePara", "Your price product is wrong");
+                request.setAttribute("messUnitPricePara", "Your price product is wrong");
                 checkValidate = true;
             }
             // validate unit int stock of product 
             if (!validate.checkUnitInStock(unitInStockPara)) {
-                request.setAttribute("unitInStockPara", "Your Unit in stock is wrong");
+                request.setAttribute("messUnitInStockPara", "Your Unit in stock is wrong");
+                checkValidate = true;
+            }
+            if(!validate.checkLengthComment(namePara)) {
+                request.setAttribute("messNamePara", "Your Name product is wrong");
+                checkValidate = true;
+            }
+            if(!validate.checkLengthComment(descriptionPara)) {
+                request.setAttribute("messDescriptionPara", "Your Name product is wrong");
                 checkValidate = true;
             }
             Date date = new Date();
@@ -161,7 +169,7 @@ public class AdminAddProductController extends RequiredAdminAccount {
         String relativePath = null;
         try {
             String name = new File(item.getName()).getName();
-            item.write(new File(UPLOAD_DIRECTORY + File.separator + name));
+            item.write(new File(Constants.UPLOAD_DIRECTORY + File.separator + name));
             relativePath = "./public/image/" + name;
         } catch (Exception ex) {
             throw ex;

@@ -78,7 +78,7 @@
                         <c:if test="${(requestScope.totalPage!=null)}">
                             <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
                                 <c:if test="${i==requestScope.page}">
-                                    <strong>${i}<strong>
+                                    <strong>${i}</strong>
                                 </c:if>
                                 <c:if test="${i!=requestScope.page}">
                                     <a href="billmanager?page=${i}" >${i}</a>
@@ -90,6 +90,6 @@
                 </div>
             </div>
         </div>
-        <jsp:include page="../view/footer.jsp"></jsp:include>
+        <%--<jsp:include page="../view/footer.jsp"></jsp:include>--%>
     </body>
 </html>

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
 
+
 /**
  * The class uses <code>AccountDAO</code> to get data of account then forward to the login page
  *

@@ -195,12 +195,13 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         Connection con = super.open();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Account account = new Account();
+        Account account = null;
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
+                account = new Account();
                 account.setAccountID(rs.getString(1));
                 account.setUserName(rs.getString(2));
                 account.setPassword(rs.getString(3));
@@ -275,6 +276,33 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
             stm.setString(2, account.getEmail());
             stm.setString(3, account.getPhone());
             stm.setString(4, account.getUserName());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            super.close(con, ps, rs);
+        }
+    }
+
+    /**
+     * The method is used to update account of user
+     *
+     * @param account is account who need to update
+     * @throws java.sql.SQLException
+     */
+    public void updateAccount(String email, String password, String saltsString) throws SQLException {
+        Connection con = super.open();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "UPDATE [dbo].[Accounts] \n"
+                + "   SET [Password] = ?\n"
+                + "   SET [Salt] = ?\n"
+                + " WHERE [Email] = ?\n";
+        try {
+            PreparedStatement stm = con.prepareStatement(sql);
+            stm.setString(1, email);
+            stm.setString(2, password);
+            stm.setString(3, saltsString);
             stm.executeUpdate();
         } catch (SQLException ex) {
             throw ex;

@@ -51,13 +51,13 @@ public class AdminAddProductController extends RequiredAdminAccount {
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String idPara = request.getParameter("id");
-            String namePara = request.getParameter("name");
-            String descriptionPara = request.getParameter("description");
-            String unitPricePara = request.getParameter("unitPrice");
-            String unitInStockPara = request.getParameter("unitInStock");
-            boolean isContinue = Boolean.parseBoolean(request.getParameter("isContinue"));
-            String categoryID = request.getParameter("categoryID");
+            String idPara = null;
+            String namePara = null;
+            String descriptionPara = null;
+            String unitPricePara = null;
+            String unitInStockPara = null;
+            boolean isContinue = true;
+            String categoryID = null;
             String imagePara = null;
 
             //get param

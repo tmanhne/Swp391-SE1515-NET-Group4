@@ -18,23 +18,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
+import javax.persistence.EntityManager;
 import model.Account;
 
 /**
  * The class contain method to check account for database
+ *
  * @author vudm
  */
 public class AccountDAO extends DBConnection implements IAccountDAO {
 
     /**
      * The method used to check account login to system
+     *
      * @param username is a <code>String</code>
-     * @param password is a <code>String</code>
-     * return null
+     * @param password is a <code>String</code> return null
      * @throws java.sql.SQLException
      */
     @Override
-    public Account checkAccountByUsernameAndPassword(String username, String password) throws Exception  {
+    public Account checkAccountByUsernameAndPassword(String username, String password) throws Exception {
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -65,33 +67,34 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
                 }
             }
         } catch (Exception ex) {
-            throw  ex;
-        }finally {
+            throw ex;
+        } finally {
             //close connection
             super.close(con, ps, rs);
         }
         return null;
     }
-    
-      /**
-     * This method is used to create an account to access in system 
+
+    /**
+     * This method is used to create an account to access in system
+     *
      * @param account is an object<code>Account</code>
      * @throws java.sql.SQLException
      */
     @Override
     public void registerAccount(Account account) throws Exception {
-        
+
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         String sql = "INSERT INTO [Accounts] ([AccountID],[Username], [Password], [Email], [Phone], [Role], [Salt])\n"
                 + " VALUES(?,?,?,?,?,?,?)";
         try {
-            
+
             con = super.open();
             ps = con.prepareStatement(sql);
-            
+
             ps.setString(1, account.getAccountID());
             IEncryptPasswordDAO encryptPasswordDAO = new EncryptPasswordDAO();
             byte[] salt = encryptPasswordDAO.getSalt();
@@ -107,65 +110,66 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
             ps.executeUpdate();
         } catch (NoSuchAlgorithmException | NoSuchProviderException ex) {
             throw ex;
-        }finally {
+        } finally {
             //close connection
             super.close(con, ps, rs);
         }
     }
-    
-     /**
-     * This method is used to check username  existed in database
+
+    /**
+     * This method is used to check username existed in database
+     *
      * @param username is <code>String</code>
      * @return true
      * @throws java.sql.SQLException
      */
     @Override
     public boolean isUsernameExist(String username) throws Exception {
-        
+
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         String sql = "select * from Accounts where Username = ? ";
-        
+
         PreparedStatement st;
-        
+
         try {
-           con = super.open();
+            con = super.open();
             ps = con.prepareStatement(sql);
-            
+
             ps.setString(1, username);
-            
+
             rs = ps.executeQuery();
-            
-            if(!rs.isBeforeFirst()) {
+
+            if (!rs.isBeforeFirst()) {
                 return false;
             }
-            
+
         } catch (SQLException ex) {
             throw ex;
-        }finally {
+        } finally {
             //close connection
             super.close(con, ps, rs);
         }
-        
+
         return true;
     }
-    
-    
-      /**
+
+    /**
      * The method is used to update account of user
-     * @param account is account who need to update 
-     * @throws java.sql.SQLException 
-     */    
+     *
+     * @param account is account who need to update
+     * @throws java.sql.SQLException
+     */
     @Override
     public void updateAccount(Account account) throws SQLException {
         Connection con = super.open();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "UPDATE [dbo].[Accounts] \n" +
-                    "   SET [Password] = ?\n" +
-                    " WHERE [Email] = ?\n" ;
+        String sql = "UPDATE [dbo].[Accounts] \n"
+                + "   SET [Password] = ?\n"
+                + " WHERE [Email] = ?\n";
         try {
             PreparedStatement stm = con.prepareStatement(sql);
             stm.setString(1, account.getPassword());
@@ -173,17 +177,17 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
             stm.executeUpdate();
         } catch (SQLException ex) {
             throw ex;
-        }
-        finally {
+        } finally {
             super.close(con, ps, rs);
         }
     }
-    
-        /**
-     * The method is used to get account by email 
+
+    /**
+     * The method is used to get account by email
+     *
      * @param email is string
-     * @return the account who have email equal first parameter 
-     * @throws java.sql.SQLException 
+     * @return the account who have email equal first parameter
+     * @throws java.sql.SQLException
      */
     @Override
     public Account getAccountByEmail(String email) throws SQLException {
@@ -205,23 +209,22 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
                 account.setRole(rs.getString(6));
                 return account;
             }
-        } 
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             throw ex;
-        }
-        finally {
+        } finally {
             super.close(con, ps, rs);
         }
         return account;
     }
 
-      /**
-     * The method is used to update account of user 
+    /**
+     * The method is used to update account of user
+     *
      * @param userName is <code>String</code>
      * @return Account
-     * @throws java.sql.SQLException 
-     */ 
-     @Override
+     * @throws java.sql.SQLException
+     */
+    @Override
     public Account getAccount(String userName) throws SQLException {
 
         Connection con = null;
@@ -254,14 +257,15 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         return account;
     }
 
-          /**
-     * The method is used to update profile of user 
+    /**
+     * The method is used to update profile of user
+     *
      * @param account is an object<code>Account</code>
-     * @throws java.sql.SQLException 
-     */ 
+     * @throws java.sql.SQLException
+     */
     @Override
     public void updateProfile(Account account) throws SQLException {
-       Connection con = super.open();
+        Connection con = super.open();
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "UPDATE [dbo].[Accounts] SET [Password]=?, [Email]=?,[Phone]=? WHERE Username = ?";
@@ -274,14 +278,9 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
             stm.executeUpdate();
         } catch (SQLException ex) {
             throw ex;
-        }
-        finally {
+        } finally {
             super.close(con, ps, rs);
         }
     }
-
-  
-
-    
 
 }

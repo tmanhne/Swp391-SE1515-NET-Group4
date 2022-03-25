@@ -132,11 +132,11 @@
                 <div class="row wow fadeIn">
 
                     <!--Grid column-->
-                    <div class="col-lg-4 col-md-12 mb-4">
+                    <div class=" col-md-12 mb-4">
 
                         <div class="container">
                             <div class="row">
-                                <div class="col-xs-12 col-md-6">
+<!--                                <div class="col-xs-12 col-md-6">-->
                                     <div class="well well-sm">
                                         <div class="row">
                                             <div class="col-xs-12 col-md-6 text-center">
@@ -225,7 +225,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+<!--                            </div>-->
                         </div>
 
 
@@ -242,7 +242,7 @@
                 <div class="row wow fadeIn">
 
                     <!--Grid column-->
-                    <div class="col-lg-4 col-md-12 mb-4">
+                    <div class="col-md-12 mb-4">
 
                         <div class="container">
                             <div class="be-comment-block">

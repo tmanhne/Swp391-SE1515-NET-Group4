@@ -31,7 +31,7 @@ public class Validate {
     private static String regexInt="^\\d+$"; 
     private static String regexDouble="^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$"; 
     private static String regexEmail="^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$"; 
-    private static int LENGTH_COMMENT = 1024; 
+    private static int LENGTH_COMMENT = 20; 
     private static  String[] INVALID_WORD= {"Tien Manh"};
 
 

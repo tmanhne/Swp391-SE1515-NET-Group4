@@ -28,6 +28,9 @@
             <div class="list-manager">
                 <a href="adminViewReport">View Report And Insurance</a>
             </div>
+            <div class="list-manager">
+                <a href="AdminViewFeedBack">View Report And Insurance</a>
+            </div>
         </div>
     </body>
 </html>

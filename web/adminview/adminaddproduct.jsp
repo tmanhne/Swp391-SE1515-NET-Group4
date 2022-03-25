@@ -37,18 +37,22 @@
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" class="form-control" name="name" value="${requestScope.book.getProductName()}" required>
+                            ${requestScope.messNamePara}
                         </div>
                         <div class="form-group">
                             <label>Description</label>
                             <input type="text" class="form-control" name="description" value="${requestScope.book.getDescription()}" required>
+                             ${requestScope.messDescriptionPara}
                         </div>
                         <div class="form-group">
                             <label>Unit Price</label>
                             <input type="number" class="form-control" name="unitPrice" value="${requestScope.unitPrice}" required>
+                            ${requestScope.messUnitPricePara}
                         </div>
                         <div class="form-group">
                             <label>Unit In Stock</label>
                             <input type="number" class="form-control" name="unitInStock" value="${requestScope.UnitInStock}" required>
+                            ${requestScope.messUnitInStockPara}
                         </div>
                         <div class="form-group">
                             <label>Is Continue</label>

@@ -11,6 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="./public/style/landingAdmin.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="./assets/js/table2excel.js"></script>
     </head>
     <body>
         <jsp:include page="../view/headerAdmin.jsp"></jsp:include>
@@ -32,64 +34,72 @@
                                         <option value="${year}">${year}</option>
                                     </c:if>
                                 </c:forEach>
-                                </select>
-                                <select name="date">
+                            </select>
+                            <select name="date">
                                 <c:forEach var="date" items="${requestScope.dates}">
                                     <c:if test="${date eq requestScope.seldate}">
                                         <option value="${date}" selected>${date}</option>
                                     </c:if>
                                     <c:if test="${date != requestScope.seldate}">
-                                            <option value="${date}">${date}</option>
+                                        <option value="${date}">${date}</option>
                                     </c:if>
-                                     
+
                                 </c:forEach>
-                                </select>
-                                <button type="submit" value="search" name="search">Search</button>
-                                <p style="color: red">${requestScope.mess}</p>
+                            </select>
+                            <button type="submit" value="search" name="search">Search</button>
+                            <p style="color: red">${requestScope.mess}</p>
                             <div>
-                            <table>
-                                <tr>             
-                                    <th>Order ID</th>
-                                    <th>Customer</th>
-                                    <th>Order Date</th>
-                                    <th>Cost</th>
-                                    <th>Ship</th>
-                                    <th>Payment Method</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
+                                <table id="tblStocks">
+                                    <tr>             
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Order Date</th>
+                                        <th>Cost</th>
+                                        <th>Ship</th>
+                                        <th>Payment Method</th>
+                                        <th>Accept</th>
+                                        <th>Deny</th>
+                                        <th>Export Excel</th>
+                                    </tr>
 
-                            <c:forEach var="order" items="${requestScope.orders}">
-                                <tr>
-                                    <td>${order.getOrderID()}</td>
-                                    <td>${order.getCustomer()}</td>
-                                    <td>${order.getOrderDate()}</td>
-                                    <td>${order.getUnitPrice()}</td>
-                                    <td>${order.getShip()}</td>
-                                    <td>${order.getPaymentMethod()}</td>
+                                    <c:forEach var="order" items="${requestScope.orders}">
+                                        <tr>
+                                            <td>${order.getOrderID()}</td>
+                                            <td>${order.getCustomer()}</td>
+                                            <td>${order.getOrderDate()}</td>
+                                            <td>${order.getUnitPrice()}</td>
+                                            <td>${order.getShip()}</td>
+                                            <td>${order.getPaymentMethod()}</td>
 
-                                    <td><button type="submit" value="${order.getOrderID()}" name="accept">Accept</button></td>
-                                    <td><button type="submit" value="${order.getOrderID()}" name="deny">Deny</button></td>
-
-                                </tr>
-                            </c:forEach>
-                        </table>
+                                            <td><button type="submit" value="${order.getOrderID()}" name="accept" onclick="return confirm('Accept the order ?')">Accept</button></td>
+                                            <td><button type="submit" value="${order.getOrderID()}" name="deny" onclick="return confirm('Are you sure deny bill?')">Deny</button></td>
+                                            <td>
+                                                <button onclick="exportData()">
+                                                    <span class="glyphicon glyphicon-download"></span>
+                                                    ExportBill
+                                                </button>
+                                            </td>   
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
                             <div>
-                        <c:if test="${(requestScope.totalPage!=null)}">
-                            <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
-                                <c:if test="${i==requestScope.page}">
-                                    <strong>${i}</strong>
+                                <c:if test="${(requestScope.totalPage!=null)}">
+                                    <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
+                                        <c:if test="${i==requestScope.page}">
+                                            <strong>${i}</strong>
+                                        </c:if>
+                                        <c:if test="${i!=requestScope.page}">
+                                            <a href="billmanager?page=${i}" >${i}</a>
+                                        </c:if>
+                                    </c:forEach>
                                 </c:if>
-                                <c:if test="${i!=requestScope.page}">
-                                    <a href="billmanager?page=${i}" >${i}</a>
-                                </c:if>
-                            </c:forEach>
-                        </c:if>
-                    </div>
+                            </div>
                     </form>
                 </div>
             </div>
         </div>
-        <%--<jsp:include page="../view/footer.jsp"></jsp:include>--%>
-    </body>
+    </div>
+    <jsp:include page="../view/footerAdmin.jsp"></jsp:include>
+</body>
 </html>

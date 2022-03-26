@@ -67,12 +67,12 @@ button,
 }
 
 .price:before,
-.subtotal:before,
+.sub-total:before,
 .subtotal-value:before,
 .total-value:before,
 .promo-value:before,
 .total-ship:before {
-    content: "$ ";
+    content: " ";
 }
 
 .hide {
@@ -152,7 +152,7 @@ li {
 }
 
 li.price:before,
-li.subtotal:before {
+li.sub-total:before {
     content: "";
 }
 
@@ -165,11 +165,9 @@ li.subtotal:before {
 .subtotal {
     width: 15%;
 }
-
-.subtotal {
-    text-align: right;
+.subtotal{
+    display: block;
 }
-
 .remove {
     bottom: 1.125rem;
     float: right;

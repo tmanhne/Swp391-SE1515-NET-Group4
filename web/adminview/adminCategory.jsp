@@ -30,10 +30,10 @@
 
                         <c:forEach var="cate" items="${requestScope.list}">
                             <tr>
-                                <td>${cate.getCategoryID()}</td>
+                                <td style="padding: 10px;">${cate.getCategoryID()}</td>
                                 <td>${cate.getCategoryName()}</td>
                                 <td><a href="adminEditCategory?cId=${cate.getCategoryID()}">Edit</a></td>
-
+                                
                             </tr>
                         </c:forEach>
                     </table>

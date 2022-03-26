@@ -37,8 +37,6 @@
                                 </form>
                             </c:forEach>
                         </div>
-
-
                     </div>
                 </div>
                 <div class="search-container">
@@ -90,12 +88,8 @@
                     </div>
                 </c:forEach>
             </div>
-
             <div class="clearfix"></div>
-
         </div>
-
         <jsp:include page="footer.jsp"></jsp:include>
-    </div>
-</body>
+    </body>
 </html>

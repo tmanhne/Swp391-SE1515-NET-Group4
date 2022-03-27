@@ -90,17 +90,32 @@ public class ProductDetailController extends HttpServlet {
                 }
                 else {
                     Account account = (Account) request.getSession().getAttribute("account");
-                    Date date = new Date();
-                    feedBacks.add(new FeedBack(account.getAccountID(), account.getAccountID(), date, comment, productID, productID, Integer.parseInt(rateComment)));
-                    IFeedBackDAO iFeedBackDAO = new FeedBackDAO();
-                    iFeedBackDAO.insertFeeback(new FeedBack(account.getAccountID(), account.getAccountID(), date, comment, productID, productID, Integer.parseInt(rateComment)));
-                    request.setAttribute("book", product);
-                    request.setAttribute("feedBacks", feedBacks);
-                    request.setAttribute("messageComment", "Add comment success");
-                    request.setAttribute("id", productID);
-                    request.setAttribute("rate", rate);
-                    request.setAttribute("rates", rateForEachStar);
-                    request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
+                    if(null == account) {
+                        request.setAttribute("book", product);
+                        request.setAttribute("feedBacks", feedBacks);
+                        request.setAttribute("messageComment", "You are not login");
+                        request.setAttribute("id", productID);
+                        request.setAttribute("rate", rate);
+                        request.setAttribute("rates", rateForEachStar);
+                        request.getRequestDispatcher("/viewDetail").forward(request, response);
+                    }
+                    else {
+                        Date date = new Date();
+                        feedBacks.add(new FeedBack(account.getAccountID(), account.getUserName(), date, comment, productID, productID, Integer.parseInt(rateComment)));
+                        IFeedBackDAO iFeedBackDAO = new FeedBackDAO();
+                        iFeedBackDAO.insertFeeback(new FeedBack(account.getAccountID(), account.getAccountID(), date, comment, productID, productID, Integer.parseInt(rateComment)));
+                        feedBacks=(ArrayList<FeedBack>) feedBackDAO.getFeedBackBYProductID(productID);
+                        rate = calcRate(feedBacks);
+                        rateForEachStar = calcRateForEachStar(feedBacks);
+                        request.setAttribute("book", product);
+                        request.setAttribute("feedBacks", feedBacks);
+                        request.setAttribute("messageComment", "Add comment success");
+                        request.setAttribute("id", productID);
+                        request.setAttribute("rate", rate);
+                        request.setAttribute("rates", rateForEachStar);
+                        request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
+                    }
+                    
                 }    
                 
             }
@@ -109,7 +124,7 @@ public class ProductDetailController extends HttpServlet {
                 request.setAttribute("feedBacks", feedBacks);
                 request.setAttribute("rate", rate);
                 request.setAttribute("rates", rateForEachStar);
-                request.setAttribute("id", 4);           
+                request.setAttribute("id", productID);           
                 request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
             }
             

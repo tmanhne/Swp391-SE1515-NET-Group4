@@ -17,7 +17,7 @@
                     <div class="send_otp">
                         <label for="email">Enter your email:</label>
                         <input type="email" id="email" name="email" value="${requestScope.email}">
-                        <input type="submit" value="Send OTP" />
+                        <input type="submit" value="Send OTP" name ="submit" >
                         <p>${requestScope.mess}</p>
                     </div>
                 </form>

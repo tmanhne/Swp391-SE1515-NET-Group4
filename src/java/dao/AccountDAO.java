@@ -18,7 +18,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
-import javax.persistence.EntityManager;
 import model.Account;
 
 /**
@@ -295,20 +294,26 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "UPDATE [dbo].[Accounts] \n"
-                + "   SET [Password] = ?\n"
-                + "   SET [Salt] = ?\n"
-                + " WHERE [Email] = ?\n";
+                + "   SET [Password] = "+password+"\n"
+                + "   ,[Salt] = "+saltsString+"\n"
+                + " WHERE [Email] = "+email+"\n";
         try {
             PreparedStatement stm = con.prepareStatement(sql);
-            stm.setString(1, email);
-            stm.setString(2, password);
-            stm.setString(3, saltsString);
+//            stm.setString(1, password);
+//            stm.setString(2, saltsString);
+//            stm.setString(3, email);
+            
             stm.executeUpdate();
         } catch (SQLException ex) {
             throw ex;
         } finally {
             super.close(con, ps, rs);
         }
+    }
+
+    @Override
+    public void updatePasswordCustomerByEmail(String email, String abc123) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

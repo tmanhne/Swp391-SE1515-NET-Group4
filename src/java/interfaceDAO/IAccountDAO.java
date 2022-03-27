@@ -72,4 +72,6 @@ public interface IAccountDAO {
      * @throws java.sql.SQLException 
      */ 
     public void updateProfile(Account account) throws SQLException;
+
+    public void updatePasswordCustomerByEmail(String email, String abc123);
 }

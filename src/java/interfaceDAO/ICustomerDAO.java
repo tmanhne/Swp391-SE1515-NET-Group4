@@ -16,4 +16,8 @@ public interface ICustomerDAO {
     public List<Customer> getAllCustomer() throws Exception;
     public Customer getCustomer(String accountId) throws Exception;
     public String addCustomer(Customer customer) throws Exception;
+
+    public Customer getAccountByEmail(String email) throws Exception;
+
+    public void updatePasswordCustomerByEmail(String email, String abc123)throws Exception;
 }

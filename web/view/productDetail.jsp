@@ -271,7 +271,7 @@
                                     </div>
                                 </c:forEach>
 
-                                <form action="viewDetail" method="Post" class="form-block">
+                                <form action="viewDetail" method="Get" class="form-block">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 fl_icon">
                                             <div class="rate">

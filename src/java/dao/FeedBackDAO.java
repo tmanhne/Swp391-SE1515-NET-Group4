@@ -180,20 +180,20 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
         ResultSet rs = null;
         try {
             String sql = "INSERT INTO [dbo].[Feedback]\n" +
-"           ([CustomerID]\n" +
-"           ,[FeedbackDate]\n" +
-"           ,[Description]\n" +
-"           ,[ProductID]\n" +
-"           ,[Ratting])\n" +
-"     VALUES\n" +
-"           (?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?\n" +
-"           ,?)";
+                        "           ([CustomerID]\n" +
+                        "           ,[FeedbackDate]\n" +
+                        "           ,[Description]\n" +
+                        "           ,[ProductID]\n" +
+                        "           ,[Ratting])\n" +
+                        "     VALUES\n" +
+                        "           (?\n" +
+                        "           ,?\n" +
+                        "           ,?\n" +
+                        "           ,?\n" +
+                        "           ,?)";
             con = super.open();
             ps = con.prepareStatement(sql);
-             ps.setString(1, p.getCustomerID());
+            ps.setString(1, p.getCustomerID());
             ps.setDate(2, new java.sql.Date(p.getFeedbackDate().getTime()));
             ps.setString(3, p.getDescription());
             ps.setString(4, p.getProductID());
@@ -201,6 +201,7 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
             ps.executeUpdate();
         } 
         catch (Exception ex) {
+            System.out.println("errror"+ex);
             ex.printStackTrace();
             throw ex;
         }

@@ -31,6 +31,9 @@
             <div class="list-manager">
                 <a href="AdminViewFeedBack">Manager Feedback</a>
             </div>
+            <div class="list-manager">
+                <a href="AdminAddDiscount">Add New Discount</a>
+            </div>
         </div>
     </body>
 </html>

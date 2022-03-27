@@ -294,14 +294,14 @@ public class AccountDAO extends DBConnection implements IAccountDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sql = "UPDATE [dbo].[Accounts] \n"
-                + "   SET [Password] = "+password+"\n"
-                + "   ,[Salt] = "+saltsString+"\n"
-                + " WHERE [Email] = "+email+"\n";
+                + "   SET [Password] = ?\n"
+                + "   ,[Salt] = ?\n"
+                + " WHERE [Email] = ?\n";
         try {
             PreparedStatement stm = con.prepareStatement(sql);
-//            stm.setString(1, password);
-//            stm.setString(2, saltsString);
-//            stm.setString(3, email);
+            stm.setString(1, password);
+            stm.setString(2, saltsString);
+            stm.setString(3, email);
             
             stm.executeUpdate();
         } catch (SQLException ex) {

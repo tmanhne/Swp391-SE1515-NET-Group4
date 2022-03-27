@@ -15,19 +15,19 @@
     </head>
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <div class="body-cart">
-            <div class="basket">
-                <div class="basket-labels">
-                    <ul>
-                        <li class="item item-heading">Item</li>
-                        <li class="price">Price</li>
-                        <li class="quantity">Quantity</li>
-                        <li class="subtotal">Subtotal</li>
-                    </ul>
-                </div>
+            <div class="body-cart" style="min-height: 500px;">
+                <div class="basket">
+                    <div class="basket-labels">
+                        <ul>
+                            <li class="item item-heading">Item</li>
+                            <li class="price">Price</li>
+                            <li class="quantity">Quantity</li>
+                            <li class="subtotal">Subtotal</li>
+                        </ul>
+                    </div>
 
-                <form action="cart" method="POST"> 
-                    <input type="hidden" name="page" value="${requestScope.page}"/>
+                    <form action="cart" method="POST"> 
+                        <input type="hidden" name="page" value="${requestScope.page}">
                     <c:if test="${requestScope.books != null}">
                         <c:forEach var="book" items="${requestScope.books}">
                             <div class="basket-product">
@@ -48,13 +48,16 @@
                                 </div>
                                 <div class="price">${book.getUnitPrice()}</div>
                                 <div class="quantity">
-                                    <input type="number" value="${book.getQuantity()}" class="quantity-field"/>
+                                    <input type="number" value="${book.getQuantity()}" class="quantity-field" readonly/>
                                 </div>
 
                                 <div class="subtotal">
-                                    <button type="submit" value="${book.getProductID()}" name="increase">+</button>
-                                    ${book.getQuantity()*book.getUnitPrice()}
-                                    <button type="submit" value="${book.getProductID()}" name="decrease" >-</button>
+                                    <button style="margin-right: 5px;" type="submit" value="${book.getProductID()}" name="increase">+</button>
+                                    <button style="margin-right: 3px;"type="submit" value="${book.getProductID()}" name="decrease" >-</button>
+
+                                    <p class="sub-total" style="display: contents;">
+                                        ${book.getQuantity()*book.getUnitPrice()}
+                                    </p>
                                 </div>
                                 <div class="remove">
                                     <button type="submit" value="${book.getProductID()}" name="delete" >Remove</button>
@@ -66,7 +69,7 @@
                         <c:if test="${(requestScope.totalPage!=null)}">
                             <c:forEach var="i" begin="1" end="${requestScope.totalPage}" step="1">
                                 <c:if test="${i==requestScope.page}">
-                                    <strong>${i}<strong>
+                                    <strong>${i}</strong>
                                 </c:if>
                                 <c:if test="${i!=requestScope.page}">
                                     <a href="cart?page=${i}" >${i}</a>
@@ -78,49 +81,49 @@
             </div>
 
             <form name="buy" action="checkoutcart" method="POST">
-                   <aside>
-              <div class="summary">
-                  <div class="summary-total-items">
-                      <span class="total-items"></span> Items in your Bag
-                  </div>
-                  <div class="summary-subtotal">
-                      <div class="subtotal-title">Subtotal</div>
-                      <div class="subtotal-value final-value" id="basket-subtotal">
-                          ${requestScope.totalAmount}
-                      </div>
-                  </div>
-                  <div class="summary-delivery">
-                      <div class="summary-ship">Ship</div>
-                      <div class="total-ship" id="basket-total">${requestScope.ship}</div>
-                  </div>
-                  <div class="summary-delivery">
-                    <div class="summary-ship">Order Date</div>
-                    <%java.text.DateFormat df = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm"); %>
-                    <div class="date-ship" id="basket-total"><%= df.format(new java.util.Date()) %></div>
-                </div>
-                <div class="summary-delivery">
-                  <div class="summary-ship">Address</div>
-                  <input name="address" class="address" id="basket-total" value="${requestScope.address}" required></input>
-              </div>
-                <div class="summary-delivery">
-                  <div class="summary-ship">Payment</div>
-                  <div class="payment-method" id="basket-total">Cash</div>
-              </div>
-                  <div class="summary-total">
-                      <div class="total-title">Total</div>
-                      <div class="total-value final-value" id="basket-total">
-                          ${requestScope.totalAmount+requestScope.ship}
-                      </div>
-                  </div>
-                  <div class="summary-checkout">
-                      <button type="submit" class="checkout-cta">Checkout Cart</button>
-                      
-                  </div> 
-                  <p style="color: red; font-size: 16px">${requestScope.mess}</p>
-              </div>
-          </aside> 
+                <aside>
+                    <div class="summary">
+                        <div class="summary-total-items">
+                            <span class="total-items"></span> Items in your Bag
+                        </div>
+                        <div class="summary-subtotal">
+                            <div class="subtotal-title">Subtotal</div>
+                            <div class="subtotal-value final-value" id="basket-subtotal">
+                                ${requestScope.totalAmount}
+                            </div>
+                        </div>
+                        <div class="summary-delivery">
+                            <div class="summary-ship">Ship</div>
+                            <div class="total-ship" id="basket-total">${requestScope.ship}</div>
+                        </div>
+                        <div class="summary-delivery">
+                            <div class="summary-ship">Order Date</div>
+                            <%java.text.DateFormat df = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm");%>
+                            <div class="date-ship" id="basket-total"><%= df.format(new java.util.Date())%></div>
+                        </div>
+                        <div class="summary-delivery">
+                            <div class="summary-ship">Address</div>
+                            <input name="address" class="address" id="basket-total" value="${requestScope.address}" required></input>
+                        </div>
+                        <div class="summary-delivery">
+                            <div class="summary-ship">Payment</div>
+                            <div class="payment-method" id="basket-total">Cash</div>
+                        </div>
+                        <div class="summary-total">
+                            <div class="total-title">Total</div>
+                            <div class="total-value final-value" id="basket-total">
+                                ${requestScope.totalAmount+requestScope.ship}
+                            </div>
+                        </div>
+                        <div class="summary-checkout">
+                            <button type="submit" class="checkout-cta">Checkout Cart</button>
+
+                        </div> 
+                        <p style="color: red; font-size: 16px">${requestScope.mess}</p>
+                    </div>
+                </aside> 
             </form>
         </div>
-                  <jsp:include page="footer.jsp"></jsp:include>
+        <jsp:include page="footerAdmin.jsp"></jsp:include>
     </body>
 </html>

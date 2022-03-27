@@ -11,13 +11,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        
+
     </head>
     <body>
-       
+
         <jsp:include page="header.jsp"></jsp:include>
 
-            <div style="width: 70%; margin: 0 auto;">
+            <div style="width: 80%; margin: 0 auto; font-size: 16px;">
                 <h5 style="color: red">${requestScope.mess}</h5>
             <c:if test="${null!=requestScope.order}">
                 <div>
@@ -36,40 +36,37 @@
                         </table>
                     </form>
                 </div>
-                <table border="1" style="width: 100%" id="tableExport">
-                    <thead>
+                <table border="2" style="width: 100%" id="tableExport">
+                    <tr>
+                        <th>ProductID</th>
+                        <th>Product Name</th>
+                        <th>Image</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Sub total</th>
+                    </tr>
+
+                    <c:forEach var="product" items="${requestScope.orderdetails}">
                         <tr>
-                            <th>ProductID</th>
-                            <th>Product Name</th>
-                            <th>Image</th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th>Sub total</th>
+                            <td>${product.getProductID()}</td>
+                            <td>${product.getProductName()}</td>
+                            <td><img src="${product.getImagePath()}" style="width: 150px;height: 150px;" alt="Product image"/></td>
+                            <td>${product.getQuantity()}</td>
+                            <td>${product.getUnitPrice()}</td>
+                            <td>${product.getUnitPrice()*product.getQuantity()}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="product" items="${requestScope.orderdetails}">
-                            <tr>
-                                <td>${product.getProductID()}</td>
-                                <td>${product.getProductName()}</td>
-                                <td><img src="${product.getImagePath()}" style="width: 150px;height: 150px;" alt="Product image"/></td>
-                                <td>${product.getQuantity()}</td>
-                                <td>${product.getUnitPrice()}</td>
-                                <td>${product.getUnitPrice()*product.getQuantity()}</td>
-                            </tr>
-                        </c:forEach>
-                        <tr>
-                            <td>Total:</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>${requestScope.total}</td>
-                        </tr>
-                    </tbody>
+                    </c:forEach>
+                    <tr>
+                        <td>Total:</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>${requestScope.total}</td>
+                    </tr>
                 </table>
             </c:if>
-        
+
         </div>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>

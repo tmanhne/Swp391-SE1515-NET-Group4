@@ -140,9 +140,10 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
                         "from \n" +
                         "Feedback f join Customer c on f.CustomerID = c.CustomerID\n" +
                         "join Products p on f.ProductID = p.ProductID\n" +
-                        "where f.ProductID = "+productID;
+                        "where f.ProductID = ? ";
             con = super.open();
             ps = con.prepareStatement(sql);
+			ps.setString(1,productID);
             rs = ps.executeQuery();
             // IF database have feedback of customer            
             while (rs.next()) {

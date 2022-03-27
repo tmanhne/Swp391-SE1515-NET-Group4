@@ -193,7 +193,7 @@
                                         <div class="be-comment-content">
 
                                             <span class="be-comment-name">
-                                                <a href="blog-detail-2.html">${feedBack.customerName}</a>
+                                                <a href="blog-detail-2.html">${feedBack.accountName}</a>
                                             </span>
                                             <span class="be-comment-time">
                                                 <i class="fa fa-clock-o"></i>

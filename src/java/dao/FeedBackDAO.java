@@ -36,9 +36,9 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
         ResultSet rs = null;
         List<FeedBack> feedBacks = new ArrayList<>();
         try {
-            String sql = "select f.CustomerID ,c.CustomerName, f.FeedbackDate, f.Description, f.ProductID, p.ProductName, f.ratting\n" +
+            String sql = "select f.AccountID ,c.Username, f.FeedbackDate, f.Description, f.ProductID, p.ProductName, f.ratting\n" +
 "from \n" +
-"	Feedback f join Customer c on f.CustomerID = c.CustomerID\n" +
+"	Feedback f join Accounts c on f.AccountID = c.AccountID\n" +
 "			   join Products p on f.ProductID = p.ProductID";
             con = super.open();
             ps = con.prepareStatement(sql);
@@ -46,8 +46,8 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
             // IF database have feedback of customer            
             while (rs.next()) {
                 FeedBack feedBack = new FeedBack();
-                feedBack.setCustomerID(rs.getString(1));
-                feedBack.setCustomerName(rs.getString(2));
+                feedBack.setAccountID(rs.getString(1));
+                feedBack.setAccountName(rs.getString(2));
                 feedBack.setFeedbackDate(rs.getDate(3));
                 feedBack.setDescription(rs.getString(4));
                 feedBack.setProductID(rs.getString(5));
@@ -57,6 +57,7 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
             }
         } 
         catch (Exception ex) {
+            ex.printStackTrace();
             throw ex;
         }
         finally{
@@ -72,12 +73,12 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
         ResultSet rs = null;
         List<FeedBack> feedBacks = new ArrayList<>();
         try {
-            String sql = "select f.CustomerID ,c.CustomerName, f.FeedbackDate, f.Description, f.ProductID, p.ProductName, f.ratting\n" +
+            String sql = "select f.AccountID ,c.Username, f.FeedbackDate, f.Description, f.ProductID, p.ProductName, f.ratting\n" +
                             "from \n" +
-                            "	Feedback f join Customer c on f.CustomerID = c.CustomerID\n" +
+                            "	Feedback f join Accounts c on f.AccountID = c.AccountID\n" +
                             "			   join Products p on f.ProductID = p.ProductID";
             if(!customerPara.equals("all")) {
-                sql=sql + " where f.CustomerID = "+customerPara+" ";
+                sql=sql + " where f.AccountID = "+customerPara+" ";
                 if(!productPara.equals("all")) {
                     sql=sql +" and f.ProductID = "+productPara+" " ;
                 }
@@ -102,8 +103,8 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
             // IF database have feedback of customer            
             while (rs.next()) {
                 FeedBack feedBack = new FeedBack();
-                feedBack.setCustomerID(rs.getString(1));
-                feedBack.setCustomerName(rs.getString(2));
+                feedBack.setAccountID(rs.getString(1));
+                feedBack.setAccountName(rs.getString(2));
                 feedBack.setFeedbackDate(rs.getDate(3));
                 feedBack.setDescription(rs.getString(4));
                 feedBack.setProductID(rs.getString(5));
@@ -135,20 +136,20 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
         ResultSet rs = null;
         List<FeedBack> feedBacks = new ArrayList<>();
         try {
-            String sql = "select f.CustomerID ,c.CustomerName, f.FeedbackDate, f.Description, f.ProductID, p.ProductName, f.ratting\n" +
+            String sql = "select f.AccountID ,c.Username, f.FeedbackDate, f.Description, f.ProductID, p.ProductName, f.ratting\n" +
                         "from \n" +
-                        "Feedback f join Customer c on f.CustomerID = c.CustomerID\n" +
+                        "Feedback f join Accounts c on f.AccountID = c.AccountID\n" +
                         "join Products p on f.ProductID = p.ProductID\n" +
-                        "where f.ProductID = ? ";
+                        "where f.ProductID = ?";
             con = super.open();
             ps = con.prepareStatement(sql);
-			ps.setString(1,productID);
+            ps.setString(1,productID);
             rs = ps.executeQuery();
             // IF database have feedback of customer            
             while (rs.next()) {
                 FeedBack feedBack = new FeedBack();
-                feedBack.setCustomerID(rs.getString(1));
-                feedBack.setCustomerName(rs.getString(2));
+                feedBack.setAccountID(rs.getString(1));
+                feedBack.setAccountName(rs.getString(2));
                 feedBack.setFeedbackDate(rs.getDate(3));
                 feedBack.setDescription(rs.getString(4));
                 feedBack.setProductID(rs.getString(5));
@@ -180,7 +181,7 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
         ResultSet rs = null;
         try {
             String sql = "INSERT INTO [dbo].[Feedback]\n" +
-                        "           ([CustomerID]\n" +
+                        "           ([AccountID]\n" +
                         "           ,[FeedbackDate]\n" +
                         "           ,[Description]\n" +
                         "           ,[ProductID]\n" +
@@ -193,7 +194,7 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
                         "           ,?)";
             con = super.open();
             ps = con.prepareStatement(sql);
-            ps.setString(1, p.getCustomerID());
+            ps.setString(1, p.getAccountID());
             ps.setDate(2, new java.sql.Date(p.getFeedbackDate().getTime()));
             ps.setString(3, p.getDescription());
             ps.setString(4, p.getProductID());

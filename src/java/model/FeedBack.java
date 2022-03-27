@@ -12,8 +12,8 @@ import java.util.Date;
  * @author Thongchu
  */
 public class FeedBack {
-    private String customerID;
-    private String customerName;
+    private String accountID;
+    private String accountName;
     private Date feedbackDate;
     private String description;
     private String productID;
@@ -23,9 +23,9 @@ public class FeedBack {
     public FeedBack() {
     }
 
-    public FeedBack(String customerID, String customerName, Date feedbackDate, String description, String productID, String productName, int ratting) {
-        this.customerID = customerID;
-        this.customerName = customerName;
+    public FeedBack(String accountID, String accountName, Date feedbackDate, String description, String productID, String productName, int ratting) {
+        this.accountID = accountID;
+        this.accountName = accountName;
         this.feedbackDate = feedbackDate;
         this.description = description;
         this.productID = productID;
@@ -33,20 +33,20 @@ public class FeedBack {
         this.ratting = ratting;
     }
 
-    public String getCustomerID() {
-        return customerID;
+    public String getAccountID() {
+        return accountID;
     }
 
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
+    public void setAccountID(String accountID) {
+        this.accountID = accountID;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public Date getFeedbackDate() {
@@ -89,5 +89,6 @@ public class FeedBack {
         this.ratting = ratting;
     }
 
+    
     
 }

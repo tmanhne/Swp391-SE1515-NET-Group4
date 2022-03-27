@@ -4,3 +4,5 @@
 *.xml
 *.properties
 *.properties
+src/java/dal/DBConnection.java
+src/java/model/Constants.java

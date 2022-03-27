@@ -53,7 +53,7 @@ public interface IReportDAO {
      * @return 0
      * @throws java.lang.Exception
      */
-    public int getTotalProduct() throws Exception;
+    public int getTotalReport() throws Exception;
     
           /**
      * This method is used to get all reports follow index from database 
@@ -62,4 +62,10 @@ public interface IReportDAO {
      * @throws java.lang.Exception
      */
     public List<Reports> pagingReport(int index) throws Exception;
+    
+    public ArrayList<Reports> getReportByName(String title) throws Exception;
+    
+    public List<Reports> pagingReportByTitle(String title,int index) throws Exception;
+    
+    public int getTotalReportByTitle(String title) throws Exception;
 }

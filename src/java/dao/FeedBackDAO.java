@@ -57,7 +57,6 @@ public class FeedBackDAO extends DBConnection implements IFeedBackDAO{
             }
         } 
         catch (Exception ex) {
-            ex.printStackTrace();
             throw ex;
         }
         finally{

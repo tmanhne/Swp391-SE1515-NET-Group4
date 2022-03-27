@@ -56,6 +56,8 @@ public class ProductDetailController extends HttpServlet {
             
             IFeedBackDAO feedBackDAO= new FeedBackDAO();
             Product product = productDAO.getProductById(productID);
+//            request.setAttribute("book", product);
+//            request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
             // get all feedback in database
             ArrayList<FeedBack> feedBacks=(ArrayList<FeedBack>) feedBackDAO.getFeedBackBYProductID(productID);
             int rate = calcRate(feedBacks);
@@ -90,32 +92,17 @@ public class ProductDetailController extends HttpServlet {
                 }
                 else {
                     Account account = (Account) request.getSession().getAttribute("account");
-                    if(null == account) {
-                        request.setAttribute("book", product);
-                        request.setAttribute("feedBacks", feedBacks);
-                        request.setAttribute("messageComment", "You are not login");
-                        request.setAttribute("id", productID);
-                        request.setAttribute("rate", rate);
-                        request.setAttribute("rates", rateForEachStar);
-                        request.getRequestDispatcher("/viewDetail").forward(request, response);
-                    }
-                    else {
-                        Date date = new Date();
-                        feedBacks.add(new FeedBack(account.getAccountID(), account.getUserName(), date, comment, productID, productID, Integer.parseInt(rateComment)));
-                        IFeedBackDAO iFeedBackDAO = new FeedBackDAO();
-                        iFeedBackDAO.insertFeeback(new FeedBack(account.getAccountID(), account.getAccountID(), date, comment, productID, productID, Integer.parseInt(rateComment)));
-                        feedBacks=(ArrayList<FeedBack>) feedBackDAO.getFeedBackBYProductID(productID);
-                        rate = calcRate(feedBacks);
-                        rateForEachStar = calcRateForEachStar(feedBacks);
-                        request.setAttribute("book", product);
-                        request.setAttribute("feedBacks", feedBacks);
-                        request.setAttribute("messageComment", "Add comment success");
-                        request.setAttribute("id", productID);
-                        request.setAttribute("rate", rate);
-                        request.setAttribute("rates", rateForEachStar);
-                        request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
-                    }
-                    
+                    Date date = new Date();
+                    feedBacks.add(new FeedBack(account.getAccountID(), account.getAccountID(), date, comment, productID, productID, Integer.parseInt(rateComment)));
+                    IFeedBackDAO iFeedBackDAO = new FeedBackDAO();
+                    iFeedBackDAO.insertFeeback(new FeedBack(account.getAccountID(), account.getAccountID(), date, comment, productID, productID, Integer.parseInt(rateComment)));
+                    request.setAttribute("book", product);
+                    request.setAttribute("feedBacks", feedBacks);
+                    request.setAttribute("messageComment", "Add comment success");
+                    request.setAttribute("id", productID);
+                    request.setAttribute("rate", rate);
+                    request.setAttribute("rates", rateForEachStar);
+                    request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
                 }    
                 
             }
@@ -124,14 +111,15 @@ public class ProductDetailController extends HttpServlet {
                 request.setAttribute("feedBacks", feedBacks);
                 request.setAttribute("rate", rate);
                 request.setAttribute("rates", rateForEachStar);
-                request.setAttribute("id", productID);           
+                request.setAttribute("id", 4);           
                 request.getRequestDispatcher("view/productDetail.jsp").forward(request, response);
             }
             
         }catch(IOException | SQLException | ServletException   ex){
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
         }

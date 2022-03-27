@@ -50,7 +50,7 @@ public class SearchController extends HttpServlet {
               ArrayList<Product> bestSellerBooks = new ArrayList<>();
               bestSellerBooks = db.getBestSellerProducts();
 
-              request.setAttribute("books", books);
+              request.setAttribute("listPage", books);
               request.setAttribute("bestSellerBooks", bestSellerBooks);
               request.setAttribute("searchname", name);
               request.getRequestDispatcher("view/landingPage.jsp").forward(request, response);

@@ -23,6 +23,7 @@ import model.Account;
 
 /**
  * The class is used to implement register and account to access system throw username and password
+ * The class contain method <code>doGet</code> and <code>doPost</code>
  * @author vudm
  */
 @WebServlet(name = "SignUpController", urlPatterns = {"/SignUpController"})
@@ -109,7 +110,7 @@ public class SignUpController extends HttpServlet {
                 boolean checkUsername = accountDAO.isUsernameExist(username);
 
                 Random random = new Random();
-                int accountID = random.nextInt(99);
+                int accountID = random.nextInt(100000);
                 if (checkUsername) {//check username is exist
                     request.setAttribute("user", username);
                     request.setAttribute("email", email);
@@ -119,10 +120,9 @@ public class SignUpController extends HttpServlet {
                     request.setAttribute("notification", "Username already exists.");
                     request.getRequestDispatcher("view/signUp.jsp").forward(request, response);
                 } else {
-                    Account account = new Account("HE" + accountID, username, password, email, phone, "1");
+                    Account account = new Account("Acc" + accountID, username, password, email, phone, "user");
                     accountDAO.registerAccount(account);
-                    request.setAttribute("notification", "Success.");
-                    request.getRequestDispatcher("view/signUp.jsp").forward(request, response);
+                    response.sendRedirect("home");
                 }
             }
         } catch (Exception ex) {

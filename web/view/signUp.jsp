@@ -786,7 +786,7 @@
             <h1>Creative SignUp Form</h1>
             <div class="main-agileinfo">
                 <div class="agileits-top">
-                    <form action="SignUpController" method="Post">
+                    <form action="SignUpController" method="POST">
                         
                          <c:choose>
                                     <c:when test="${requestScope.user != null}">

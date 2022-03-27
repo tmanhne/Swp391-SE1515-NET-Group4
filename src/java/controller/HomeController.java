@@ -23,7 +23,7 @@ import model.Category;
 import model.Product;
 
 /**
- * The class contain method doGet used ProductDAO to get products then forward
+ * The class contain method <code>doGet </code>used ProductDAO to get products then forward
  * to LandingPage
  *
  * @author vudm
@@ -35,7 +35,6 @@ public class HomeController extends HttpServlet {
      * Get all book,best seller and highest price of products from database then
      * setAttribute and forward to LangdingPage.jsp This method uses
      * <code>ProductDAO</code> to get all product on home page for user
-     *
      * @param request is HttpServletRequest
      * @param response is HttpServletResponse
      * @throws ServletException if a servlet-specific error occurs

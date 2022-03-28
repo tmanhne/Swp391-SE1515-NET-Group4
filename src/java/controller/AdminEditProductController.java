@@ -137,7 +137,9 @@ public class AdminEditProductController extends HttpServlet {
                             }
                         }
                     } else {
-                        imagePath = uploadImage(item);
+                        if (item.getSize() != 0) {
+                            imagePath = uploadImage(item);
+                        }
                     }
                 }
             }

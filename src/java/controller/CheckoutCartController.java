@@ -168,6 +168,7 @@ public class CheckoutCartController extends HttpServlet {
                 response.addCookie(cookie);
             } else {
                 request = reloadCart(request, booklst);
+                request.setAttribute("address", address);
                 request.setAttribute("mess", "Checkout fail");
             }
             request.getRequestDispatcher("view/cart.jsp").forward(request, response);

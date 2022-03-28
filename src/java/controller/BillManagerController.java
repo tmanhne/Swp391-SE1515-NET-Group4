@@ -117,14 +117,19 @@ public class BillManagerController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+
             OrderDAO dAO = new OrderDAO();
 
             if (null == request.getParameter("search")) {
                 String orderId = null != request.getParameter("accept") ? request.getParameter("accept") : request.getParameter("deny");
                 boolean accept = null != request.getParameter("accept");
                 String status = accept ? "Approved" : "Denied";
-                dAO.setFlagStatus(orderId, status);
-                request.setAttribute("mess", status+" "+orderId+" successfully!");
+                if (null==orderId) {
+                    request.setAttribute("mess", "Export bill successfully!");
+                }else{
+                    dAO.setFlagStatus(orderId, status);
+                    request.setAttribute("mess", status + " " + orderId + " successfully!");
+                }
             }
             String year = null;
             String date = null;

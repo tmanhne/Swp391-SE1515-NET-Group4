@@ -79,35 +79,23 @@
                                     </div>
                                 </div>
 
-<!--                                <div class="divTableRow">
-                                    <div class="divTableCell">IsContinue</div>
-                                    <div class="divTableCell    ">
-                                        <div class="checkbox">
-                                            Yes <input type="radio"  name="isContinue" value="Yes" checked>
-                                        </div>
-
-                                        <div class="checkbox">
-                                            No <input type="radio"  name="isContinue" value="No">
-                                        </div>
-                                    </div>
-                                </div>-->
                                 <div class="divTableRow">
                                     <div class="divTableCell">Ratting</div>
                                     <div class="divTableCell">
                                         <input type="text" name="ratting" value="${requestScope.book.getRatting()}" >
-                                        <p>${requestScope.ratting}</p></div>
-                                </div>                             
+
+                                    </div>                             
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit_edit">
+                            <button type="submit" value="Submit" name="submit">Submit</button> 
+                            <div class="backPage">
+                                <a href="homeadmin">Back</a>
                             </div>
                         </div>
                     </div>
-                    <div class="submit_edit">
-                        <button type="submit" value="Submit" name="submit">Submit</button> 
-                        <div class="backPage">
-                            <a href="homeadmin">Back</a>
-                        </div>
-                    </div>
-                </div>
-            </div> 
+                </div> 
         </form>
     </body>
 </html>

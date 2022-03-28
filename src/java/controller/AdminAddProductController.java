@@ -102,35 +102,35 @@ public class AdminAddProductController extends RequiredAdminAccount {
                     }
                 }
             }
-            
+
             Validate validate = new Validate();
             boolean checkValidate = false;
             // validate name of product
             if (!validate.checkName(namePara)) {
-                request.setAttribute("messNamePara", "Your Name product is wrong");
+                request.setAttribute("pName", "Your Name product is wrong");
                 checkValidate = true;
             }
             // validate description of product 
             if (!validate.checkName(descriptionPara)) {
-                request.setAttribute("messDescriptionPara", "Your Description product is wrong");
+                request.setAttribute("pDes", "Your Description product is wrong");
                 checkValidate = true;
             }
             // validate price of product 
             if (!validate.checkPrice(unitPricePara)) {
-                request.setAttribute("messUnitPricePara", "Your price product is wrong");
+                request.setAttribute("uPrice", "Your price product is wrong");
                 checkValidate = true;
             }
             // validate unit int stock of product 
             if (!validate.checkUnitInStock(unitInStockPara)) {
-                request.setAttribute("messUnitInStockPara", "Your Unit in stock is wrong");
+                request.setAttribute("uInStock", "Your Unit in stock is wrong");
                 checkValidate = true;
             }
-            if(!validate.checkLengthComment(namePara)) {
-                request.setAttribute("messNamePara", "Your Name product is wrong");
+            if (!validate.checkLengthComment(namePara)) {
+                request.setAttribute("pName", "Your Name product is wrong");
                 checkValidate = true;
             }
-            if(!validate.checkLengthComment(descriptionPara)) {
-                request.setAttribute("messDescriptionPara", "Your Name product is wrong");
+            if (!validate.checkLengthComment(descriptionPara)) {
+                request.setAttribute("pDes", "Your Name product is wrong");
                 checkValidate = true;
             }
             Date date = new Date();
@@ -139,8 +139,6 @@ public class AdminAddProductController extends RequiredAdminAccount {
             if (!checkValidate) {
                 double unitInPrice = Double.parseDouble(unitPricePara);
                 int unitInStock = Integer.parseInt(unitInStockPara);
-                
-
                 // add all attribute to class 
                 product.setUnitPrice(unitInPrice);
                 product.setUnitInStock(unitInStock);

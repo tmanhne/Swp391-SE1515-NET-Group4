@@ -36,7 +36,7 @@
                         </table>
                     </form>
                 </div>
-                <table border="2" style="width: 100%" id="tableExport">
+                <table border="2" style="width: 100%">
                     <tr>
                         <th>ProductID</th>
                         <th>Product Name</th>

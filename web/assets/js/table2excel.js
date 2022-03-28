@@ -9,10 +9,9 @@ function exportData() {
         column3 = row.cells[2].innerText;
         column4 = row.cells[3].innerText;
         column5 = row.cells[4].innerText;
-        column6 = row.cells[5].innerText;
 
         rows.push([
-            column1, column2, column3, column4, column5, column6
+            column1, column2, column3, column4, column5
         ]);
     }
     ;
@@ -27,7 +26,7 @@ function exportData() {
     var encodedUri = encodeURI(csvContent);
     var link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "Stock_Price_Report.csv");
+    link.setAttribute("download", "Bill_Stock.csv");
     document.body.appendChild(link);
     /* download the data file named "Stock_Price_Report.csv" */
     link.click();

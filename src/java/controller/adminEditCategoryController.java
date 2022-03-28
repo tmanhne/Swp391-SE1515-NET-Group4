@@ -96,8 +96,8 @@ public class adminEditCategoryController extends HttpServlet {
         try {
             Validate v = new Validate();
             boolean checkValidate = false;
-            String cateId = request.getParameter("categoryID");
-            String cateName = request.getParameter("categoryName");
+            String cateId = request.getParameter("categoryID").trim();
+            String cateName = request.getParameter("categoryName").trim();
             //validate categoryName 
             if(!v.checkName(cateId)){
                 request.setAttribute("cateId", "id is wrong");
@@ -105,6 +105,10 @@ public class adminEditCategoryController extends HttpServlet {
             }
             if (!v.checkName(cateName)) {
                 request.setAttribute("cateName", "name is wrong");
+                checkValidate = true;
+            }
+            if(!v.checkLengthComment(cateName)){
+                request.setAttribute("cateName", "name is length");
                 checkValidate = true;
             }
             //if checkValidate true (all variable correct) => update

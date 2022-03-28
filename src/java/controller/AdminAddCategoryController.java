@@ -21,11 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import model.Category;
 
 /**
- ** The class contains method respond for initialize add new attribute
- * get value form jsp insert to database.
- * validate value after insert.
- * table in database. The method will throw an object of
- * <code>java.lang.Exception</code> class if there is any error occurring when
+ ** The class contains method respond for initialize add new attribute get
+ * value form jsp insert to database. validate value after insert. table in
+ * database. The method will throw an object of <code>java.lang.Exception</code>
+ * class if there is any error occurring when
  *
  * @author t.manh
  */
@@ -98,6 +97,10 @@ public class AdminAddCategoryController extends HttpServlet {
             //validate nameCategory
             if (!v.checkName(cateName)) {
                 request.setAttribute("cateName", "name is wrong");
+                checkValidate = true;
+            }
+            if (!v.checkLengthComment(cateName)) {
+                request.setAttribute("cateName", "name is length");
                 checkValidate = true;
             }
             //if all paremeters is true

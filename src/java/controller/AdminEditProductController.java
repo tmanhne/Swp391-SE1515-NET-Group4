@@ -39,7 +39,6 @@ import model.Constants;
 @WebServlet(name = "AdminEditProductController", urlPatterns = {"/AdminEditProduct"})
 public class AdminEditProductController extends HttpServlet {
 
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -144,49 +143,10 @@ public class AdminEditProductController extends HttpServlet {
             }
 
             // Check here
-//        Product b = new Book(productId, pName, pDes, uPrice, uInStock, ratting, isContinues);
-//            Validate validate = new Validate();
-//            boolean checkValidate = false;
-//            // validate name of product
-//            if (!validate.checkName(pName)) {
-//                request.setAttribute("pName", "Name is wrong");
-//                checkValidate = true;
-//            }
-//            // validate description of product 
-//            if (null==pDes||pDes.isEmpty()) {
-//                request.setAttribute("pDes", "Your Description product is wrong");
-//                checkValidate = true;
-//            }
-//            // validate price of product
-//            if (!validate.checkPrice(uPrice)) {
-//                request.setAttribute("uPrice", "Your price product is wrong");
-//                checkValidate = true;
-//            }
-//            // validate unit int stock of product 
-//            if (!validate.checkUnitInStock(uInStock)) {
-//                request.setAttribute("uInStock", "Your Unit in stock is wrong");
-//                checkValidate = true;
-//            }
             // if all parameters is true 
             double unitInPrice = Double.parseDouble(uPrice);
             int unitInStock = Integer.parseInt(uInStock);
             int uratting = Integer.parseInt(ratting);
-
-//
-//            //if all parametter is true 
-//            if (!checkValidate) {
-//                Product b = new Product(productId, pName, pDes, unitInPrice, unitInStock, isContinues, uratting);
-//                // update to database
-//                ProductDAO db = new ProductDAO();
-//                request.setAttribute("book", b);
-//                int count = db.updateBook(b);
-//                request.setAttribute("mess", count);
-//                if (count != 0) {
-//                    request.setAttribute("mess", "Update success!!");
-//                } else {
-//                    request.setAttribute("mess", "Update fail!!");
-//                }
-//                request.getRequestDispatcher("adminview/adminEditProduct.jsp").forward(request, response);
 
             Product b;
             if (imagePath != null) {
@@ -206,7 +166,6 @@ public class AdminEditProductController extends HttpServlet {
             request.setAttribute("mess", count);
             if (count != 0) {
                 request.setAttribute("mess", "Update success!!");
-//>>>>>>> 534a726ca39784dcca20c722f405e9e8723f74e1
             } else {
                 request.setAttribute("mess", "Update fail!!");
             }

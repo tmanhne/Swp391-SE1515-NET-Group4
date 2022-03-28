@@ -59,26 +59,23 @@
                                         <th>Payment Method</th>
                                         <th>Accept</th>
                                         <th>Deny</th>
-                                        <th>Export Excel</th>
+
                                     </tr>
 
                                     <c:forEach var="order" items="${requestScope.orders}">
                                         <tr>
-                                            <td>${order.getOrderID()}</td>
+                                            <td>
+                                                <a href="AdminviewOrderDetail?id=${order.getOrderID()}">${order.getOrderID()}</a>
+                                            </td>
                                             <td>${order.getCustomer()}</td>
-                                            <td>${order.getOrderDate()}</td>
+                                            <td>${order.getOrderDate()}</td>F
                                             <td>${order.getUnitPrice()}</td>
                                             <td>${order.getShip()}</td>
                                             <td>${order.getPaymentMethod()}</td>
 
                                             <td><button type="submit" value="${order.getOrderID()}" name="accept" onclick="return confirm('Accept the order ?')">Accept</button></td>
                                             <td><button type="submit" value="${order.getOrderID()}" name="deny" onclick="return confirm('Are you sure deny bill?')">Deny</button></td>
-                                            <td>
-                                                <button onclick="exportData()">
-                                                    <span class="glyphicon glyphicon-download"></span>
-                                                    ExportBill
-                                                </button>
-                                            </td>   
+
                                         </tr>
                                     </c:forEach>
                                 </table>
@@ -95,11 +92,12 @@
                                     </c:forEach>
                                 </c:if>
                             </div>
-                    </form>
+
+                        </div>
+                    </form>     
                 </div>
             </div>
         </div>
-    </div>
-    <jsp:include page="../view/footerAdmin.jsp"></jsp:include>
-</body>
+        <jsp:include page="../view/footerAdmin.jsp"></jsp:include>
+    </body>
 </html>

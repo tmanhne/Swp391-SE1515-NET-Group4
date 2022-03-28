@@ -11,5 +11,5 @@ package model;
  */
 public class Constants {
 
-    public static final String UPLOAD_DIRECTORY = "C:\\Users\\Hfyl\\Desktop\\s7\\SWP391\\Swp391-SE1515-NET-Group4\\web\\public\\image";
+    public static final String UPLOAD_DIRECTORY = "C:\\Users\\Dell\\Desktop\\Destop\\Swp391-SE1515-NET-Group4\\web\\public\\image";
 }

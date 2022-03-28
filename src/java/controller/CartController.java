@@ -101,7 +101,10 @@ public class CartController extends HttpServlet {
             String add = request.getParameter("increase");
             String delete = request.getParameter("delete");
             Cookie cartCookie = getCartCookie(request.getCookies());
-
+            String address = request.getParameter("address");
+            if(address!=null){
+                request.setAttribute("address", address);
+            }
             int page = 1;
             if (null != request.getParameter("page")) {
                 page = Integer.parseInt(request.getParameter("page"));

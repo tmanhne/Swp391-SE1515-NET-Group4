@@ -23,8 +23,7 @@ import model.Account;
 
 
 /**
- * The class uses <code>AccountDAO</code> to get data of account then forward to the login page
- *
+ * The class contain method <code>doGET</code> and <code>doPOST</code>
  * @author vudm
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/Login"})
@@ -32,8 +31,10 @@ public class LoginController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method. This method used to get username and password throw cookie value
-     *
+     * Handles the HTTP <code>doGET</code> method.
+     * This method used to get username and password throw cookie value when user access page
+     * If this page have error,it throws an exception 
+     * The method uses  <code>AccountDAO</code> to get data of account then forward to the login page
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -83,8 +84,10 @@ public class LoginController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method. This method is used to login to system and add username and password to cookie
-     *
+     * Handles the HTTP <code>doPOST</code> method. 
+     * This method is used to login to system and add username and password to cookie
+     * when user click remember me username and password will be save in cookie with 1 week
+     * The method uses  <code>AccountDAO</code> to get data of account then forward to the login page
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs

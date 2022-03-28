@@ -5,7 +5,7 @@
  *
  * Record of change
  * DATE             VERSION             AUTHOR              DESCRIPTION
- * 2022-02-08         1.0               VUDMHE140017,THONGCT      First Implement
+ * 2022-02-08         1.0               VUDMHE140017      First Implement
  */
 package dao;
 
@@ -29,7 +29,6 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     /**
      * The method is used get all products from database
-     *
      * @return ArrayList products
      * @throws java.lang.Exception
      */
@@ -79,7 +78,6 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     /**
      * Get top 3 best seller products from database
-     *
      * @return ArrayList products
      * @throws java.sql.SQLException
      */
@@ -129,7 +127,6 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     /**
      * Get top 2 highest price products from database
-     *
      * @return ArrayList products
      * @throws java.sql.SQLException
      *
@@ -180,7 +177,6 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     /**
      * Get all products by name from database
-     *
      * @param name was searching name
      * @return ArrayList books
      */
@@ -239,7 +235,6 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     /**
      * Get top 2 highest price products from database
-     *
      * @param pid is a <code>String</code>
      * @return ArrayList products
      * @throws java.sql.SQLException
@@ -444,6 +439,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
         return result;
     }
 
+    @Override
     public void removeProduct(String pid) throws Exception {
         Connection con = null;
         PreparedStatement ps = null;
@@ -454,8 +450,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, pid);
             rs = ps.executeQuery();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
             throw ex;
         } finally {
             super.close(con, ps, rs);
@@ -464,8 +459,8 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
 
     /**
      *
-     * @param NO
      * @return return all FeedBack of member
+     * @throws java.lang.Exception
      */
     public List<Product> getAllProduct() throws Exception {
         Connection con = null;
@@ -492,8 +487,7 @@ public class ProductDAO extends dal.DBConnection implements IProductDAO {
                 product.setCategoryID(rs.getString(10));
                 products.add(product);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (SQLException ex) {
             throw ex;
         } finally {
             super.close(con, ps, rs);

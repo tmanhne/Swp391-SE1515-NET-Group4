@@ -26,7 +26,8 @@ public class BillManagerController extends HttpServlet {
     private final int FETCH = 10;
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -117,14 +118,17 @@ public class BillManagerController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+
             OrderDAO dAO = new OrderDAO();
 
             if (null == request.getParameter("search")) {
                 String orderId = null != request.getParameter("accept") ? request.getParameter("accept") : request.getParameter("deny");
                 boolean accept = null != request.getParameter("accept");
                 String status = accept ? "Approved" : "Denied";
+
                 dAO.setFlagStatus(orderId, status);
-                request.setAttribute("mess", status+" "+orderId+" successfully!");
+                request.setAttribute("mess", status + " " + orderId + " successfully!");
+
             }
             String year = null;
             String date = null;

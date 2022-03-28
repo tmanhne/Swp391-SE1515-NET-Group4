@@ -1,8 +1,9 @@
 <%-- 
-    Document   : adminEditReport
-    Created on : Mar 5, 2022, 11:29:15 AM
+    Document   : adminEditSalesPartner
+    Created on : Mar 26, 2022, 3:56:59 PM
     Author     : vudm
 --%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,11 +11,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit Report</title>
+        <title>Edit Sales Partner</title>
         <link href="./public/style/landingAdmin.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <jsp:include page="headerReport.jsp"></jsp:include>
+        <jsp:include page="../view/headerAdmin.jsp"></jsp:include>
         <script>
             function updateOk() {
                 alert("Update Successfull!");
@@ -26,26 +27,26 @@
                     <div class="header-main">
                         <p>Edit Report</p>
                     </div>
-                    <form action="AdminEditReportController"method="POST">
+                    <form action="AdminEditSalesPartner"method="POST">
                     <div class="table-listProduct">
                        
                         <table>
                             <tr>
-                                <th>ReportID</th>
-                                <th>Title</th>
-                                <th>Customer'sName</th>
+                                <th>PartnerID</th>
+                                <th>Name</th>
+                                <th>Address</th>
                                 <th>Status</th>
                                 
 
                             </tr>
                             
-                        <c:forEach var="rpt" items="${requestScope.reports}">
+                        <c:forEach var="rpt" items="${requestScope.salesPartner}">
                             <tr>
-                                <td><input type="text" class="form-control" style="text-align: center;" name="reportId" value="${rpt.getReportID()}" readonly></td>
-                                <td>${rpt.getTitle()}</td>
-                                <td>${rpt.getCustomerName()}</td>
+                                <td><input type="text" class="form-control" style="text-align: center;" name="partnerID" value="${rpt.getPartnerID()}" readonly></td>
+                                <td>${rpt.getPartnerName()}</td>
+                                <td>${rpt.getAddress()}</td>
                                 <td><div class="divTableCell">
-                                         <select name="reportStatus" class="controls">
+                                         <select name="partnerStatus" class="controls">
                                                 <option value="${rpt.getStatus()}" selected="selected">${rpt.getStatus()}</option>
                                                 <option value="Pending">Pending</option>
                                                 <option value="Doing">Doing</option>
@@ -64,7 +65,7 @@
                 </div>
                  </form>
                 <div class="backPage">
-                        <a href="adminViewReport">Back</a>
+                        <a href="AdminViewSalesPartner">Back</a>
                     </div>
             </div>
                 

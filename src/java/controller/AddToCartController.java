@@ -9,6 +9,7 @@
 package controller;
 
 import dao.ProductDAO;
+import interfaceDAO.IProductDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -41,7 +42,7 @@ public class AddToCartController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          try{
-                  ProductDAO bd = new ProductDAO();
+                  IProductDAO bd = new ProductDAO();
                   String productID = request.getParameter("id");
                   Product product = bd.getProductById(productID);
                   if (product == null) {

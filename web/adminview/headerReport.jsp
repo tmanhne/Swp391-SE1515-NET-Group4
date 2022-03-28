@@ -1,8 +1,9 @@
 <%-- 
-    Document   : header
-    Created on : Jan 18, 2022, 5:18:01 PM
-    Author     : admin
+    Document   : headerReport
+    Created on : Mar 22, 2022, 5:20:52 PM
+    Author     : vudm
 --%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,10 +19,10 @@
             <div class="row">
 
                 <div class="header-logo">
-                    <a href="homeadmin">Admin Manager</a>
+                    <a href="adminViewReport">Reports</a>
                 </div>
                 <div class="search-input">
-                    <form action="homeadmin" method="POST">
+                    <form action="adminViewReport" method="POST">
                         <span class="glyphicon glyphicon-search"></span>
                         <input type="text" placeholder="Find" name="search" value="${requestScope.searchname}" />
                         <button type="submit">Search</button>

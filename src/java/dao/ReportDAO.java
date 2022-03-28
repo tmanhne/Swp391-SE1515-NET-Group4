@@ -19,7 +19,7 @@ import java.util.List;
 import model.Reports;
 
 /**
- * The class contain all method to contacts with report throw database
+ * The class contain all method to contacts with report from database
  * @author vudm
  */
 public class ReportDAO extends dal.DBConnection implements IReportDAO{
@@ -156,7 +156,7 @@ public class ReportDAO extends dal.DBConnection implements IReportDAO{
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "DELETE FROM dbo.Reports WHERE ReportID = ?";
+        String sql = "DELETE FROM Reports WHERE ReportID = ?";
         try {
             con = super.open();
             ps = con.prepareStatement(sql);
@@ -176,7 +176,7 @@ public class ReportDAO extends dal.DBConnection implements IReportDAO{
      * @throws java.lang.Exception
      */
     @Override
-    public int getTotalProduct() throws Exception{
+    public int getTotalReport() throws Exception{
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -245,5 +245,116 @@ public class ReportDAO extends dal.DBConnection implements IReportDAO{
         }
 
         return rptList;
+    }
+    
+    @Override
+    public ArrayList<Reports> getReportByName(String title) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        AuthorsDAO au;
+        ArrayList<Reports> rptList = new ArrayList<>();
+        String sql = "SELECT * FROM Reports WHERE [Title] LIKE ? ";
+
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + title.toUpperCase() + "%");
+            rs = ps.executeQuery();
+
+            //assign data to books
+            while (rs.next()) {
+               Reports reports = new Reports();
+                reports.setReportID(rs.getInt("ReportID"));
+                reports.setTitle(rs.getString("Title"));
+                reports.setCustomerName(rs.getString("CustomerName"));
+                reports.setEmail(rs.getString("Email"));
+                reports.setPhone(rs.getString("Phone"));
+                reports.setInsurance(rs.getString("Insurance"));
+                reports.setDescriptions(rs.getString("Descriptions"));
+                reports.setStatus(rs.getString("Status"));
+                reports.setAccountID(rs.getString("AccountID"));
+                reports.setTime(rs.getDate("Time"));
+                rptList.add(reports);
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+
+        return rptList;
+    }
+    
+    
+    @Override
+    public List<Reports> pagingReportByTitle(String title,int index) throws Exception {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Reports> rptList = new ArrayList<>();
+        String sql = "SELECT * FROM Reports WHERE [Title] LIKE ?\n"
+                + "ORDer by ReportID\n"
+                + "offset ? rows fetch next 3 rows only;";
+
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + title.toUpperCase() + "%");
+            ps.setInt(2, (index - 1) * 3);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reports reports = new Reports();
+                reports.setReportID(rs.getInt("ReportID"));
+                reports.setTitle(rs.getString("Title"));
+                reports.setCustomerName(rs.getString("CustomerName"));
+                reports.setEmail(rs.getString("Email"));
+                reports.setPhone(rs.getString("Phone"));
+                reports.setInsurance(rs.getString("Insurance"));
+                reports.setDescriptions(rs.getString("Descriptions"));
+                reports.setStatus(rs.getString("Status"));
+                reports.setAccountID(rs.getString("AccountID"));
+                reports.setTime(rs.getDate("Time"));
+                rptList.add(reports);
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+
+        return rptList;
+    }
+    
+    @Override
+    public int getTotalReportByTitle(String title) throws Exception{
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Reports reports = new Reports();
+        String sql = "SELECT COUNT(*)FROM Reports WHERE [Title] LIKE ?";
+        try {
+            //open connection
+            con = super.open();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + title.toUpperCase() + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            //close connection
+            super.close(con, ps, rs);
+        }
+        return 0;
     }
 }

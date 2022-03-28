@@ -4,12 +4,12 @@
  * 
  * Record of change
  * DATE             VERSION             AUTHOR              DESCRIPTION
- * 2022-03-05         1.0               VUDMHE140017      First Implement
+ * 2022-03-26         1.0               VUDMHE140017      First Implement
  */
 package controller;
 
-import dao.ReportDAO;
-import interfaceDAO.IReportDAO;
+import dao.SalesPartnerDAO;
+import interfaceDAO.ISalesPartnerDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -17,22 +17,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Reports;
+import model.SalesPartner;
 
 /**
- * The class contain method <code>doGet</code> and <code>doPost</code>  to implement function
- * @author vudm
+ *The class contain method <code>doGet</code> and <code>doPost</code>  to implement function
+ * @author admin
  */
-@WebServlet(name = "AdminEditReportController", urlPatterns = {"/AdminEditReportController"})
-public class AdminEditReportController extends HttpServlet {
+@WebServlet(name = "AdminEditSalesPartner", urlPatterns = {"/AdminEditSalesPartner"})
+public class AdminEditSalesPartner extends HttpServlet {
 
-   
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
-     * This method get all information by rid is <code>int</code>
-     * This method contain <code>ReportDAO</code> to get information of report by rid
+     * The method is used to get form edit to display when user click link edit
+     * The method contain <code>SalesPartnerDAO</code> to get SalesPartner by id to excute edit 
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -41,10 +41,10 @@ public class AdminEditReportController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       try {
-            int reportID = Integer.parseInt(request.getParameter("rid"));
-            IReportDAO reportDAO = new ReportDAO();
-            ArrayList<Reports> reports = reportDAO.getReportByID(reportID);
+         try {
+            int partnerID = Integer.parseInt(request.getParameter("partnerID").trim());
+            ISalesPartnerDAO partnerDAO = new SalesPartnerDAO();
+            ArrayList<SalesPartner> salesPartner = partnerDAO.getPartnerByID(partnerID);
             String name = "";
             //check search parameter
             if (request.getParameter("search") != null) {
@@ -54,8 +54,8 @@ public class AdminEditReportController extends HttpServlet {
             }
 
             request.setAttribute("searchname", name);
-            request.setAttribute("reports", reports);
-            request.getRequestDispatcher("adminview/adminEditReport.jsp").forward(request, response);
+            request.setAttribute("salesPartner", salesPartner);
+            request.getRequestDispatcher("adminview/adminEditSalesPartner.jsp").forward(request, response);
         } catch (Exception ex) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);
@@ -65,8 +65,8 @@ public class AdminEditReportController extends HttpServlet {
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     * This method is used to update data of report by rid is a <code>int</code>
-     * This method contain <code>ReportDAO</code> to update information of report again
+     * The method is used to update data of SalesPartner need edit when people click button save in interface
+     * The method contain <code>SalesPartnerDAO</code> get method update to database
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -76,15 +76,15 @@ public class AdminEditReportController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int reportID = Integer.parseInt(request.getParameter("reportId").trim());
-            String status = request.getParameter("reportStatus").trim();
+            int partnerID = Integer.parseInt(request.getParameter("partnerID").trim());
+            String status = request.getParameter("partnerStatus").trim();
             
             
-            Reports reports = new Reports(reportID, status);
-            IReportDAO reportDAO = new ReportDAO();
+            SalesPartner salePartner = new SalesPartner(partnerID, status);
+            ISalesPartnerDAO partnerDAO = new SalesPartnerDAO();
 //            int count = reportDAO.updateReport(reports);
-                reportDAO.updateReport(reports);
-                response.sendRedirect("adminViewReport");
+                partnerDAO.updateSalesPartner(salePartner);
+                response.sendRedirect("AdminViewSalesPartner");
         } catch (Exception e) {
             request.setAttribute("error", "Sorry! Error occurred, THAT PAGE DOESN'T EXIST OR IS UNAVABLE.");
             request.getRequestDispatcher("error/error.jsp").forward(request, response);

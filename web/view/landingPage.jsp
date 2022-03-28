@@ -96,7 +96,7 @@
                             <div class="buy-section">
                                 <form action="AddToCart" method="POST" class="button-container">
                                     <input type="hidden" value="${book.getProductID()}" name="id" >
-                                    <input type="submit" value="Buy" class="form-button">
+                                    <input type="submit" onclick="addToCart()"  value="Buy" class="form-button">
                                 </form>
                                 <div class="price">${book.getUnitPrice()}$</div>
                             </div>
